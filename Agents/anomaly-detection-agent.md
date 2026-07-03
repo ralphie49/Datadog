@@ -1,5 +1,5 @@
 # Anomaly Detection Agent
-**Version:** 1.1.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.2.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -47,18 +47,39 @@ anomaly_config:
 
 ### MUST
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
-  across every record this agent actually processed (never leave them null when input records exist)
+  across every record this agent actually processed (never leave them null when input records exist).
+  `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
+  like `["from_value", "to_value"]`
+- MUST populate each individual anomaly's own `timestamp` field with the actual timestamp of the specific
+  record/finding that triggered it (e.g. the trace timestamp for a `LATENCY_SPIKE`, the log timestamp for a
+  `KAFKA_LAG_SPIKE`) — NEVER default an anomaly's `timestamp` to `analysis_period.from`, the run start time,
+  or any other placeholder. A wrong per-anomaly timestamp breaks every downstream agent that correlates by
+  time window (Dependency/Flow Analysis Agent, Root Cause Analysis Agent), so this is treated as a data
+  integrity failure, not a cosmetic one. If the true timestamp genuinely cannot be determined for a specific
+  anomaly, set it to `null` explicitly rather than substituting a different real timestamp that misrepresents
+  when the anomaly occurred
 - MUST load all upstream report JSON files
 - MUST detect spikes — sudden increase above `spike_multiplier × rolling average`
 - MUST detect drops — sudden decrease below `drop_multiplier × rolling average`
 - MUST detect worsening trends — metric consistently increasing/decreasing over `trend_window_batches`
 - MUST correlate anomalies across multiple data sources — same timeframe anomaly in multiple sources = higher confidence
 - MUST assign confidence score to each anomaly: LOW | MEDIUM | HIGH
+- MUST ensure every anomaly's `description` field describes that anomaly's own `anomaly_type` and `value` —
+  never copy or borrow a message/description that actually belongs to a different anomaly or a different
+  metric domain (e.g. a `THROUGHPUT_DROP` entry's description must describe a throughput measurement, not a
+  Kafka lag log line — if the only available context for a throughput drop IS the Kafka lag event, phrase the
+  description to make that causal link explicit rather than pasting the unrelated raw message verbatim)
 - MUST write all anomalies and trends to `anomaly_report.json`
 
 ### MUST NOT
 - MUST NOT flag single-point anomalies as HIGH confidence without corroboration
 - MUST NOT require more than `min_data_points` to report an anomaly
+- MUST NOT emit more than one `CORRELATED_ANOMALY` entry for the same pair (or set) of corroborating
+  anomaly types on the same service within the same correlation timeframe — a single underlying correlation
+  (e.g. "LATENCY_SPIKE + KAFKA_LAG_SPIKE on checkout-consumer") produces exactly one `CORRELATED_ANOMALY`
+  entry, never a copy per contributing raw data point. Before writing output, deduplicate `anomalies[]` /
+  `all_anomalies[]` by the combination of (`anomaly_type`, `service`, `corroborated_by` set, rounded
+  timeframe) and collapse duplicates into one entry
 - MUST NOT modify any upstream input files
 
 ---
@@ -132,9 +153,13 @@ anomaly_config:
 3. Flag consistently increasing metrics as WORSENING_TREND, decreasing as IMPROVING_TREND
 
 ### Phase 3 — Correlation Analysis
-1. For each anomaly, check if other metrics show anomalies within ±5 minutes
+1. For each anomaly, check if other metrics show anomalies within ±5 minutes, using each anomaly's own
+   accurate `timestamp` (per the MUST rule above) — never the analysis-period start
 2. If 2+ sources show anomalies at the same time → CORRELATED_ANOMALY, HIGH confidence
 3. Single-source anomaly → MEDIUM or LOW confidence depending on deviation magnitude
+4. Before adding a new `CORRELATED_ANOMALY` entry, check whether an entry already exists for the same
+   `service` + same `corroborated_by` set (order-independent) within the same timeframe — if so, do not add
+   a duplicate; this is the most common failure mode of this phase
 
 ### Phase 4 — Write Output
 1. Sort anomalies by confidence descending, then by deviation descending
@@ -167,3 +192,4 @@ anomaly_config:
 |---|---|---|---|
 | 1.0.0 | 2026-07-02 | anomaly-detection-agent | Initial release — spike detection, trend analysis, cross-source correlation, confidence scoring |
 | 1.1.0 | 2026-07-03 | anomaly-detection-agent | Added MUST rule requiring analysis_period.from/to to be populated from actual record timestamps instead of left null |
+| 1.2.0 | 2026-07-03 | anomaly-detection-agent | Fixed observed failure mode where individual anomalies were timestamped at analysis_period.from as a placeholder instead of their real occurrence time, which broke downstream time-window correlation in the Dependency/Flow and Root Cause agents; fixed duplicate CORRELATED_ANOMALY entries for the same underlying correlation; fixed description/anomaly_type mismatches (e.g. a THROUGHPUT_DROP entry carrying an unrelated Kafka-lag log message); analysis_period is now explicitly specified as an object, never an array |

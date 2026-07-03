@@ -1,5 +1,5 @@
 # Root Cause Analysis Agent
-**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.4.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -70,6 +70,7 @@ root_cause_config:
 - MUST NOT produce recommendations unrelated to actual findings in the input reports
 - MUST NOT cite an `issue_type` / finding category (e.g. `BRUTE_FORCE_ATTEMPT`, `KAFKA_LAG_CRITICAL`) in `root_cause_finding`, `evidence_sources`, or a recommendation's `evidence` field unless that exact issue type literally appears in the named upstream JSON file's own findings/issues list. A raw log line, alert message, or record elsewhere in the pipeline that merely *uses similar wording* is not evidence that the responsible domain agent (e.g. Security Audit Agent) confirmed it — if that agent didn't independently flag it, this agent must not either
 - MUST NOT assign a single `root_cause_category` to an incident whose findings don't causally belong together. If an incident's evidence spans unrelated domains (e.g. a `PIPELINE_BACKPRESSURE` finding on one service plus a `CREDENTIAL_LEAK`/`PII_IN_LOGS` finding on an unconnected service) that were only clustered by time proximity, split them into separate incidents — a security finding is never a "downstream symptom" of a pipeline or infrastructure root cause unless a concrete causal path (e.g. a dependency-graph edge, or the same service) connects them
+- MUST NOT allow a CRITICAL-severity finding from `apm_report.json`, `metrics_report.json`, `security_report.json`, or a `dependency_report.json` breakpoint to disappear from the output entirely. Every such finding must end up either represented in an incident's `evidence_sources`, or explicitly listed in `unresolved_findings` with a reason — never neither (see the timestamp-robustness safeguard in Phase 1)
 - MUST NOT modify any upstream input files
 
 ---
@@ -213,6 +214,18 @@ but then not translating that evidence into the matching category.
    string if `description` is blank or absent. An entry in `downstream_symptoms` MUST NEVER be an empty string
    (`""`) or whitespace-only; if no readable text can be resolved for a finding, omit that finding from the list
    entirely rather than inserting a blank placeholder
+6. **Timestamp-robustness safeguard.** Upstream reports occasionally carry corrupted or missing per-finding
+   timestamps (e.g. a finding defaulted to the analysis-period start instead of its real occurrence time), which
+   can cause step 2's time-window clustering to fail even though strong, clearly-related evidence exists across
+   multiple reports. Before finalizing the incident list, cross-check every CRITICAL-severity finding in
+   `apm_report.json`, `metrics_report.json`, `security_report.json`, and every `breakpoints[]` entry in
+   `dependency_report.json` against the incidents produced so far. If a CRITICAL finding or a breakpoint is not
+   represented in any incident's `evidence_sources`/`root_cause_finding`, do not silently drop it — instead
+   attempt clustering by *service identity* alone (ignore the timestamp match for this one check, since the
+   dependency graph or shared service name is independent, non-corruptible evidence of relatedness) before
+   giving up and routing it to `unresolved_findings` with a `reason` explaining why it couldn't be clustered.
+   `unresolved_findings` existing and being non-empty is normal and expected on messy data; a CRITICAL finding
+   disappearing from the output entirely, with no incident and no unresolved_findings entry, is not
 
 ### Phase 2 — Root Cause Identification
 1. Check `dependency_report.json` first — if a breakpoint was identified for this incident window, treat it as the primary root cause candidate
@@ -265,3 +278,4 @@ but then not translating that evidence into the matching category.
 | 1.1.0 | 2026-07-03 | root-cause-analysis-agent | Added MUST NOT rule preventing citation of an issue_type/finding category not literally present in the named upstream report's own findings; added analysis_period population rule |
 | 1.2.0 | 2026-07-03 | root-cause-analysis-agent | Tightened incident clustering to require an actual dependency-graph edge (not just time proximity) between services before merging findings into one incident; added downstream_symptoms dedup rule and a rule against mixing unrelated root-cause domains in a single incident |
 | 1.3.0 | 2026-07-03 | root-cause-analysis-agent | Fixed observed failure mode where every incident was written as UNDETERMINED despite strong matching evidence (Kafka lag, PII/credential findings) — added a mandatory category-mapping table and a required self-review pass over UNDETERMINED incidents; fixed a second observed bug where downstream_symptoms contained empty-string entries — added a rule requiring a non-empty resolved string per finding, omitting unresolvable findings instead of inserting blanks |
+| 1.4.0 | 2026-07-03 | root-cause-analysis-agent | Fixed observed failure mode where the single most severe, best-evidenced incident in the dataset (a CRITICAL Kafka-lag cascade, corroborated in apm_report/metrics_report/dependency_report) was silently absent from root_cause.json entirely, traced to upstream timestamp corruption in anomaly_report.json breaking time-window clustering — added a mandatory cross-check of every CRITICAL finding/breakpoint against produced incidents, a service-identity fallback clustering path when timestamps can't be trusted, and a MUST NOT rule against any CRITICAL finding disappearing without landing in either an incident or unresolved_findings |

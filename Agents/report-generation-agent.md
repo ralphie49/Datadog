@@ -1,5 +1,5 @@
 # Report Generation Agent
-**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.4.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -191,7 +191,15 @@ pressure — these are the specific failure modes observed in prior runs of this
    whose `root_cause_category` is `UNDETERMINED`, do not simply render "UNDETERMINED impacting X" — instead
    write the sentence from that incident's `root_cause_finding` text (e.g. "Kafka consumer lag reached
    125,000 on ecommerce-events, cascading to order-service and payment-service"), since `root_cause_finding`
-   is required by that agent's spec to always be populated even when the category itself is undetermined
+   is required by that agent's spec to always be populated even when the category itself is undetermined.
+   This sentence requirement applies EQUALLY when `root_cause.json` has fewer than 3 incidents and the
+   remaining top-risk slots are filled from "highest severity standalone findings" per that agent's own
+   selection logic — a standalone finding pulled directly from a domain report (e.g. `apm_report.json`'s
+   `kafka.topics[]`) still has a `description` field; render the sentence from that field (e.g. "Kafka
+   consumer lag on checkout-consumer reached 68,000 messages, approaching the critical threshold"), never
+   the bare `issue_type` value (e.g. never just "KAFKA_LAG_HIGH on checkout-consumer"). Additionally, verify
+   the 3 top risks are not duplicates of each other (same underlying finding rendered twice) — if fewer than
+   3 genuinely distinct risks exist in the input, list fewer than 3 rather than repeating one
 2. **Recommendations/Patches sections aren't silently empty when they shouldn't be.** If `root_cause.json` has
    1+ incidents but `recommendations.json` has 0 entries, this is very likely an upstream defect (the Root
    Cause Analysis Agent should generate a recommendation for every incident) — flag this explicitly in the
@@ -233,3 +241,4 @@ pressure — these are the specific failure modes observed in prior runs of this
 | 1.1.0 | 2026-07-03 | report-generation-agent | Fixed CRITICAL verdict clause — it referenced "unredacted" security findings, which can never occur since Security Audit Agent always redacts before writing; now triggers on any CRITICAL-severity security finding |
 | 1.2.0 | 2026-07-03 | report-generation-agent | Defined the exact executive-summary aggregation formula for total_critical/total_error/total_warn across domain reports; top risks must now be full descriptive sentences, not bare issue_type labels |
 | 1.3.0 | 2026-07-03 | report-generation-agent | The 1.2.0 "top risks must be full sentences" rule was observed being violated in practice (rendered as "UNDETERMINED impacting X"). Added a mandatory Phase 6 pre-write validation checklist that mechanically catches bare-label top risks, silently-empty recommendation sections when incidents exist, blank table rows, and duplicate entity rows, instead of relying on a one-line prose instruction |
+| 1.4.0 | 2026-07-03 | report-generation-agent | The 1.3.0 checklist still didn't catch a variant of the same bug: bare issue_type labels reappeared when top risks fell back to standalone findings (fewer than 3 root-cause incidents available) rather than root_cause.json incidents — extended the sentence-rendering rule to explicitly cover that fallback path, and added a duplicate-top-risk check after two identical "KAFKA_LAG_HIGH on checkout-consumer" entries were observed in the same report |

@@ -1,5 +1,5 @@
 # Security Audit Agent
-**Version:** 1.2.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -46,7 +46,8 @@ security_audit_config:
 
 ### MUST
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
-  across every record this agent actually processed (never leave them null when input records exist)
+  across every record this agent actually processed (never leave them null when input records exist).
+  `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
 - MUST scan all log messages two ways: (1) by `pii_columns` field-name labels (e.g. `email=...`), and (2)
   independently by `pii_value_patterns` regex against the raw message text, so unlabelled PII (a bare email or
   phone number with no field prefix) is still caught — never log raw PII values in findings
@@ -183,3 +184,4 @@ security_audit_config:
 | 1.0.0 | 2026-07-02 | security-audit-agent | Initial release — PII scan, credential leak, brute force, permission escalation, compliance |
 | 1.1.0 | 2026-07-03 | security-audit-agent | Added regex-based PII value detection (catches unlabelled PII, not just field-name matches); fixed brute-force grouping to use available `source_ip`/`user`/`service` fields with a documented fallback instead of assuming fields that ingestion never produced |
 | 1.2.0 | 2026-07-03 | security-audit-agent | Added rule preventing ingested alert-type records from being passed through as a confirmed BRUTE_FORCE_ATTEMPT; such alerts now surface as SUSPICIOUS_ACTIVITY citing the source monitor instead; added analysis_period population rule |
+| 1.3.0 | 2026-07-03 | security-audit-agent | Fixed observed bug: analysis_period was being written as a bare array instead of a {from, to} object — now explicitly specified as an object-only field |

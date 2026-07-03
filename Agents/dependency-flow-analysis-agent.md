@@ -1,5 +1,5 @@
 # Dependency/Flow Analysis Agent
-**Version:** 1.4.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.5.0 | **Domain:** Datadog Observability Analysis
 **Design credit:** originally proposed by teammate as part of her pipeline flow
 
 ---
@@ -54,12 +54,18 @@ dependency_flow_config:
 
 ### MUST
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
-  across every record this agent actually processed (never leave them null when input records exist)
+  across every record this agent actually processed (never leave them null when input records exist).
+  `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
 - MUST reconstruct a service call graph from trace spans — parent/child relationships via `trace_id` and `span_id`
 - MUST build a dependency edge between two services only if observed call count >= `min_call_count_for_edge`
 - MUST identify, for each incident window flagged in `anomaly_report.json`, which node in the call graph is the most upstream failing point
 - MUST distinguish between a breakpoint (originating failure) and a propagated symptom (downstream effect of the breakpoint)
 - MUST assign a breakpoint confidence score (0-1) based on how consistently failures trace back to that node
+- MUST, once a breakpoint candidate is identified, trace `downstream_impact` through the FULL connected chain —
+  not just its immediate one-hop neighbor. If node A → B → C are all edges in `dependency_graph`, and the
+  incident's affected services include both B and C, a breakpoint at A must list `downstream_impact: [B, C]`
+  and `hops_to_furthest_symptom: 2`, not just `[B]`. Stopping at one hop is the most common way this agent
+  under-reports cascading failures
 - MUST flag cascading failure chains — where a single breakpoint's failure visibly propagates through 2+ downstream services
 - MUST write the dependency graph and breakpoint findings to `dependency_report.json`
 
@@ -75,6 +81,14 @@ dependency_flow_config:
 - MUST NOT declare a `BREAKPOINT_IDENTIFIED` finding with an empty `downstream_impact` — a breakpoint is by
   definition an origin whose failure *propagates*; a finding with zero downstream impact and zero hops is not a
   breakpoint, it is an isolated finding that belongs in the source domain report instead (e.g. metrics_report.json)
+- MUST NOT emit more than one breakpoint entry for the same `breakpoint_service` with the same `downstream_impact`
+  set within the same incident window, even if multiple raw anomaly records (e.g. several near-identical
+  `CORRELATED_ANOMALY` entries in `anomaly_report.json`) reference that window. One underlying incident produces
+  one breakpoint entry, referencing one representative `incident_id` — not one entry per contributing anomaly
+  record. Before writing output, deduplicate `breakpoints[]` / `all_findings[]` by (`breakpoint_service`,
+  sorted `downstream_impact`) and collapse duplicates into a single entry; if the upstream `anomaly_report.json`
+  contains many near-duplicate anomaly records for what is clearly one real incident, that is itself evidence of
+  an upstream deduplication defect worth noting, not a reason to produce many breakpoint entries here
 - MUST NOT modify any upstream input files
 
 ---
@@ -210,3 +224,4 @@ dependency_flow_config:
 | 1.2.0 | 2026-07-03 | dependency-flow-analysis-agent | Added MUST rule requiring analysis_period.from/to to be populated from actual record timestamps instead of left null |
 | 1.3.0 | 2026-07-03 | dependency-flow-analysis-agent | Added MUST NOT rules preventing host-level infra anomalies from being fabricated into service-graph breakpoints they cannot structurally belong to, and preventing zero-downstream-impact 'breakpoints' |
 | 1.4.0 | 2026-07-03 | dependency-flow-analysis-agent | Fixed observed failure mode where a populated graph plus a known multi-service correlated incident still produced zero breakpoints — replaced vague "score confidence based on consistency" with a concrete, reproducible confidence formula, and added a mandatory self-check before writing an empty breakpoints array |
+| 1.5.0 | 2026-07-03 | dependency-flow-analysis-agent | Fixed a regression from 1.4.0's fix: breakpoints[] was producing 10+ near-duplicate entries for the same service pair (one per raw anomaly record instead of one per real incident) — added explicit dedup-by-(breakpoint_service, downstream_impact) rule; fixed downstream_impact only ever tracing one hop, causing real 2+-hop cascades to be under-reported — added explicit full-chain tracing requirement; analysis_period is now explicitly specified as an object, never an array |

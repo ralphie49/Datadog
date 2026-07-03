@@ -1,5 +1,5 @@
 # Pipeline Health Monitor Agent
-**Version:** 1.2.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -42,13 +42,34 @@ pipeline_health_config:
 
 ### MUST
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
-  across every record this agent actually processed (never leave them null when input records exist)
+  across every record this agent actually processed (never leave them null when input records exist).
+  `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
 - MUST scan all records for Kafka lag metrics and flag breaches
+- MUST preserve `topic` and `consumer_group` as two distinct fields, each populated from its own actual
+  source field in the normalised data — NEVER substitute one for the other when a value is missing or
+  unclear. If the true topic name genuinely cannot be determined for a lag record, set `topic: null` rather
+  than writing the consumer group's name (or any other value) into the `topic` field
+- MUST include a `timestamp` field on every entry in `kafka.topics[]`, taken from that record's own source
+  timestamp — an untimestamped Kafka finding cannot be correlated by any downstream agent and is a data
+  integrity defect, not an optional field
 - MUST detect checkpoint health issues from log messages
-- MUST identify SLA breaches — batches running longer than threshold
+- MUST identify SLA breaches — batches running longer than `sla_breach_threshold_ms`, using an actual
+  measured batch/request duration value compared against the threshold. A generic retry/timeout log line
+  (e.g. "request timeout, retrying") is evidence for a `TIMEOUT` application error (handled by the Error &
+  Data Quality Agent) or a `KAFKA_LAG_*`/backlog finding (handled by this agent's own Kafka/backlog sections)
+  — it is NOT by itself an `SLA_BREACH` unless the record carries an explicit duration value that exceeds
+  `sla_breach_threshold_ms`. Do not create an `SLA_BREACH` entry from a message that contains no measured
+  duration
 - MUST detect missed trigger intervals in streaming pipelines
 - MUST detect processing backlogs building up over time
 - MUST group findings by pipeline or topic name
+- MUST ensure `pipelines_with_issues` never exceeds `total_pipelines_analysed` — since it is a count of
+  distinct pipeline/topic/consumer-group names, not a count of issues (see summary schema note below), verify
+  this arithmetically before writing output: `len(set(pipeline_name for every finding across kafka/checkpoints/
+  sla_breaches/backlogs)) <= total_pipelines_analysed`. If the computed distinct-pipeline count would exceed
+  `total_pipelines_analysed`, that means `total_pipelines_analysed` itself was undercounted during ingestion
+  scanning — recompute it as the count of distinct pipeline/topic/consumer-group names seen across the input,
+  never leave the two numbers contradicting each other
 - MUST write all findings to `apm_report.json`
 
 ### MUST NOT
@@ -166,3 +187,4 @@ pipeline_health_config:
 | 1.0.0 | 2026-07-02 | pipeline-health-monitor-agent | Initial release — Kafka lag, checkpoint health, SLA breach, backlog detection |
 | 1.1.0 | 2026-07-03 | pipeline-health-monitor-agent | Clarified pipelines_with_issues counts distinct pipelines, not total issue count, and can never exceed total_pipelines_analysed; added analysis_period population rule |
 | 1.2.0 | 2026-07-03 | pipeline-health-monitor-agent | Backlog description text must reflect the actual computed verdict (WARN/CRITICAL) instead of a hardcoded severity word |
+| 1.3.0 | 2026-07-03 | pipeline-health-monitor-agent | Fixed observed failure mode where pipelines_with_issues exceeded total_pipelines_analysed — added an explicit arithmetic self-check; fixed topic field being overwritten with the consumer_group value; fixed SLA_BREACH entries being fabricated from generic retry/timeout log lines with no measured duration; added requirement that every kafka.topics[] entry carry its own timestamp; analysis_period is now explicitly specified as an object, never an array |
