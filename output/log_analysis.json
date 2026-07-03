@@ -1,0 +1,1110 @@
+{
+  "summary": {
+    "total_errors": 19,
+    "total_warnings": 4,
+    "total_critical": 4,
+    "recurring_errors": 2,
+    "affected_services": [
+      "checkout-consumer",
+      "host-01",
+      "order-service",
+      "payment-service",
+      "user-service"
+    ],
+    "total_batches_analysed": 3,
+    "batches_with_dq_issues": 2,
+    "avg_rejection_rate_pct": 12.333333333333334,
+    "max_rejection_rate_pct": 17.0,
+    "total_quarantine_records": 0,
+    "total_dead_letter_records": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "top_errors": [
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "frequency": 5,
+      "first_seen": "2026-07-02T09:51:00Z",
+      "last_seen": "2026-07-02T09:53:30Z",
+      "is_recurring": true
+    },
+    {
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "frequency": 4,
+      "first_seen": "2026-07-02T08:05:00Z",
+      "last_seen": "2026-07-02T08:12:00Z",
+      "is_recurring": true
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "consume_event",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "frequency": 2,
+      "first_seen": "2026-07-02T09:29:50Z",
+      "last_seen": "2026-07-02T09:30:55Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "infrastructure metrics",
+      "service": "host-01",
+      "severity": "CRITICAL",
+      "frequency": 2,
+      "first_seen": "2026-07-02T09:30:00Z",
+      "last_seen": "2026-07-02T09:40:00Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "create_order",
+      "service": "order-service",
+      "severity": "ERROR",
+      "frequency": 2,
+      "first_seen": "2026-07-02T09:30:00Z",
+      "last_seen": "2026-07-02T09:31:00Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "process_payment",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "frequency": 2,
+      "first_seen": "2026-07-02T09:30:01Z",
+      "last_seen": "2026-07-02T09:31:02Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "NULL_POINTER",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "service": "order-service",
+      "severity": "ERROR",
+      "frequency": 2,
+      "first_seen": "2026-07-02T09:31:00Z",
+      "last_seen": "2026-07-02T09:32:00Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "frequency": 1,
+      "first_seen": "2026-07-02T09:25:00Z",
+      "last_seen": "2026-07-02T09:25:00Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "frequency": 1,
+      "first_seen": "2026-07-02T09:26:00Z",
+      "last_seen": "2026-07-02T09:26:00Z",
+      "is_recurring": false
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "first_seen": "2026-07-02T09:28:00Z",
+      "last_seen": "2026-07-02T09:28:00Z",
+      "is_recurring": false
+    }
+  ],
+  "rejection_rates": [
+    {
+      "batch_id": "batch_001",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 920,
+      "failed": 80,
+      "rejection_pct": 8.0,
+      "verdict": "OK",
+      "timestamp": "2026-07-02T09:00:00Z"
+    },
+    {
+      "batch_id": "batch_002",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 880,
+      "failed": 120,
+      "rejection_pct": 12.0,
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:10:00Z"
+    },
+    {
+      "batch_id": "batch_003",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 830,
+      "failed": 170,
+      "rejection_pct": 17.0,
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:20:00Z"
+    },
+    {
+      "batch_id": null,
+      "pipeline": "checkout-consumer",
+      "total": null,
+      "passed": null,
+      "failed": null,
+      "rejection_pct": null,
+      "verdict": "DQ_ALERT",
+      "timestamp": "2026-07-02T09:25:00Z"
+    },
+    {
+      "batch_id": null,
+      "pipeline": "checkout-consumer",
+      "total": null,
+      "passed": null,
+      "failed": null,
+      "rejection_pct": null,
+      "verdict": "DQ_ALERT",
+      "timestamp": "2026-07-02T09:26:00Z"
+    }
+  ],
+  "worst_columns": [
+    {
+      "column": "email",
+      "rule_type": "FORMAT_MISMATCH",
+      "rejection_count": 45
+    },
+    {
+      "column": "phone",
+      "rule_type": "NULL_VALUE",
+      "rejection_count": 30
+    }
+  ],
+  "dq_alerts": [
+    {
+      "alert": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "count": 1,
+      "issue_type": "DQ_ALERT"
+    },
+    {
+      "alert": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "count": 1,
+      "issue_type": "DQ_ALERT"
+    }
+  ],
+  "dq_trends": [
+    {
+      "batch": "batch_002",
+      "trend": "WORSENING",
+      "from": 8.0,
+      "to": 12.0
+    },
+    {
+      "batch": "batch_003",
+      "trend": "WORSENING",
+      "from": 12.0,
+      "to": 17.0
+    }
+  ],
+  "all_errors": [
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T08:05:00Z_payment-service_6466223703443955077",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T08:05:00Z",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "tags": [
+        "team:payments"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:05:00Z",
+        "level": "ERROR",
+        "service": "payment-service",
+        "message": "DB connection refused: connection to payments-db timed out",
+        "host": "host-01",
+        "environment": "prod",
+        "tags": [
+          "team:payments"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T08:07:00Z_payment-service_6466223703443955077",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T08:07:00Z",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "tags": [
+        "team:payments"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:07:00Z",
+        "level": "ERROR",
+        "service": "payment-service",
+        "message": "DB connection refused: connection to payments-db timed out",
+        "host": "host-01",
+        "environment": "prod",
+        "tags": [
+          "team:payments"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T08:10:00Z_payment-service_6466223703443955077",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T08:10:00Z",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "tags": [
+        "team:payments"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:10:00Z",
+        "level": "ERROR",
+        "service": "payment-service",
+        "message": "DB connection refused: connection to payments-db timed out",
+        "host": "host-01",
+        "environment": "prod",
+        "tags": [
+          "team:payments"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T08:12:00Z_payment-service_6466223703443955077",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T08:12:00Z",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "tags": [
+        "team:payments"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:12:00Z",
+        "level": "ERROR",
+        "service": "payment-service",
+        "message": "DB connection refused: connection to payments-db timed out",
+        "host": "host-01",
+        "environment": "prod",
+        "tags": [
+          "team:payments"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:25:00Z_checkout-consumer_1339844851061491960",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:25:00Z",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:25:00Z",
+        "level": "ERROR",
+        "service": "checkout-consumer",
+        "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:26:00Z_checkout-consumer_-6634756704277714557",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:26:00Z",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:26:00Z",
+        "level": "ERROR",
+        "service": "checkout-consumer",
+        "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:28:00Z_checkout-consumer_1808529492659883079",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:28:00Z",
+        "level": "CRITICAL",
+        "service": "checkout-consumer",
+        "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_kafka-consumer-lag-ecommerce-events_2026-07-02T09:28:00Z",
+      "source_type": "alert",
+      "severity": "CRITICAL",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "kafka-consumer-lag-ecommerce-events",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:28:00Z",
+        "service": "checkout-consumer",
+        "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
+        "priority": "P1"
+      }
+    },
+    {
+      "record_id": "trace_t002_s005",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:29:50Z",
+      "message": "consume_event",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s005",
+        "service": "checkout-consumer",
+        "operation": "consume_event",
+        "duration_ms": 3500,
+        "status": "error",
+        "timestamp": "2026-07-02T09:29:50Z"
+      }
+    },
+    {
+      "record_id": "infra_host-01_2026-07-02T09:30:00Z",
+      "source_type": "infrastructure",
+      "severity": "CRITICAL",
+      "service": "host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "infrastructure metrics",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-01",
+        "cpu_pct": 93,
+        "memory_pct": 89,
+        "disk_pct": 42,
+        "network_in": 850,
+        "network_out": 780,
+        "timestamp": "2026-07-02T09:30:00Z"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:30:00Z_payment-service_-2510123503580954325",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "Request timeout: upstream checkout-consumer not responding",
+      "tags": [
+        "team:payments"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "level": "ERROR",
+        "service": "payment-service",
+        "message": "Request timeout: upstream checkout-consumer not responding",
+        "host": "host-01",
+        "environment": "prod",
+        "tags": [
+          "team:payments"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_payment-service-error-rate_2026-07-02T09:30:00Z",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "Error rate exceeded 15% over 5 minute window",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "payment-service-error-rate",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:30:00Z",
+        "service": "payment-service",
+        "message": "Error rate exceeded 15% over 5 minute window",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "alert_checkout-consumer-cpu_2026-07-02T09:30:00Z",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "CPU usage exceeded 90% on host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "checkout-consumer-cpu",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:30:00Z",
+        "service": "payment-service",
+        "message": "CPU usage exceeded 90% on host-01",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "trace_t002_s003",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "create_order",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s003",
+        "service": "order-service",
+        "operation": "create_order",
+        "duration_ms": 4200,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:00Z"
+      }
+    },
+    {
+      "record_id": "trace_t002_s004",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:01Z",
+      "message": "process_payment",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s004",
+        "service": "payment-service",
+        "operation": "process_payment",
+        "duration_ms": 3900,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:01Z"
+      }
+    },
+    {
+      "record_id": "trace_t003_s008",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:55Z",
+      "message": "consume_event",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s008",
+        "service": "checkout-consumer",
+        "operation": "consume_event",
+        "duration_ms": 3300,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:55Z"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:31:00Z_order-service_-651603993497885835",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:31:00Z",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "tags": [
+        "team:orders"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:31:00Z",
+        "level": "ERROR",
+        "service": "order-service",
+        "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+        "host": "host-02",
+        "environment": "prod",
+        "tags": [
+          "team:orders"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_order-service-latency_2026-07-02T09:31:00Z",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:00Z",
+      "message": "p99 latency exceeded 1000ms",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "order-service-latency",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:31:00Z",
+        "service": "order-service",
+        "message": "p99 latency exceeded 1000ms",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "trace_t003_s006",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:00Z",
+      "message": "create_order",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s006",
+        "service": "order-service",
+        "operation": "create_order",
+        "duration_ms": 3800,
+        "status": "error",
+        "timestamp": "2026-07-02T09:31:00Z"
+      }
+    },
+    {
+      "record_id": "trace_t003_s007",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:02Z",
+      "message": "process_payment",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s007",
+        "service": "payment-service",
+        "operation": "process_payment",
+        "duration_ms": 3600,
+        "status": "error",
+        "timestamp": "2026-07-02T09:31:02Z"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:32:00Z_order-service_-651603993497885835",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:32:00Z",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "tags": [
+        "team:orders"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:32:00Z",
+        "level": "ERROR",
+        "service": "order-service",
+        "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+        "host": "host-02",
+        "environment": "prod",
+        "tags": [
+          "team:orders"
+        ]
+      }
+    },
+    {
+      "record_id": "infra_host-01_2026-07-02T09:40:00Z",
+      "source_type": "infrastructure",
+      "severity": "CRITICAL",
+      "service": "host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "infrastructure metrics",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-01",
+        "cpu_pct": 95,
+        "memory_pct": 91,
+        "disk_pct": 43,
+        "network_in": 910,
+        "network_out": 860,
+        "timestamp": "2026-07-02T09:40:00Z"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:40:00Z_checkout-consumer_651110931979797940",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "level": "CRITICAL",
+        "service": "checkout-consumer",
+        "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:50:00Z_user-service_7375699196932039090",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:50:00Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:51:00Z_user-service_-1291117620443576879",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:51:00Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "trace_t005_s012",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "message": "authenticate",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t005",
+        "span_id": "s012",
+        "service": "user-service",
+        "operation": "authenticate",
+        "duration_ms": 60,
+        "status": "error",
+        "timestamp": "2026-07-02T09:51:00Z"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:52:00Z_user-service_-1291117620443576879",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:52:00Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:52:30Z_user-service_-1291117620443576879",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:52:30Z",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:52:30Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:53:00Z_user-service_-1291117620443576879",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:53:00Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_user-service-auth-failures_2026-07-02T09:53:00Z",
+      "source_type": "alert",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "message": "Auth failure rate exceeded threshold, possible brute force",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "user-service-auth-failures",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:53:00Z",
+        "service": "user-service",
+        "message": "Auth failure rate exceeded threshold, possible brute force",
+        "priority": "P1"
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:53:30Z_user-service_-1291117620443576879",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:53:30Z",
+        "level": "ERROR",
+        "service": "user-service",
+        "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:54:00Z_user-service_3907897576606341717",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:54:00Z",
+        "level": "CRITICAL",
+        "service": "user-service",
+        "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:55:00Z_user-service_-3214952855934910219",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:55:00Z",
+      "message": "Credential leak detected: Authorization: Bearer abc123redacted",
+      "tags": [
+        "team:identity"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:55:00Z",
+        "level": "CRITICAL",
+        "service": "user-service",
+        "message": "Credential leak detected: Authorization: Bearer abc123redacted",
+        "host": "host-04",
+        "environment": "prod",
+        "tags": [
+          "team:identity"
+        ]
+      }
+    }
+  ],
+  "all_dq_issues": [
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:00:00Z_checkout-consumer_2713172205810708032",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "message": "DQ_METRICS batch_id=batch_001 pipeline=cdc-pipeline total=1000 passed=920 failed=80 rejection_rate_pct=8.0",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:00:00Z",
+        "level": "INFO",
+        "service": "checkout-consumer",
+        "message": "DQ_METRICS batch_id=batch_001 pipeline=cdc-pipeline total=1000 passed=920 failed=80 rejection_rate_pct=8.0",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:10:00Z_checkout-consumer_1527220031946604069",
+      "source_type": "log",
+      "severity": "WARN",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:10:00Z",
+      "message": "DQ_METRICS batch_id=batch_002 pipeline=cdc-pipeline total=1000 passed=880 failed=120 rejection_rate_pct=12.0",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:10:00Z",
+        "level": "WARN",
+        "service": "checkout-consumer",
+        "message": "DQ_METRICS batch_id=batch_002 pipeline=cdc-pipeline total=1000 passed=880 failed=120 rejection_rate_pct=12.0",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:20:00Z_checkout-consumer_531829809363504409",
+      "source_type": "log",
+      "severity": "WARN",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:20:00Z",
+      "message": "DQ_METRICS batch_id=batch_003 pipeline=cdc-pipeline total=1000 passed=830 failed=170 rejection_rate_pct=17.0",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:20:00Z",
+        "level": "WARN",
+        "service": "checkout-consumer",
+        "message": "DQ_METRICS batch_id=batch_003 pipeline=cdc-pipeline total=1000 passed=830 failed=170 rejection_rate_pct=17.0",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:25:00Z_checkout-consumer_1339844851061491960",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:25:00Z",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:25:00Z",
+        "level": "ERROR",
+        "service": "checkout-consumer",
+        "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    },
+    {
+      "record_id": "log_datadog_logs_export_20260702.json_2026-07-02T09:26:00Z_checkout-consumer_-6634756704277714557",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "prod",
+      "timestamp": "2026-07-02T09:26:00Z",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "tags": [
+        "team:data"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:26:00Z",
+        "level": "ERROR",
+        "service": "checkout-consumer",
+        "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+        "host": "host-03",
+        "environment": "prod",
+        "tags": [
+          "team:data"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,463 @@
+{
+  "summary": {
+    "total_anomalies": 18,
+    "high_confidence": 15,
+    "medium_confidence": 2,
+    "low_confidence": 1,
+    "correlated_anomalies": 9,
+    "worsening_trends": 1,
+    "improving_trends": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "anomalies": [
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3800,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3800ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "payment-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3600,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3600ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3300,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3300ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "user-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 60,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 60ms"
+    },
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 125000,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "Kafka lag 125000"
+    },
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 118000,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "Kafka lag 118000"
+    },
+    {
+      "anomaly_type": "THROUGHPUT_DROP",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "MEDIUM",
+      "description": "Kafka consumer lag critical for topic ecommerce-events, lag=125000"
+    },
+    {
+      "anomaly_type": "THROUGHPUT_DROP",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "MEDIUM",
+      "description": "Kafka consumer lag critical for topic ecommerce-events, lag=118000"
+    },
+    {
+      "anomaly_type": "SUSPICIOUS_ACTIVITY",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "LOW",
+      "description": "PII field detected in log message"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and KAFKA_LAG_SPIKE on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and KAFKA_LAG_SPIKE on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "user-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "SUSPICIOUS_ACTIVITY"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and SUSPICIOUS_ACTIVITY on user-service"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    }
+  ],
+  "trends": [
+    {
+      "anomaly_type": "WORSENING_TREND",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T10:00:01Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "MEDIUM",
+      "description": "Observed worsening trend in pipeline health across multiple sources"
+    }
+  ],
+  "all_anomalies": [
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3800,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3800ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "payment-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3600,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3600ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 3300,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 3300ms"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "user-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 60,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "p99 latency 60ms"
+    },
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 125000,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "Kafka lag 125000"
+    },
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 118000,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "description": "Kafka lag 118000"
+    },
+    {
+      "anomaly_type": "THROUGHPUT_DROP",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "MEDIUM",
+      "description": "Kafka consumer lag critical for topic ecommerce-events, lag=125000"
+    },
+    {
+      "anomaly_type": "THROUGHPUT_DROP",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "MEDIUM",
+      "description": "Kafka consumer lag critical for topic ecommerce-events, lag=118000"
+    },
+    {
+      "anomaly_type": "SUSPICIOUS_ACTIVITY",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "LOW",
+      "description": "PII field detected in log message"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and KAFKA_LAG_SPIKE on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and KAFKA_LAG_SPIKE on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "user-service",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE",
+        "SUSPICIOUS_ACTIVITY"
+      ],
+      "description": "Correlated anomalies LATENCY_SPIKE and SUSPICIOUS_ACTIVITY on user-service"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "value": 0,
+      "baseline": null,
+      "deviation_pct": null,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "THROUGHPUT_DROP"
+      ],
+      "description": "Correlated anomalies KAFKA_LAG_SPIKE and THROUGHPUT_DROP on checkout-consumer"
+    }
+  ]
+}

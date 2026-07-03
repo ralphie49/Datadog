@@ -1,0 +1,14 @@
+[
+  {"trace_id": "t001", "span_id": "s001", "service": "order-service", "operation": "create_order", "duration_ms": 180, "status": "ok", "timestamp": "2026-07-02T08:00:00Z"},
+  {"trace_id": "t001", "span_id": "s002", "service": "payment-service", "operation": "process_payment", "duration_ms": 210, "status": "ok", "timestamp": "2026-07-02T08:00:01Z"},
+  {"trace_id": "t002", "span_id": "s003", "service": "order-service", "operation": "create_order", "duration_ms": 4200, "status": "error", "timestamp": "2026-07-02T09:30:00Z"},
+  {"trace_id": "t002", "span_id": "s004", "service": "payment-service", "operation": "process_payment", "duration_ms": 3900, "status": "error", "timestamp": "2026-07-02T09:30:01Z"},
+  {"trace_id": "t002", "span_id": "s005", "service": "checkout-consumer", "operation": "consume_event", "duration_ms": 3500, "status": "error", "timestamp": "2026-07-02T09:29:50Z"},
+  {"trace_id": "t003", "span_id": "s006", "service": "order-service", "operation": "create_order", "duration_ms": 3800, "status": "error", "timestamp": "2026-07-02T09:31:00Z"},
+  {"trace_id": "t003", "span_id": "s007", "service": "payment-service", "operation": "process_payment", "duration_ms": 3600, "status": "error", "timestamp": "2026-07-02T09:31:02Z"},
+  {"trace_id": "t003", "span_id": "s008", "service": "checkout-consumer", "operation": "consume_event", "duration_ms": 3300, "status": "error", "timestamp": "2026-07-02T09:30:55Z"},
+  {"trace_id": "t004", "span_id": "s009", "service": "order-service", "operation": "create_order", "duration_ms": 195, "status": "ok", "timestamp": "2026-07-02T10:00:00Z"},
+  {"trace_id": "t004", "span_id": "s010", "service": "payment-service", "operation": "process_payment", "duration_ms": 220, "status": "ok", "timestamp": "2026-07-02T10:00:01Z"},
+  {"trace_id": "t005", "span_id": "s011", "service": "user-service", "operation": "get_user_profile", "duration_ms": 90, "status": "ok", "timestamp": "2026-07-02T09:50:00Z"},
+  {"trace_id": "t005", "span_id": "s012", "service": "user-service", "operation": "authenticate", "duration_ms": 60, "status": "error", "timestamp": "2026-07-02T09:51:00Z"}
+]

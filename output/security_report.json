@@ -1,0 +1,165 @@
+{
+  "summary": {
+    "total_security_issues": 8,
+    "critical_issues": 2,
+    "error_issues": 6,
+    "warn_issues": 0,
+    "pii_exposures": 1,
+    "credential_leaks": 1,
+    "auth_failures": 0,
+    "analysis_period": [
+      "2026-07-02T08:00:00Z",
+      "2026-07-02T10:00:00Z"
+    ]
+  },
+  "findings": [
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:30Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "PII_IN_LOGS",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "description": "PII field detected in log message",
+      "redacted": true,
+      "action": "Remove PII from log statements immediately"
+    },
+    {
+      "issue_type": "CREDENTIAL_LEAK",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:55:00Z",
+      "description": "Credential leak pattern detected in log message",
+      "redacted": true,
+      "action": "Remove credentials from logs and rotate exposed keys"
+    }
+  ],
+  "auth_failures": [],
+  "compliance": [],
+  "all_issues": [
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:30Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Unauthorised access attempt detected",
+      "redacted": true,
+      "action": "Investigate and block invalid access sources"
+    },
+    {
+      "issue_type": "PII_IN_LOGS",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "description": "PII field detected in log message",
+      "redacted": true,
+      "action": "Remove PII from log statements immediately"
+    },
+    {
+      "issue_type": "CREDENTIAL_LEAK",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:55:00Z",
+      "description": "Credential leak pattern detected in log message",
+      "redacted": true,
+      "action": "Remove credentials from logs and rotate exposed keys"
+    }
+  ]
+}

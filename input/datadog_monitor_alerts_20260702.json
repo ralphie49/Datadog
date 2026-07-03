@@ -1,0 +1,9 @@
+[
+  {"monitor_name": "kafka-consumer-lag-ecommerce-events", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:28:00Z", "service": "checkout-consumer", "message": "Consumer lag exceeded 100000 on topic ecommerce-events", "priority": "P1"},
+  {"monitor_name": "payment-service-error-rate", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:30:00Z", "service": "payment-service", "message": "Error rate exceeded 15% over 5 minute window", "priority": "P2"},
+  {"monitor_name": "order-service-latency", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:31:00Z", "service": "order-service", "message": "p99 latency exceeded 1000ms", "priority": "P2"},
+  {"monitor_name": "checkout-consumer-cpu", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:30:00Z", "service": "payment-service", "message": "CPU usage exceeded 90% on host-01", "priority": "P2"},
+  {"monitor_name": "user-service-auth-failures", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:53:00Z", "service": "user-service", "message": "Auth failure rate exceeded threshold, possible brute force", "priority": "P1"},
+  {"monitor_name": "checkout-consumer-dq-rejection-rate", "status": "TRIGGERED", "triggered_at": "2026-07-02T09:20:00Z", "service": "checkout-consumer", "message": "DQ rejection rate exceeded 15%", "priority": "P3"},
+  {"monitor_name": "payment-service-recovery", "status": "RESOLVED", "triggered_at": "2026-07-02T10:00:00Z", "service": "payment-service", "message": "Error rate returned to normal", "priority": "P4"}
+]

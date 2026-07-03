@@ -1,0 +1,12 @@
+[
+  {"host": "host-01", "cpu_pct": 45, "memory_pct": 50, "disk_pct": 40, "network_in": 200, "network_out": 180, "timestamp": "2026-07-02T08:00:00Z"},
+  {"host": "host-01", "cpu_pct": 93, "memory_pct": 89, "disk_pct": 42, "network_in": 850, "network_out": 780, "timestamp": "2026-07-02T09:30:00Z"},
+  {"host": "host-01", "cpu_pct": 95, "memory_pct": 91, "disk_pct": 43, "network_in": 910, "network_out": 860, "timestamp": "2026-07-02T09:40:00Z"},
+  {"host": "host-01", "cpu_pct": 60, "memory_pct": 58, "disk_pct": 41, "network_in": 300, "network_out": 250, "timestamp": "2026-07-02T10:00:00Z"},
+  {"host": "host-02", "cpu_pct": 40, "memory_pct": 45, "disk_pct": 35, "network_in": 150, "network_out": 130, "timestamp": "2026-07-02T08:00:00Z"},
+  {"host": "host-02", "cpu_pct": 72, "memory_pct": 68, "disk_pct": 36, "network_in": 400, "network_out": 380, "timestamp": "2026-07-02T09:40:00Z"},
+  {"host": "host-03", "cpu_pct": 50, "memory_pct": 55, "disk_pct": 60, "network_in": 300, "network_out": 280, "timestamp": "2026-07-02T08:00:00Z"},
+  {"host": "host-03", "cpu_pct": 88, "memory_pct": 82, "disk_pct": 61, "network_in": 700, "network_out": 650, "timestamp": "2026-07-02T09:28:00Z"},
+  {"host": "host-04", "cpu_pct": 35, "memory_pct": 40, "disk_pct": 30, "network_in": 100, "network_out": 90, "timestamp": "2026-07-02T08:00:00Z"},
+  {"host": "host-04", "cpu_pct": 42, "memory_pct": 44, "disk_pct": 31, "network_in": 220, "network_out": 200, "timestamp": "2026-07-02T09:50:00Z"}
+]

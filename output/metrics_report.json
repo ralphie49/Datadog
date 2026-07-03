@@ -1,0 +1,124 @@
+{
+  "summary": {
+    "total_services_analysed": 4,
+    "total_hosts_analysed": 4,
+    "services_with_issues": 3,
+    "hosts_with_issues": 1,
+    "critical_issues": 3,
+    "warn_issues": 0,
+    "hosts_down": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "latency": {
+    "by_service": [
+      {
+        "service": "order-service",
+        "avg_ms": 2093.8,
+        "p95_ms": 3800,
+        "p99_ms": 3800,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "payment-service",
+        "avg_ms": 1982.5,
+        "p95_ms": 3600,
+        "p99_ms": 3600,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "checkout-consumer",
+        "avg_ms": 3400.0,
+        "p95_ms": 3300,
+        "p99_ms": 3300,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "user-service",
+        "avg_ms": 75.0,
+        "p95_ms": 60,
+        "p99_ms": 60,
+        "verdict": "OK"
+      }
+    ]
+  },
+  "throughput": [
+    {
+      "service": "payment-service",
+      "baseline": 119.0,
+      "current": 115.0,
+      "drop_pct": 3.4,
+      "verdict": "OK"
+    }
+  ],
+  "hosts": [
+    {
+      "host": "host-03",
+      "cpu_pct": 88.0,
+      "memory_pct": 82.0,
+      "disk_pct": 61.0,
+      "network_mbps": 1350.0,
+      "issues": [
+        "HIGH_CPU",
+        "HIGH_MEMORY",
+        "NETWORK_SATURATION"
+      ],
+      "health_score": 70,
+      "verdict": "CRITICAL"
+    },
+    {
+      "host": "host-01",
+      "cpu_pct": 60.0,
+      "memory_pct": 58.0,
+      "disk_pct": 41.0,
+      "network_mbps": 550.0,
+      "issues": [],
+      "health_score": 100,
+      "verdict": "OK"
+    },
+    {
+      "host": "host-02",
+      "cpu_pct": 72.0,
+      "memory_pct": 68.0,
+      "disk_pct": 36.0,
+      "network_mbps": 780.0,
+      "issues": [],
+      "health_score": 100,
+      "verdict": "OK"
+    },
+    {
+      "host": "host-04",
+      "cpu_pct": 42.0,
+      "memory_pct": 44.0,
+      "disk_pct": 31.0,
+      "network_mbps": 420.0,
+      "issues": [],
+      "health_score": 100,
+      "verdict": "OK"
+    }
+  ],
+  "storage_issues": [],
+  "network": [],
+  "all_issues": [
+    {
+      "service": "order-service",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "description": "p99 3800ms"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "description": "p99 3600ms"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "description": "p99 3300ms"
+    }
+  ]
+}

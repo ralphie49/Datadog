@@ -1,0 +1,23 @@
+{
+  "summary": {
+    "total_recommendations": 1,
+    "p1_immediate": 1,
+    "p2_urgent": 0,
+    "p3_planned": 0,
+    "p4_advisory": 0
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "priority": "P1_IMMEDIATE",
+      "incident_id": "incident_026",
+      "title": "Investigate security findings and redact sensitive logging",
+      "description": "Authorization failures and credential exposure were detected in user-service logs.",
+      "action": "Rotate compromised tokens and remove PII/credentials from application logs.",
+      "affected_services": [
+        "user-service"
+      ],
+      "evidence": "security_report.json: security findings"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "total_incidents": 1,
+    "high_confidence": 1,
+    "medium_confidence": 0,
+    "low_confidence": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "incidents": [
+    {
+      "incident_id": "incident_026",
+      "root_cause_category": "SECURITY_INCIDENT",
+      "confidence": "HIGH",
+      "primary_service": "user-service",
+      "affected_services": [
+        "user-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:50:00Z",
+        "to": "2026-07-02T09:55:00Z"
+      },
+      "root_cause_finding": "PII field detected in log message",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "Unauthorised access attempt detected",
+        "Credential leak pattern detected in log message"
+      ],
+      "evidence_sources": [
+        "anomaly_report.json",
+        "log_analysis.json",
+        "security_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ],
+  "unresolved_findings": [],
+  "all_incidents": [
+    {
+      "incident_id": "incident_026",
+      "root_cause_category": "SECURITY_INCIDENT",
+      "confidence": "HIGH",
+      "primary_service": "user-service",
+      "affected_services": [
+        "user-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:50:00Z",
+        "to": "2026-07-02T09:55:00Z"
+      },
+      "root_cause_finding": "PII field detected in log message",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt detected",
+        "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "Unauthorised access attempt detected",
+        "Credential leak pattern detected in log message"
+      ],
+      "evidence_sources": [
+        "anomaly_report.json",
+        "log_analysis.json",
+        "security_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ]
+}
