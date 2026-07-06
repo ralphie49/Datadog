@@ -14,6 +14,36 @@ suitable for sharing with engineering leadership or an incident review.
 
 ---
 
+## 🚫 Anti-Hardcoding & Generalization Contract (read before writing any code)
+
+This spec will be used to generate an implementation that MUST run correctly against **inputs it has
+never seen** — different services, different metric values, different incidents, possibly zero
+incidents, possibly many more files than the sample. An implementation that only reproduces this
+project's bundled sample data is non-compliant, even if every self-test / acceptance-test check
+elsewhere in this file passes.
+
+**Rules:**
+- Any `Self-Test Cases`, `Mandatory Acceptance Test For Sample input/`, or "for the sample `input/`
+  folder, X MUST equal N" section in this file describes the expected *result* of running the general
+  algorithm on the bundled sample data. It is a regression check on that algorithm, not a specification
+  of literal values to write into the code. Treat every number, service name, incident ID, topic name,
+  or string in those sections as derived output to verify — never as a constant to embed.
+- Do NOT special-case any literal from the sample dataset (e.g. specific service names, specific lag/
+  latency/error-rate numbers, specific incident IDs) anywhere in the implementation's logic, thresholds,
+  or output-construction code. Every such value may only appear in the output because the algorithm
+  computed it from the actual input file contents at runtime — never because it was typed into the code.
+- Before this agent is considered done, run the implementation against a **second, structurally
+  different input dataset** (different service names, different metric values, a different or absent
+  incident, a different number of input files) and confirm the output changes accordingly and remains
+  internally consistent. If running the code against a different input still produces the sample
+  dataset's specific service names, IDs, or numeric findings, that is proof of hardcoding — reject the
+  implementation and rewrite it.
+- If a self-test/acceptance check in this file cannot be satisfied by an implementation that also passes
+  the different-dataset test above, treat that as a reason to flag the self-test for spec review — never
+  as a license to hardcode the literal expected value instead of implementing the described logic.
+
+---
+
 ## 🔧 DEVELOPER CONFIGURATION
 
 ```yaml
@@ -226,6 +256,45 @@ pressure — these are the specific failure modes observed in prior runs of this
 
 ---
 
+## Table Integrity (added after a real run produced misaligned columns)
+
+A prior implementation rendered an "Errors & Data Quality" table whose header was
+`Service | Issue | Severity | Detail` but whose data rows were shifted by one column — the `Service`
+cell showed a bare rank number (`1`, `2`, `3`...) instead of a service name, an extra unlabeled value
+appeared, and the actual message/detail text was missing entirely. This kind of shift happens when a
+row is built by positionally concatenating fields in a different order than the header declares,
+instead of explicitly mapping each named field to its named column.
+
+**MUST:** build every table row by explicitly assigning each source field to its declared header
+column by name (e.g. `row.service`, `row.issue_type`, `row.severity`, `row.detail`) — never by
+positional list/tuple unpacking that could silently shift if an extra or reordered field is present
+upstream.
+
+**MUST:** before writing the file, verify for every table: (a) every data row has exactly as many
+`|`-separated cells as the header row, and (b) the cell under a column named `Service`/`Host` contains
+a service or host name string, never a bare integer (a bare integer there is a near-certain sign the
+row is shifted). Fail this self-check and fix the row-building logic rather than shipping a
+misaligned table.
+
+## Severity-Aware Truncation (added after a real run silently dropped CRITICAL findings)
+
+A prior implementation's Security section showed only the first 5 `UNAUTHORISED_ACCESS` (ERROR)
+findings from the input's original order and cut off before reaching the `PII_IN_LOGS`,
+`CREDENTIAL_LEAK`, and `BRUTE_FORCE_ATTEMPT` findings (all CRITICAL) that appeared later in the source
+array — directly violating the existing "MUST NOT hide critical security findings" rule elsewhere in
+this file, because truncation was applied in raw input order rather than severity order.
+
+**MUST:** before applying `max_top_issues_per_section`, sort each domain's findings by severity
+descending (CRITICAL > ERROR > WARN > INFO), then by whatever secondary key the domain uses (e.g.
+deviation, blast radius) — truncate only after that sort. Every domain table capped by
+`max_top_issues_per_section` MUST include all CRITICAL findings for that domain before including any
+lower-severity ones, even if that means fewer ERROR/WARN rows are shown.
+
+Self-test: given 6 ERROR findings and 3 CRITICAL findings in `security_report.json` and
+`max_top_issues_per_section: 5`, the rendered Security table MUST include all 3 CRITICAL findings
+(dropping ERROR-level rows to make room), never all 5 slots filled by ERROR findings while CRITICAL
+findings are omitted.
+
 ## Output Specification
 
 | Artifact | Description |
@@ -269,3 +338,15 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
   the corresponding upstream JSON files contain findings.
 
 Reject the generated report if it contains encoding artifacts, placeholder text, or executive-summary counts that disagree with upstream JSON.
+
+
+---
+
+## 🚫 Final Hardcoding Check (applies on top of everything above)
+
+Before accepting this agent's implementation as done: pick any literal value in its output (a service
+name, an ID, a count, a percentage) and ask "would this exact value still appear if I fed the agent a
+different input file with different data?" If the answer is yes for a value that should depend on the
+input, the implementation is hardcoded and must be rewritten to derive that value from the actual input
+at runtime. This check applies to every JSON/Markdown artifact this agent produces, not just the fields
+called out elsewhere in this file.

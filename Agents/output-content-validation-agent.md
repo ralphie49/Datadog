@@ -14,6 +14,36 @@ incorrect cross-file counts.
 
 ---
 
+## 🚫 Anti-Hardcoding & Generalization Contract (read before writing any code)
+
+This spec will be used to generate an implementation that MUST run correctly against **inputs it has
+never seen** — different services, different metric values, different incidents, possibly zero
+incidents, possibly many more files than the sample. An implementation that only reproduces this
+project's bundled sample data is non-compliant, even if every self-test / acceptance-test check
+elsewhere in this file passes.
+
+**Rules:**
+- Any `Self-Test Cases`, `Mandatory Acceptance Test For Sample input/`, or "for the sample `input/`
+  folder, X MUST equal N" section in this file describes the expected *result* of running the general
+  algorithm on the bundled sample data. It is a regression check on that algorithm, not a specification
+  of literal values to write into the code. Treat every number, service name, incident ID, topic name,
+  or string in those sections as derived output to verify — never as a constant to embed.
+- Do NOT special-case any literal from the sample dataset (e.g. specific service names, specific lag/
+  latency/error-rate numbers, specific incident IDs) anywhere in the implementation's logic, thresholds,
+  or output-construction code. Every such value may only appear in the output because the algorithm
+  computed it from the actual input file contents at runtime — never because it was typed into the code.
+- Before this agent is considered done, run the implementation against a **second, structurally
+  different input dataset** (different service names, different metric values, a different or absent
+  incident, a different number of input files) and confirm the output changes accordingly and remains
+  internally consistent. If running the code against a different input still produces the sample
+  dataset's specific service names, IDs, or numeric findings, that is proof of hardcoding — reject the
+  implementation and rewrite it.
+- If a self-test/acceptance check in this file cannot be satisfied by an implementation that also passes
+  the different-dataset test above, treat that as a reason to flag the self-test for spec review — never
+  as a license to hardcode the literal expected value instead of implementing the described logic.
+
+---
+
 ## Developer Configuration
 
 ```yaml
@@ -137,7 +167,41 @@ These checks apply to every dataset, regardless of input folder name.
 
 ---
 
-## Mandatory Acceptance Test For Sample `input/`
+## Mandatory Semantic Checks (added after a real run reported "valid" while containing real bugs)
+
+A prior run of this pipeline produced `validation_manifest.json` with `status: "valid"` and every
+check `"passed"` while `anomaly_report.json` had a Kafka lag spike with `baseline: 0`,
+`correlated_anomalies: 0` despite an obvious dependency-connected multi-service correlation,
+`dependency_report.json` had an edge direction that contradicted its own declared breakpoint, and
+`datadog_analysis_report.md` had a misaligned table and silently dropped CRITICAL security findings.
+A validator that only checks file existence, JSON parsing, and field presence will miss all of these —
+it MUST also check field *values* against the other artifacts' own data. Add these checks:
+
+- **Baseline sanity:** for every anomaly in `anomaly_report.json.anomalies[]` whose `anomaly_type` ends
+  in `_SPIKE` or `_DROP`, if `normalised_data.json` contains 2+ chronological readings of the
+  underlying metric for that service before the anomaly's timestamp, `baseline` MUST NOT be `0`. Fail
+  this check and list the offending anomaly if it is.
+- **Correlation completeness:** if 2+ anomalies in `anomaly_report.json` occur within that agent's
+  correlation window and their services are identical or connected via any edge in
+  `dependency_report.json.dependency_graph` (any hop, either direction), `summary.correlated_anomalies`
+  MUST be >= 1. Fail this check if it is `0` while such a pair exists.
+- **Breakpoint/edge consistency:** for every entry in `dependency_report.json.breakpoints[]`, no edge in
+  `dependency_graph.edges` may have `to == breakpoint_service` where `from` is one of that breakpoint's
+  own `downstream_impact` services. Fail this check and name the contradictory edge if found.
+- **Markdown table integrity:** for every Markdown table in `datadog_analysis_report.md`, every data row
+  MUST have the same number of `|`-separated cells as its header row, and the cell under a
+  `Service`/`Host` column MUST NOT be a bare integer. Fail this check and quote the offending row if
+  violated.
+- **Markdown severity completeness:** every `CRITICAL`-severity finding present in `security_report.json`,
+  `metrics_report.json`, or `apm_report.json` MUST be findable in `datadog_analysis_report.md` (by
+  `issue_type` + `service` substring match). Fail this check and name the missing finding if a CRITICAL
+  finding from any domain report is absent from the rendered report.
+
+`validation_manifest.json.status` MUST be `"invalid"` if any of the above semantic checks fail — a
+manifest cannot say `"valid"` merely because every artifact exists and parses; it must also be
+internally consistent and free of the specific defect classes above.
+
+## Mandatory Acceptance Test For Sample `input/` (regression check only — see Anti-Hardcoding Contract above; these values MUST be produced by the general algorithm, never embedded as literals)
 
 When the dataset name is `input` and the source files match this project sample, all checks below MUST pass.
 If any fail, `validation_manifest.json.status` MUST be `invalid`.
@@ -173,3 +237,15 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
 
 Reject the generated implementation if the manifest can say `valid` while traces are misclassified, required
 schema fields are missing, security evidence is unredacted, or the generated runner is outside `output/<dataset>/`.
+
+
+---
+
+## 🚫 Final Hardcoding Check (applies on top of everything above)
+
+Before accepting this agent's implementation as done: pick any literal value in its output (a service
+name, an ID, a count, a percentage) and ask "would this exact value still appear if I fed the agent a
+different input file with different data?" If the answer is yes for a value that should depend on the
+input, the implementation is hardcoded and must be rewritten to derive that value from the actual input
+at runtime. This check applies to every JSON/Markdown artifact this agent produces, not just the fields
+called out elsewhere in this file.

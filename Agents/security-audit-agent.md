@@ -13,6 +13,36 @@ permission escalations, and compliance breaches across any system monitored in D
 
 ---
 
+## 🚫 Anti-Hardcoding & Generalization Contract (read before writing any code)
+
+This spec will be used to generate an implementation that MUST run correctly against **inputs it has
+never seen** — different services, different metric values, different incidents, possibly zero
+incidents, possibly many more files than the sample. An implementation that only reproduces this
+project's bundled sample data is non-compliant, even if every self-test / acceptance-test check
+elsewhere in this file passes.
+
+**Rules:**
+- Any `Self-Test Cases`, `Mandatory Acceptance Test For Sample input/`, or "for the sample `input/`
+  folder, X MUST equal N" section in this file describes the expected *result* of running the general
+  algorithm on the bundled sample data. It is a regression check on that algorithm, not a specification
+  of literal values to write into the code. Treat every number, service name, incident ID, topic name,
+  or string in those sections as derived output to verify — never as a constant to embed.
+- Do NOT special-case any literal from the sample dataset (e.g. specific service names, specific lag/
+  latency/error-rate numbers, specific incident IDs) anywhere in the implementation's logic, thresholds,
+  or output-construction code. Every such value may only appear in the output because the algorithm
+  computed it from the actual input file contents at runtime — never because it was typed into the code.
+- Before this agent is considered done, run the implementation against a **second, structurally
+  different input dataset** (different service names, different metric values, a different or absent
+  incident, a different number of input files) and confirm the output changes accordingly and remains
+  internally consistent. If running the code against a different input still produces the sample
+  dataset's specific service names, IDs, or numeric findings, that is proof of hardcoding — reject the
+  implementation and rewrite it.
+- If a self-test/acceptance check in this file cannot be satisfied by an implementation that also passes
+  the different-dataset test above, treat that as a reason to flag the self-test for spec review — never
+  as a license to hardcode the literal expected value instead of implementing the described logic.
+
+---
+
 ## 🔧 DEVELOPER CONFIGURATION
 
 ```yaml
@@ -199,7 +229,7 @@ for record in log_and_alert_records:
 The two passes still both run (a value-only match with no field-name label must still be caught), but the
 per-record flag ensures at most one `PII_IN_LOGS` finding is emitted per record even when both passes fire.
 
-## Self-Test Cases (run against this project's own sample data before considering this agent done)
+## Self-Test Cases (regression check only — see Anti-Hardcoding Contract above; verify via the algorithm, never hardcode these literal values)
 
 Given the single log line "PII field 'email' detected in log message: user record
 email=redacted@example.com" (which matches both the `email` field-name pass and the email regex pass):
@@ -256,3 +286,15 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
   were scanned.
 
 Reject the generated output if any unredacted secret-like or PII-like value appears in the report.
+
+
+---
+
+## 🚫 Final Hardcoding Check (applies on top of everything above)
+
+Before accepting this agent's implementation as done: pick any literal value in its output (a service
+name, an ID, a count, a percentage) and ask "would this exact value still appear if I fed the agent a
+different input file with different data?" If the answer is yes for a value that should depend on the
+input, the implementation is hardcoded and must be rewritten to derive that value from the actual input
+at runtime. This check applies to every JSON/Markdown artifact this agent produces, not just the fields
+called out elsewhere in this file.

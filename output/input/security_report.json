@@ -1,84 +1,210 @@
 {
   "summary": {
-    "total_security_issues": 3,
-    "critical_issues": 2,
-    "error_issues": 1,
-    "warn_issues": 0,
+    "total_security_issues": 10,
+    "critical_issues": 3,
+    "error_issues": 6,
+    "warn_issues": 1,
     "pii_exposures": 1,
     "credential_leaks": 1,
+    "auth_failures": 1,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:01Z"
+      "to": "2026-07-02T10:00:00Z"
     }
   },
   "findings": [
     {
-      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
       "severity": "ERROR",
       "service": "user-service",
       "timestamp": "2026-07-02T09:52:00Z",
-      "description": "Repeated unauthorized access attempts suggest brute-force activity",
+      "description": "Unauthorised access observed",
       "redacted": true,
-      "action": "Review authentication controls and rate-limit exposure"
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:30Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
     },
     {
       "issue_type": "PII_IN_LOGS",
       "severity": "CRITICAL",
       "service": "user-service",
       "timestamp": "2026-07-02T09:54:00Z",
-      "description": "PII detected in log message and redacted before reporting",
+      "description": "PII field detected in log message",
       "redacted": true,
-      "action": "Redact and review log pipeline handling"
+      "action": "Remove PII from log statements immediately"
     },
     {
       "issue_type": "CREDENTIAL_LEAK",
       "severity": "CRITICAL",
       "service": "user-service",
       "timestamp": "2026-07-02T09:55:00Z",
-      "description": "Credential-like content detected and redacted",
+      "description": "Credential material detected in log message",
       "redacted": true,
-      "action": "Remove secrets from logs and rotate any exposed credentials"
+      "action": "Remove secrets from logs and rotate exposed credentials"
+    },
+    {
+      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Repeated unauthorised access attempts exceeded threshold",
+      "redacted": true,
+      "action": "Block the source and review authentication controls"
+    },
+    {
+      "issue_type": "SUSPICIOUS_ACTIVITY",
+      "severity": "WARN",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "External monitor user-service-auth-failures flagged possible brute force",
+      "redacted": true,
+      "action": "Review the monitor and investigate the underlying login activity"
     }
   ],
   "auth_failures": [
     {
-      "issue_type": "BRUTE_FORCE_ATTEMPT",
-      "severity": "ERROR",
       "service": "user-service",
-      "timestamp": "2026-07-02T09:52:00Z",
-      "description": "Repeated unauthorized access attempts suggest brute-force activity",
-      "redacted": true,
-      "action": "Review authentication controls and rate-limit exposure"
+      "window_start": "2026-07-02T09:50:00Z",
+      "window_end": "2026-07-02T09:53:30Z",
+      "count": 6,
+      "grouping_key": "service",
+      "description": "Repeated auth failures detected"
     }
   ],
   "compliance": [],
   "all_issues": [
     {
-      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
       "severity": "ERROR",
       "service": "user-service",
       "timestamp": "2026-07-02T09:52:00Z",
-      "description": "Repeated unauthorized access attempts suggest brute-force activity",
+      "description": "Unauthorised access observed",
       "redacted": true,
-      "action": "Review authentication controls and rate-limit exposure"
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:30Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Unauthorised access observed",
+      "redacted": true,
+      "action": "Investigate the access attempt and block the source"
     },
     {
       "issue_type": "PII_IN_LOGS",
       "severity": "CRITICAL",
       "service": "user-service",
       "timestamp": "2026-07-02T09:54:00Z",
-      "description": "PII detected in log message and redacted before reporting",
+      "description": "PII field detected in log message",
       "redacted": true,
-      "action": "Redact and review log pipeline handling"
+      "action": "Remove PII from log statements immediately"
     },
     {
       "issue_type": "CREDENTIAL_LEAK",
       "severity": "CRITICAL",
       "service": "user-service",
       "timestamp": "2026-07-02T09:55:00Z",
-      "description": "Credential-like content detected and redacted",
+      "description": "Credential material detected in log message",
       "redacted": true,
-      "action": "Remove secrets from logs and rotate any exposed credentials"
+      "action": "Remove secrets from logs and rotate exposed credentials"
+    },
+    {
+      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30Z",
+      "description": "Repeated unauthorised access attempts exceeded threshold",
+      "redacted": true,
+      "action": "Block the source and review authentication controls"
+    },
+    {
+      "issue_type": "SUSPICIOUS_ACTIVITY",
+      "severity": "WARN",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "description": "External monitor user-service-auth-failures flagged possible brute force",
+      "redacted": true,
+      "action": "Review the monitor and investigate the underlying login activity"
     }
   ]
 }

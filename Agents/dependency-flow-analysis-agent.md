@@ -16,6 +16,36 @@ instead of relying purely on time-based correlation.
 
 ---
 
+## 🚫 Anti-Hardcoding & Generalization Contract (read before writing any code)
+
+This spec will be used to generate an implementation that MUST run correctly against **inputs it has
+never seen** — different services, different metric values, different incidents, possibly zero
+incidents, possibly many more files than the sample. An implementation that only reproduces this
+project's bundled sample data is non-compliant, even if every self-test / acceptance-test check
+elsewhere in this file passes.
+
+**Rules:**
+- Any `Self-Test Cases`, `Mandatory Acceptance Test For Sample input/`, or "for the sample `input/`
+  folder, X MUST equal N" section in this file describes the expected *result* of running the general
+  algorithm on the bundled sample data. It is a regression check on that algorithm, not a specification
+  of literal values to write into the code. Treat every number, service name, incident ID, topic name,
+  or string in those sections as derived output to verify — never as a constant to embed.
+- Do NOT special-case any literal from the sample dataset (e.g. specific service names, specific lag/
+  latency/error-rate numbers, specific incident IDs) anywhere in the implementation's logic, thresholds,
+  or output-construction code. Every such value may only appear in the output because the algorithm
+  computed it from the actual input file contents at runtime — never because it was typed into the code.
+- Before this agent is considered done, run the implementation against a **second, structurally
+  different input dataset** (different service names, different metric values, a different or absent
+  incident, a different number of input files) and confirm the output changes accordingly and remains
+  internally consistent. If running the code against a different input still produces the sample
+  dataset's specific service names, IDs, or numeric findings, that is proof of hardcoding — reject the
+  implementation and rewrite it.
+- If a self-test/acceptance check in this file cannot be satisfied by an implementation that also passes
+  the different-dataset test above, treat that as a reason to flag the self-test for spec review — never
+  as a license to hardcode the literal expected value instead of implementing the described logic.
+
+---
+
 ## 🔧 DEVELOPER CONFIGURATION
 
 ```yaml
@@ -211,6 +241,32 @@ dependency_flow_config:
 - If `anomaly_report.json` contains a multi-service incident and the dependency graph has at least one edge between those services, `dependency_report.json.summary.breakpoints_identified` must be at least 1.
 - A breakpoint must be emitted only when it has non-empty `downstream_impact`; otherwise the agent should record the finding in the source report instead of fabricating a breakpoint.
 
+## Edge Direction Must Be Consistent With Declared Breakpoints (added after a real run produced a contradiction)
+
+A prior implementation declared `checkout-consumer` as the breakpoint (the most upstream, originating
+node) while simultaneously writing an edge `order-service → checkout-consumer` — i.e. the graph said
+checkout-consumer was downstream of the very service it was declared to be upstream of. This is a
+direct self-contradiction: a node cannot be both the origin of a cascading failure and the destination
+of an edge from one of its own declared downstream services within the same incident.
+
+**MUST:** before writing output, for every entry in `breakpoints[]`, verify that no edge in
+`dependency_graph.edges` has `to == breakpoint_service` where `from` is one of that breakpoint's own
+`downstream_impact` services, within the same incident window. Direction must follow the same rule used
+to build the graph (true `parent_span_id` linkage if available, else earliest-timestamped span in the
+trace = parent/`from`, per the Phase 1 fallback) — the edge direction and the breakpoint conclusion are
+two views of the same underlying parent/child relationships and must never disagree.
+
+**If a contradiction is found:** the parent/child direction was computed backwards for at least one
+span pair. Re-derive edge direction from actual span timestamps/parent_span_id rather than adjusting
+the breakpoint identification to match an already-wrong graph — the graph is the source of truth for
+direction, so fix the graph construction, not the breakpoint logic, when they disagree.
+
+Self-test: given a trace where `checkout-consumer`'s span is timestamped before `order-service`'s and
+`payment-service`'s spans in the same `trace_id`, and `checkout-consumer` is declared the breakpoint
+with `downstream_impact: [order-service, payment-service]`, the edges MUST read
+`checkout-consumer → order-service` / `checkout-consumer → payment-service` (or equivalent chain), never
+the reverse.
+
 ## Output Specification
 
 | Artifact | Description |
@@ -258,3 +314,15 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
 Reject the generated output if the graph contains a chain A -> B -> C, the breakpoint is A, and only B is listed when C is also affected in the same incident window.
 Also reject it if `dependency_report.json` has `service_graph` instead of `dependency_graph`, or
 `breakpoints[].service` instead of `breakpoints[].breakpoint_service`.
+
+
+---
+
+## 🚫 Final Hardcoding Check (applies on top of everything above)
+
+Before accepting this agent's implementation as done: pick any literal value in its output (a service
+name, an ID, a count, a percentage) and ask "would this exact value still appear if I fed the agent a
+different input file with different data?" If the answer is yes for a value that should depend on the
+input, the implementation is hardcoded and must be rewritten to derive that value from the actual input
+at runtime. This check applies to every JSON/Markdown artifact this agent produces, not just the fields
+called out elsewhere in this file.

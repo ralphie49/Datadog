@@ -11,27 +11,27 @@
       "rank": 1,
       "priority": "P1_IMMEDIATE",
       "incident_id": "incident_001",
-      "title": "Scale the checkout consumer for the ecommerce-events topic",
-      "description": "Consumer lag reached 125000 and is creating downstream payment and order-service pressure.",
-      "action": "Increase consumer parallelism and validate partitioning for the ecommerce-events topic.",
+      "title": "Scale the checkout-consumer pipeline to relieve Kafka lag",
+      "description": "Kafka consumer lag reached 125000 and created downstream latency and error spikes.",
+      "action": "Increase consumer concurrency and verify partitions for the ecommerce-events topic.",
       "affected_services": [
         "checkout-consumer",
         "payment-service",
         "order-service"
       ],
-      "evidence": "apm_report.json: KAFKA_LAG_CRITICAL; dependency_report.json: breakpoint checkout-consumer"
+      "evidence": "apm_report.json: KAFKA_LAG_CRITICAL; dependency_report.json: breakpoint=checkout-consumer"
     },
     {
       "rank": 2,
       "priority": "P2_URGENT",
       "incident_id": "incident_002",
-      "title": "Redact and rate-limit authentication logs for user-service",
-      "description": "Repeated unauthorized access patterns and credential-like content require immediate containment.",
-      "action": "Apply redaction and tighten authentication monitoring around user-service.",
+      "title": "Redact PII and credential values in user-service logging",
+      "description": "PII and credential values were exposed in logs during repeated access attempts.",
+      "action": "Redact PII fields and credential strings before emitting logs, then rotate any exposed credentials.",
       "affected_services": [
         "user-service"
       ],
-      "evidence": "security_report.json: PII_IN_LOGS and BRUTE_FORCE_ATTEMPT evidence"
+      "evidence": "security_report.json: PII_IN_LOGS, CREDENTIAL_LEAK, BRUTE_FORCE_ATTEMPT"
     }
   ]
 }

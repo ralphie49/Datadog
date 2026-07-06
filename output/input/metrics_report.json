@@ -3,9 +3,9 @@
     "total_services_analysed": 4,
     "total_hosts_analysed": 4,
     "services_with_issues": 4,
-    "hosts_with_issues": 2,
-    "critical_issues": 8,
-    "warn_issues": 0,
+    "hosts_with_issues": 1,
+    "critical_issues": 4,
+    "warn_issues": 1,
     "hosts_down": 0,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
@@ -16,67 +16,67 @@
     "slowest_traces": [
       {
         "service": "order-service",
-        "operation": "create_order",
-        "duration_ms": 4200,
         "timestamp": "2026-07-02T09:30:00Z",
-        "trace_id": "t002"
+        "duration_ms": 4200.0,
+        "trace_id": "t002",
+        "verdict": "CRITICAL"
       },
       {
         "service": "payment-service",
-        "operation": "process_payment",
-        "duration_ms": 3900,
         "timestamp": "2026-07-02T09:30:01Z",
-        "trace_id": "t002"
-      },
-      {
-        "service": "order-service",
-        "operation": "create_order",
-        "duration_ms": 3800,
-        "timestamp": "2026-07-02T09:31:00Z",
-        "trace_id": "t003"
-      },
-      {
-        "service": "payment-service",
-        "operation": "process_payment",
-        "duration_ms": 3600,
-        "timestamp": "2026-07-02T09:31:02Z",
-        "trace_id": "t003"
-      },
-      {
-        "service": "checkout-consumer",
-        "operation": "consume_event",
-        "duration_ms": 3500,
-        "timestamp": "2026-07-02T09:29:50Z",
-        "trace_id": "t002"
-      }
-    ],
-    "by_service": [
-      {
-        "service": "checkout-consumer",
-        "avg_ms": 3400.0,
-        "p95_ms": 3300,
-        "p99_ms": 3300,
+        "duration_ms": 3900.0,
+        "trace_id": "t002",
         "verdict": "CRITICAL"
       },
       {
         "service": "order-service",
-        "avg_ms": 2093.8,
-        "p95_ms": 3800,
-        "p99_ms": 3800,
+        "timestamp": "2026-07-02T09:31:00Z",
+        "duration_ms": 3800.0,
+        "trace_id": "t003",
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "payment-service",
+        "timestamp": "2026-07-02T09:31:02Z",
+        "duration_ms": 3600.0,
+        "trace_id": "t003",
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "checkout-consumer",
+        "timestamp": "2026-07-02T09:29:50Z",
+        "duration_ms": 3500.0,
+        "trace_id": "t002",
+        "verdict": "CRITICAL"
+      }
+    ],
+    "by_service": [
+      {
+        "service": "order-service",
+        "avg_ms": 2093.75,
+        "p95_ms": 4200.0,
+        "p99_ms": 4200.0,
         "verdict": "CRITICAL"
       },
       {
         "service": "payment-service",
         "avg_ms": 1982.5,
-        "p95_ms": 3600,
-        "p99_ms": 3600,
+        "p95_ms": 3900.0,
+        "p99_ms": 3900.0,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "checkout-consumer",
+        "avg_ms": 3400.0,
+        "p95_ms": 3500.0,
+        "p99_ms": 3500.0,
         "verdict": "CRITICAL"
       },
       {
         "service": "user-service",
         "avg_ms": 75.0,
-        "p95_ms": 60,
-        "p99_ms": 60,
+        "p95_ms": 90.0,
+        "p99_ms": 90.0,
         "verdict": "OK"
       }
     ]
@@ -84,54 +84,53 @@
   "throughput": [
     {
       "service": "payment-service",
-      "current_rps": 115.0,
-      "average_rps": 85.6
+      "baseline_rps": 119.0,
+      "current_rps": 63.33,
+      "drop_pct": 46.78,
+      "issue_type": "THROUGHPUT_DROP",
+      "severity": "WARN"
     }
   ],
   "hosts": [
     {
       "host": "host-01",
-      "cpu_pct": 95,
-      "memory_pct": 91,
-      "disk_pct": 43,
-      "network_mbps": 860,
-      "health_score": 55,
-      "verdict": "CRITICAL",
-      "issues": [
-        "HIGH_CPU",
-        "HIGH_MEMORY",
-        "NETWORK_SATURATION"
-      ]
-    },
-    {
-      "host": "host-03",
-      "cpu_pct": 88,
-      "memory_pct": 82,
-      "disk_pct": 61,
-      "network_mbps": 650,
-      "health_score": 70,
-      "verdict": "CRITICAL",
-      "issues": [
-        "HIGH_DISK",
-        "NETWORK_SATURATION"
-      ]
-    },
-    {
-      "host": "host-02",
-      "cpu_pct": 72,
-      "memory_pct": 68,
-      "disk_pct": 36,
-      "network_mbps": 380,
+      "cpu_pct": 60.0,
+      "memory_pct": 58.0,
+      "disk_pct": 41.0,
+      "network_mbps": 250.0,
       "health_score": 100,
       "verdict": "OK",
       "issues": []
     },
     {
+      "host": "host-02",
+      "cpu_pct": 72.0,
+      "memory_pct": 68.0,
+      "disk_pct": 36.0,
+      "network_mbps": 380.0,
+      "health_score": 100,
+      "verdict": "OK",
+      "issues": []
+    },
+    {
+      "host": "host-03",
+      "cpu_pct": 88.0,
+      "memory_pct": 82.0,
+      "disk_pct": 61.0,
+      "network_mbps": 650.0,
+      "health_score": 70,
+      "verdict": "CRITICAL",
+      "issues": [
+        "HIGH_CPU",
+        "HIGH_MEMORY"
+      ]
+    },
+    {
       "host": "host-04",
-      "cpu_pct": 42,
-      "memory_pct": 44,
-      "disk_pct": 31,
-      "network_mbps": 200,
+      "cpu_pct": 42.0,
+      "memory_pct": 44.0,
+      "disk_pct": 31.0,
+      "network_mbps": 200.0,
       "health_score": 100,
       "verdict": "OK",
       "issues": []
@@ -141,58 +140,39 @@
   "network": [],
   "all_issues": [
     {
-      "service": "checkout-consumer",
-      "issue_type": "LATENCY_SPIKE",
-      "verdict": "CRITICAL",
-      "description": "Latency exceeded baseline for checkout-consumer"
-    },
-    {
-      "service": "host-01",
-      "issue_type": "HIGH_CPU",
-      "verdict": "CRITICAL",
-      "description": "Host host-01 breached HIGH_CPU"
-    },
-    {
-      "service": "host-01",
-      "issue_type": "HIGH_MEMORY",
-      "verdict": "CRITICAL",
-      "description": "Host host-01 breached HIGH_MEMORY"
-    },
-    {
-      "service": "host-01",
-      "issue_type": "NETWORK_SATURATION",
-      "verdict": "CRITICAL",
-      "description": "Host host-01 breached NETWORK_SATURATION"
-    },
-    {
-      "service": "host-03",
-      "issue_type": "HIGH_DISK",
-      "verdict": "CRITICAL",
-      "description": "Host host-03 breached HIGH_DISK"
-    },
-    {
-      "service": "host-03",
-      "issue_type": "NETWORK_SATURATION",
-      "verdict": "CRITICAL",
-      "description": "Host host-03 breached NETWORK_SATURATION"
-    },
-    {
+      "domain": "latency",
       "service": "order-service",
-      "issue_type": "LATENCY_SPIKE",
-      "verdict": "CRITICAL",
-      "description": "Latency exceeded baseline for order-service"
+      "severity": "CRITICAL",
+      "issue_type": "HIGH_LATENCY",
+      "detail": "p99 latency 4200.0ms"
     },
     {
+      "domain": "latency",
       "service": "payment-service",
-      "issue_type": "LATENCY_SPIKE",
-      "verdict": "CRITICAL",
-      "description": "Latency exceeded baseline for payment-service"
+      "severity": "CRITICAL",
+      "issue_type": "HIGH_LATENCY",
+      "detail": "p99 latency 3900.0ms"
     },
     {
-      "service": "user-service",
-      "issue_type": "LATENCY_SPIKE",
-      "verdict": "OK",
-      "description": "Latency exceeded baseline for user-service"
+      "domain": "latency",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "issue_type": "HIGH_LATENCY",
+      "detail": "p99 latency 3500.0ms"
+    },
+    {
+      "domain": "throughput",
+      "service": "payment-service",
+      "severity": "WARN",
+      "issue_type": "THROUGHPUT_DROP",
+      "detail": "Throughput drop 46.78%"
+    },
+    {
+      "domain": "infra",
+      "host": "host-03",
+      "severity": "CRITICAL",
+      "issue_type": "HIGH_CPU;HIGH_MEMORY",
+      "detail": "88.0% CPU / 82.0% memory"
     }
   ]
 }

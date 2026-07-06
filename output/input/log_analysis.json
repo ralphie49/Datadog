@@ -11,20 +11,20 @@
       "user-service"
     ],
     "total_batches_analysed": 3,
-    "batches_with_dq_issues": 3,
-    "avg_rejection_rate_pct": 12.3,
+    "batches_with_dq_issues": 2,
+    "avg_rejection_rate_pct": 12.33,
     "max_rejection_rate_pct": 17.0,
     "total_quarantine_records": 0,
     "total_dead_letter_records": 0,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:01Z"
+      "to": "2026-07-02T10:00:00Z"
     }
   },
   "top_errors": [
     {
       "rank": 1,
-      "error_type": "SECURITY_EVENT",
+      "error_type": "AUTHENTICATION_FAILURE",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
       "service": "user-service",
       "severity": "ERROR",
@@ -46,7 +46,7 @@
     },
     {
       "rank": 3,
-      "error_type": "PIPELINE_ISSUE",
+      "error_type": "NULL_POINTER",
       "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
       "service": "order-service",
       "severity": "ERROR",
@@ -57,7 +57,7 @@
     },
     {
       "rank": 4,
-      "error_type": "PIPELINE_ISSUE",
+      "error_type": "UNKNOWN",
       "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
       "service": "checkout-consumer",
       "severity": "ERROR",
@@ -68,7 +68,7 @@
     },
     {
       "rank": 5,
-      "error_type": "PIPELINE_ISSUE",
+      "error_type": "UNKNOWN",
       "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
       "service": "checkout-consumer",
       "severity": "ERROR",
@@ -76,6 +76,61 @@
       "is_recurring": false,
       "first_seen": "2026-07-02T09:26:00Z",
       "last_seen": "2026-07-02T09:26:00Z"
+    },
+    {
+      "rank": 6,
+      "error_type": "UNKNOWN",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:40:00Z",
+      "last_seen": "2026-07-02T09:40:00Z"
+    },
+    {
+      "rank": 7,
+      "error_type": "UNKNOWN",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:28:00Z",
+      "last_seen": "2026-07-02T09:28:00Z"
+    },
+    {
+      "rank": 8,
+      "error_type": "CONNECTION_FAILURE",
+      "message": "Request timeout: upstream checkout-consumer not responding",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:30:00Z",
+      "last_seen": "2026-07-02T09:30:00Z"
+    },
+    {
+      "rank": 9,
+      "error_type": "UNKNOWN",
+      "message": "Credential leak detected: Authorization: Bearer abc123redacted",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:55:00Z",
+      "last_seen": "2026-07-02T09:55:00Z"
+    },
+    {
+      "rank": 10,
+      "error_type": "UNKNOWN",
+      "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:54:00Z",
+      "last_seen": "2026-07-02T09:54:00Z"
     }
   ],
   "rejection_rates": [
@@ -86,7 +141,7 @@
       "passed": 920,
       "failed": 80,
       "rejection_pct": 8.0,
-      "verdict": "WARN"
+      "verdict": "OK"
     },
     {
       "batch_id": "batch_002",
@@ -104,7 +159,7 @@
       "passed": 830,
       "failed": 170,
       "rejection_pct": 17.0,
-      "verdict": "CRITICAL"
+      "verdict": "WARN"
     }
   ],
   "worst_columns": [
@@ -121,12 +176,14 @@
   ],
   "dq_alerts": [
     {
-      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
-      "count": 1
+      "alert_message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "count": 1,
+      "severity": "WARN"
     },
     {
-      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
-      "count": 1
+      "alert_message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "count": 1,
+      "severity": "WARN"
     }
   ],
   "dq_trends": [],
@@ -164,21 +221,21 @@
       "service": "checkout-consumer",
       "severity": "ERROR",
       "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     },
     {
       "timestamp": "2026-07-02T09:26:00Z",
       "service": "checkout-consumer",
       "severity": "ERROR",
       "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     },
     {
       "timestamp": "2026-07-02T09:28:00Z",
       "service": "checkout-consumer",
       "severity": "CRITICAL",
       "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     },
     {
       "timestamp": "2026-07-02T09:30:00Z",
@@ -192,106 +249,91 @@
       "service": "order-service",
       "severity": "ERROR",
       "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "NULL_POINTER"
     },
     {
       "timestamp": "2026-07-02T09:32:00Z",
       "service": "order-service",
       "severity": "ERROR",
       "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "NULL_POINTER"
     },
     {
       "timestamp": "2026-07-02T09:40:00Z",
       "service": "checkout-consumer",
       "severity": "CRITICAL",
       "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     },
     {
       "timestamp": "2026-07-02T09:50:00Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:51:00Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:52:00Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:52:30Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:53:00Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:53:30Z",
       "service": "user-service",
       "severity": "ERROR",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "SECURITY_EVENT"
+      "error_type": "AUTHENTICATION_FAILURE"
     },
     {
       "timestamp": "2026-07-02T09:54:00Z",
       "service": "user-service",
       "severity": "CRITICAL",
       "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     },
     {
       "timestamp": "2026-07-02T09:55:00Z",
       "service": "user-service",
       "severity": "CRITICAL",
       "message": "Credential leak detected: Authorization: Bearer abc123redacted",
-      "error_type": "PIPELINE_ISSUE"
+      "error_type": "UNKNOWN"
     }
   ],
   "all_dq_issues": [
     {
-      "batch_id": "batch_001",
-      "pipeline": "cdc-pipeline",
-      "total": 1000,
-      "passed": 920,
-      "failed": 80,
-      "rejection_pct": 8.0,
-      "verdict": "WARN"
-    },
-    {
+      "type": "HIGH_REJECTION_RATE",
       "batch_id": "batch_002",
-      "pipeline": "cdc-pipeline",
-      "total": 1000,
-      "passed": 880,
-      "failed": 120,
-      "rejection_pct": 12.0,
-      "verdict": "WARN"
+      "severity": "WARN",
+      "detail": "Rejection rate 12.0%"
     },
     {
+      "type": "HIGH_REJECTION_RATE",
       "batch_id": "batch_003",
-      "pipeline": "cdc-pipeline",
-      "total": 1000,
-      "passed": 830,
-      "failed": 170,
-      "rejection_pct": 17.0,
-      "verdict": "CRITICAL"
+      "severity": "WARN",
+      "detail": "Rejection rate 17.0%"
     }
   ]
 }

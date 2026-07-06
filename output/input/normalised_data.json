@@ -3,7 +3,7 @@
   "input_root": "C:\\Users\\Vaishnavi\\Datadog\\input",
   "analysis_period": {
     "from": "2026-07-02T08:00:00Z",
-    "to": "2026-07-02T10:00:01Z"
+    "to": "2026-07-02T10:00:02Z"
   },
   "record_counts": {
     "log": 26,
@@ -43,13 +43,13 @@
   "skipped_files": [],
   "records": [
     {
-      "record_id": "infra_000001",
+      "record_id": "infrastructure_000001",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-01",
-      "environment": "prod",
+      "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host host-01 metrics",
+      "message": "host metrics host-01",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -64,13 +64,76 @@
       }
     },
     {
-      "record_id": "infra_000005",
+      "record_id": "infrastructure_000002",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "host metrics host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-01",
+        "cpu_pct": 93,
+        "memory_pct": 89,
+        "disk_pct": 42,
+        "network_in": 850,
+        "network_out": 780,
+        "timestamp": "2026-07-02T09:30:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000003",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "host metrics host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-01",
+        "cpu_pct": 95,
+        "memory_pct": 91,
+        "disk_pct": 43,
+        "network_in": 910,
+        "network_out": 860,
+        "timestamp": "2026-07-02T09:40:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000004",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "host metrics host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-01",
+        "cpu_pct": 60,
+        "memory_pct": 58,
+        "disk_pct": 41,
+        "network_in": 300,
+        "network_out": 250,
+        "timestamp": "2026-07-02T10:00:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000005",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-02",
-      "environment": "prod",
+      "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host host-02 metrics",
+      "message": "host metrics host-02",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -85,13 +148,34 @@
       }
     },
     {
-      "record_id": "infra_000007",
+      "record_id": "infrastructure_000006",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-02",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "host metrics host-02",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-02",
+        "cpu_pct": 72,
+        "memory_pct": 68,
+        "disk_pct": 36,
+        "network_in": 400,
+        "network_out": 380,
+        "timestamp": "2026-07-02T09:40:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000007",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-03",
-      "environment": "prod",
+      "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host host-03 metrics",
+      "message": "host metrics host-03",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -106,13 +190,34 @@
       }
     },
     {
-      "record_id": "infra_000009",
+      "record_id": "infrastructure_000008",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-03",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "message": "host metrics host-03",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-03",
+        "cpu_pct": 88,
+        "memory_pct": 82,
+        "disk_pct": 61,
+        "network_in": 700,
+        "network_out": 650,
+        "timestamp": "2026-07-02T09:28:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000009",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-04",
-      "environment": "prod",
+      "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host host-04 metrics",
+      "message": "host metrics host-04",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -127,7 +232,28 @@
       }
     },
     {
-      "record_id": "log_000001",
+      "record_id": "infrastructure_000010",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "host-04",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "message": "host metrics host-04",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "host-04",
+        "cpu_pct": 42,
+        "memory_pct": 44,
+        "disk_pct": 31,
+        "network_in": 220,
+        "network_out": 200,
+        "timestamp": "2026-07-02T09:50:00Z"
+      }
+    },
+    {
+      "record_id": "log_000011",
       "source_type": "log",
       "severity": "INFO",
       "service": "payment-service",
@@ -152,238 +278,7 @@
       }
     },
     {
-      "record_id": "metric_000001",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 45.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000002",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 50.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000003",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric throughput_rps",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "throughput_rps",
-        "value": 120.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000018",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 40.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000019",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 45.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000024",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 50.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000025",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 55.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000032",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 35.0,
-        "host": "host-04",
-        "service": "user-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000033",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 40.0,
-        "host": "host-04",
-        "service": "user-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "trace_000001",
-      "source_type": "trace",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:00Z",
-      "message": "create_order (ok)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t001",
-        "span_id": "s001",
-        "service": "order-service",
-        "operation": "create_order",
-        "duration_ms": 180,
-        "status": "ok",
-        "timestamp": "2026-07-02T08:00:00Z"
-      }
-    },
-    {
-      "record_id": "trace_000002",
-      "source_type": "trace",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T08:00:01Z",
-      "message": "process_payment (ok)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t001",
-        "span_id": "s002",
-        "service": "payment-service",
-        "operation": "process_payment",
-        "duration_ms": 210,
-        "status": "ok",
-        "timestamp": "2026-07-02T08:00:01Z"
-      }
-    },
-    {
-      "record_id": "log_000002",
+      "record_id": "log_000012",
       "source_type": "log",
       "severity": "ERROR",
       "service": "payment-service",
@@ -408,7 +303,7 @@
       }
     },
     {
-      "record_id": "log_000003",
+      "record_id": "log_000013",
       "source_type": "log",
       "severity": "ERROR",
       "service": "payment-service",
@@ -433,7 +328,7 @@
       }
     },
     {
-      "record_id": "log_000004",
+      "record_id": "log_000014",
       "source_type": "log",
       "severity": "ERROR",
       "service": "payment-service",
@@ -458,7 +353,7 @@
       }
     },
     {
-      "record_id": "log_000005",
+      "record_id": "log_000015",
       "source_type": "log",
       "severity": "ERROR",
       "service": "payment-service",
@@ -483,7 +378,7 @@
       }
     },
     {
-      "record_id": "log_000006",
+      "record_id": "log_000016",
       "source_type": "log",
       "severity": "WARN",
       "service": "order-service",
@@ -508,7 +403,7 @@
       }
     },
     {
-      "record_id": "log_000007",
+      "record_id": "log_000017",
       "source_type": "log",
       "severity": "INFO",
       "service": "checkout-consumer",
@@ -533,91 +428,7 @@
       }
     },
     {
-      "record_id": "metric_000004",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:00:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 55.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000005",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:00:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 60.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000006",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:00:00Z",
-      "message": "metric throughput_rps",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "throughput_rps",
-        "value": 118.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000026",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:00:00Z",
-      "message": "metric kafka_consumer_lag",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 8000.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "log_000008",
+      "record_id": "log_000018",
       "source_type": "log",
       "severity": "WARN",
       "service": "checkout-consumer",
@@ -642,48 +453,7 @@
       }
     },
     {
-      "record_id": "metric_000027",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:10:00Z",
-      "message": "metric kafka_consumer_lag",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 25000.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "alert_000006",
-      "source_type": "alert",
-      "severity": "WARN",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "message": "DQ rejection rate exceeded 15%",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "checkout-consumer-dq-rejection-rate",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:20:00Z",
-        "service": "checkout-consumer",
-        "message": "DQ rejection rate exceeded 15%",
-        "priority": "P3"
-      }
-    },
-    {
-      "record_id": "log_000009",
+      "record_id": "log_000019",
       "source_type": "log",
       "severity": "WARN",
       "service": "checkout-consumer",
@@ -708,70 +478,7 @@
       }
     },
     {
-      "record_id": "metric_000007",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 78.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000008",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 72.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000028",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "message": "metric kafka_consumer_lag",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 68000.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "log_000010",
+      "record_id": "log_000020",
       "source_type": "log",
       "severity": "ERROR",
       "service": "checkout-consumer",
@@ -796,7 +503,7 @@
       }
     },
     {
-      "record_id": "log_000011",
+      "record_id": "log_000021",
       "source_type": "log",
       "severity": "ERROR",
       "service": "checkout-consumer",
@@ -821,48 +528,7 @@
       }
     },
     {
-      "record_id": "alert_000001",
-      "source_type": "alert",
-      "severity": "CRITICAL",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "kafka-consumer-lag-ecommerce-events",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:28:00Z",
-        "service": "checkout-consumer",
-        "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
-        "priority": "P1"
-      }
-    },
-    {
-      "record_id": "infra_000008",
-      "source_type": "infrastructure",
-      "severity": "INFO",
-      "service": "host-03",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "message": "host host-03 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-03",
-        "cpu_pct": 88,
-        "memory_pct": 82,
-        "disk_pct": 61,
-        "network_in": 700,
-        "network_out": 650,
-        "timestamp": "2026-07-02T09:28:00Z"
-      }
-    },
-    {
-      "record_id": "log_000012",
+      "record_id": "log_000022",
       "source_type": "log",
       "severity": "CRITICAL",
       "service": "checkout-consumer",
@@ -887,110 +553,7 @@
       }
     },
     {
-      "record_id": "metric_000029",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "message": "metric kafka_consumer_lag",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 125000.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "trace_000005",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:29:50Z",
-      "message": "consume_event (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t002",
-        "span_id": "s005",
-        "service": "checkout-consumer",
-        "operation": "consume_event",
-        "duration_ms": 3500,
-        "status": "error",
-        "timestamp": "2026-07-02T09:29:50Z"
-      }
-    },
-    {
-      "record_id": "alert_000002",
-      "source_type": "alert",
-      "severity": "ERROR",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "Error rate exceeded 15% over 5 minute window",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "payment-service-error-rate",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:30:00Z",
-        "service": "payment-service",
-        "message": "Error rate exceeded 15% over 5 minute window",
-        "priority": "P2"
-      }
-    },
-    {
-      "record_id": "alert_000004",
-      "source_type": "alert",
-      "severity": "ERROR",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "CPU usage exceeded 90% on host-01",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "checkout-consumer-cpu",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:30:00Z",
-        "service": "payment-service",
-        "message": "CPU usage exceeded 90% on host-01",
-        "priority": "P2"
-      }
-    },
-    {
-      "record_id": "infra_000002",
-      "source_type": "infrastructure",
-      "severity": "WARN",
-      "service": "host-01",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "host host-01 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-01",
-        "cpu_pct": 93,
-        "memory_pct": 89,
-        "disk_pct": 42,
-        "network_in": 850,
-        "network_out": 780,
-        "timestamp": "2026-07-02T09:30:00Z"
-      }
-    },
-    {
-      "record_id": "log_000013",
+      "record_id": "log_000023",
       "source_type": "log",
       "severity": "ERROR",
       "service": "payment-service",
@@ -1015,195 +578,7 @@
       }
     },
     {
-      "record_id": "metric_000009",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 93.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000010",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 89.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000011",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "metric throughput_rps",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "throughput_rps",
-        "value": 40.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000020",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 70.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000021",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 65.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "trace_000003",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "message": "create_order (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t002",
-        "span_id": "s003",
-        "service": "order-service",
-        "operation": "create_order",
-        "duration_ms": 4200,
-        "status": "error",
-        "timestamp": "2026-07-02T09:30:00Z"
-      }
-    },
-    {
-      "record_id": "trace_000004",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:01Z",
-      "message": "process_payment (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t002",
-        "span_id": "s004",
-        "service": "payment-service",
-        "operation": "process_payment",
-        "duration_ms": 3900,
-        "status": "error",
-        "timestamp": "2026-07-02T09:30:01Z"
-      }
-    },
-    {
-      "record_id": "trace_000008",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:30:55Z",
-      "message": "consume_event (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t003",
-        "span_id": "s008",
-        "service": "checkout-consumer",
-        "operation": "consume_event",
-        "duration_ms": 3300,
-        "status": "error",
-        "timestamp": "2026-07-02T09:30:55Z"
-      }
-    },
-    {
-      "record_id": "alert_000003",
-      "source_type": "alert",
-      "severity": "ERROR",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:31:00Z",
-      "message": "p99 latency exceeded 1000ms",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "order-service-latency",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:31:00Z",
-        "service": "order-service",
-        "message": "p99 latency exceeded 1000ms",
-        "priority": "P2"
-      }
-    },
-    {
-      "record_id": "log_000014",
+      "record_id": "log_000024",
       "source_type": "log",
       "severity": "ERROR",
       "service": "order-service",
@@ -1228,49 +603,7 @@
       }
     },
     {
-      "record_id": "trace_000006",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:31:00Z",
-      "message": "create_order (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t003",
-        "span_id": "s006",
-        "service": "order-service",
-        "operation": "create_order",
-        "duration_ms": 3800,
-        "status": "error",
-        "timestamp": "2026-07-02T09:31:00Z"
-      }
-    },
-    {
-      "record_id": "trace_000007",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:31:02Z",
-      "message": "process_payment (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t003",
-        "span_id": "s007",
-        "service": "payment-service",
-        "operation": "process_payment",
-        "duration_ms": 3600,
-        "status": "error",
-        "timestamp": "2026-07-02T09:31:02Z"
-      }
-    },
-    {
-      "record_id": "log_000015",
+      "record_id": "log_000025",
       "source_type": "log",
       "severity": "ERROR",
       "service": "order-service",
@@ -1295,7 +628,7 @@
       }
     },
     {
-      "record_id": "log_000016",
+      "record_id": "log_000026",
       "source_type": "log",
       "severity": "WARN",
       "service": "checkout-consumer",
@@ -1320,49 +653,7 @@
       }
     },
     {
-      "record_id": "infra_000003",
-      "source_type": "infrastructure",
-      "severity": "WARN",
-      "service": "host-01",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "host host-01 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-01",
-        "cpu_pct": 95,
-        "memory_pct": 91,
-        "disk_pct": 43,
-        "network_in": 910,
-        "network_out": 860,
-        "timestamp": "2026-07-02T09:40:00Z"
-      }
-    },
-    {
-      "record_id": "infra_000006",
-      "source_type": "infrastructure",
-      "severity": "INFO",
-      "service": "host-02",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "host host-02 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-02",
-        "cpu_pct": 72,
-        "memory_pct": 68,
-        "disk_pct": 36,
-        "network_in": 400,
-        "network_out": 380,
-        "timestamp": "2026-07-02T09:40:00Z"
-      }
-    },
-    {
-      "record_id": "log_000017",
+      "record_id": "log_000027",
       "source_type": "log",
       "severity": "CRITICAL",
       "service": "checkout-consumer",
@@ -1387,154 +678,7 @@
       }
     },
     {
-      "record_id": "metric_000012",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 95.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000013",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 91.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000014",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric throughput_rps",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "throughput_rps",
-        "value": 35.0,
-        "host": "host-01",
-        "service": "payment-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000022",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 72.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000023",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "order-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 68.0,
-        "host": "host-02",
-        "service": "order-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000030",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "message": "metric kafka_consumer_lag",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 118000.0,
-        "host": "host-03",
-        "service": "checkout-consumer",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "infra_000010",
-      "source_type": "infrastructure",
-      "severity": "INFO",
-      "service": "host-04",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:50:00Z",
-      "message": "host host-04 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-04",
-        "cpu_pct": 42,
-        "memory_pct": 44,
-        "disk_pct": 31,
-        "network_in": 220,
-        "network_out": 200,
-        "timestamp": "2026-07-02T09:50:00Z"
-      }
-    },
-    {
-      "record_id": "log_000018",
+      "record_id": "log_000028",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1559,70 +703,7 @@
       }
     },
     {
-      "record_id": "metric_000034",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:50:00Z",
-      "message": "metric cpu_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "cpu_pct",
-        "value": 42.0,
-        "host": "host-04",
-        "service": "user-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "metric_000035",
-      "source_type": "metric",
-      "severity": "INFO",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:50:00Z",
-      "message": "metric memory_pct",
-      "tags": [
-        "env:prod"
-      ],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "metric_name": "memory_pct",
-        "value": 44.0,
-        "host": "host-04",
-        "service": "user-service",
-        "tags": "env:prod"
-      }
-    },
-    {
-      "record_id": "trace_000011",
-      "source_type": "trace",
-      "severity": "INFO",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:50:00Z",
-      "message": "get_user_profile (ok)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t005",
-        "span_id": "s011",
-        "service": "user-service",
-        "operation": "get_user_profile",
-        "duration_ms": 90,
-        "status": "ok",
-        "timestamp": "2026-07-02T09:50:00Z"
-      }
-    },
-    {
-      "record_id": "log_000019",
+      "record_id": "log_000029",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1647,28 +728,7 @@
       }
     },
     {
-      "record_id": "trace_000012",
-      "source_type": "trace",
-      "severity": "ERROR",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:51:00Z",
-      "message": "authenticate (error)",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "trace_id": "t005",
-        "span_id": "s012",
-        "service": "user-service",
-        "operation": "authenticate",
-        "duration_ms": 60,
-        "status": "error",
-        "timestamp": "2026-07-02T09:51:00Z"
-      }
-    },
-    {
-      "record_id": "log_000020",
+      "record_id": "log_000030",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1693,7 +753,7 @@
       }
     },
     {
-      "record_id": "log_000021",
+      "record_id": "log_000031",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1718,27 +778,7 @@
       }
     },
     {
-      "record_id": "alert_000005",
-      "source_type": "alert",
-      "severity": "CRITICAL",
-      "service": "user-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T09:53:00Z",
-      "message": "Auth failure rate exceeded threshold, possible brute force",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "user-service-auth-failures",
-        "status": "TRIGGERED",
-        "triggered_at": "2026-07-02T09:53:00Z",
-        "service": "user-service",
-        "message": "Auth failure rate exceeded threshold, possible brute force",
-        "priority": "P1"
-      }
-    },
-    {
-      "record_id": "log_000022",
+      "record_id": "log_000032",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1763,7 +803,7 @@
       }
     },
     {
-      "record_id": "log_000023",
+      "record_id": "log_000033",
       "source_type": "log",
       "severity": "ERROR",
       "service": "user-service",
@@ -1788,7 +828,7 @@
       }
     },
     {
-      "record_id": "log_000024",
+      "record_id": "log_000034",
       "source_type": "log",
       "severity": "CRITICAL",
       "service": "user-service",
@@ -1813,7 +853,7 @@
       }
     },
     {
-      "record_id": "log_000025",
+      "record_id": "log_000035",
       "source_type": "log",
       "severity": "CRITICAL",
       "service": "user-service",
@@ -1838,48 +878,7 @@
       }
     },
     {
-      "record_id": "alert_000007",
-      "source_type": "alert",
-      "severity": "INFO",
-      "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "Error rate returned to normal",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "monitor_name": "payment-service-recovery",
-        "status": "RESOLVED",
-        "triggered_at": "2026-07-02T10:00:00Z",
-        "service": "payment-service",
-        "message": "Error rate returned to normal",
-        "priority": "P4"
-      }
-    },
-    {
-      "record_id": "infra_000004",
-      "source_type": "infrastructure",
-      "severity": "INFO",
-      "service": "host-01",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "host host-01 metrics",
-      "tags": [],
-      "source_ip": null,
-      "user": null,
-      "raw": {
-        "host": "host-01",
-        "cpu_pct": 60,
-        "memory_pct": 58,
-        "disk_pct": 41,
-        "network_in": 300,
-        "network_out": 250,
-        "timestamp": "2026-07-02T10:00:00Z"
-      }
-    },
-    {
-      "record_id": "log_000026",
+      "record_id": "log_000036",
       "source_type": "log",
       "severity": "INFO",
       "service": "payment-service",
@@ -1904,97 +903,1091 @@
       }
     },
     {
-      "record_id": "metric_000015",
+      "record_id": "metric_000037",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "metric cpu_pct",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "cpu_pct=45",
       "tags": [
         "env:prod"
       ],
       "source_ip": null,
       "user": null,
       "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
         "metric_name": "cpu_pct",
-        "value": 60.0,
+        "value": "45",
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
       }
     },
     {
-      "record_id": "metric_000016",
+      "record_id": "metric_000038",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "metric memory_pct",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "memory_pct=50",
       "tags": [
         "env:prod"
       ],
       "source_ip": null,
       "user": null,
       "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
         "metric_name": "memory_pct",
-        "value": 58.0,
+        "value": "50",
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
       }
     },
     {
-      "record_id": "metric_000017",
+      "record_id": "metric_000039",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "metric throughput_rps",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "throughput_rps=120",
       "tags": [
         "env:prod"
       ],
       "source_ip": null,
       "user": null,
       "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
         "metric_name": "throughput_rps",
-        "value": 115.0,
+        "value": "120",
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
       }
     },
     {
-      "record_id": "metric_000031",
+      "record_id": "metric_000040",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "message": "cpu_pct=55",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:00:00Z",
+        "metric_name": "cpu_pct",
+        "value": "55",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000041",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "message": "memory_pct=60",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:00:00Z",
+        "metric_name": "memory_pct",
+        "value": "60",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000042",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "message": "throughput_rps=118",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:00:00Z",
+        "metric_name": "throughput_rps",
+        "value": "118",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000043",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:20:00Z",
+      "message": "cpu_pct=78",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:20:00Z",
+        "metric_name": "cpu_pct",
+        "value": "78",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000044",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:20:00Z",
+      "message": "memory_pct=72",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:20:00Z",
+        "metric_name": "memory_pct",
+        "value": "72",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000045",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "cpu_pct=93",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "metric_name": "cpu_pct",
+        "value": "93",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000046",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "memory_pct=89",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "metric_name": "memory_pct",
+        "value": "89",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000047",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "throughput_rps=40",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "metric_name": "throughput_rps",
+        "value": "40",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000048",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "cpu_pct=95",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "cpu_pct",
+        "value": "95",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000049",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "memory_pct=91",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "memory_pct",
+        "value": "91",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000050",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "throughput_rps=35",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "throughput_rps",
+        "value": "35",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000051",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "cpu_pct=60",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T10:00:00Z",
+        "metric_name": "cpu_pct",
+        "value": "60",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000052",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "memory_pct=58",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T10:00:00Z",
+        "metric_name": "memory_pct",
+        "value": "58",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000053",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "throughput_rps=115",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T10:00:00Z",
+        "metric_name": "throughput_rps",
+        "value": "115",
+        "host": "host-01",
+        "service": "payment-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000054",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "cpu_pct=40",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "cpu_pct",
+        "value": "40",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000055",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "memory_pct=45",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "memory_pct",
+        "value": "45",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000056",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "cpu_pct=70",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "metric_name": "cpu_pct",
+        "value": "70",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000057",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "memory_pct=65",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:30:00Z",
+        "metric_name": "memory_pct",
+        "value": "65",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000058",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "cpu_pct=72",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "cpu_pct",
+        "value": "72",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000059",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "memory_pct=68",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "memory_pct",
+        "value": "68",
+        "host": "host-02",
+        "service": "order-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000060",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "prod",
-      "timestamp": "2026-07-02T10:00:00Z",
-      "message": "metric kafka_consumer_lag",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "cpu_pct=50",
       "tags": [
         "env:prod"
       ],
       "source_ip": null,
       "user": null,
       "raw": {
-        "metric_name": "kafka_consumer_lag",
-        "value": 15000.0,
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "cpu_pct",
+        "value": "50",
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
       }
     },
     {
-      "record_id": "trace_000009",
+      "record_id": "metric_000061",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "memory_pct=55",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "memory_pct",
+        "value": "55",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000062",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:00:00Z",
+      "message": "kafka_consumer_lag=8000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:00:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "8000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000063",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:10:00Z",
+      "message": "kafka_consumer_lag=25000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:10:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "25000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000064",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:20:00Z",
+      "message": "kafka_consumer_lag=68000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:20:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "68000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000065",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "message": "kafka_consumer_lag=125000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:28:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "125000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000066",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:40:00Z",
+      "message": "kafka_consumer_lag=118000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:40:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "118000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000067",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "kafka_consumer_lag=15000",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T10:00:00Z",
+        "metric_name": "kafka_consumer_lag",
+        "value": "15000",
+        "host": "host-03",
+        "service": "checkout-consumer",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000068",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "cpu_pct=35",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "cpu_pct",
+        "value": "35",
+        "host": "host-04",
+        "service": "user-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000069",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "memory_pct=40",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T08:00:00Z",
+        "metric_name": "memory_pct",
+        "value": "40",
+        "host": "host-04",
+        "service": "user-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000070",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "message": "cpu_pct=42",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:50:00Z",
+        "metric_name": "cpu_pct",
+        "value": "42",
+        "host": "host-04",
+        "service": "user-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "metric_000071",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "message": "memory_pct=44",
+      "tags": [
+        "env:prod"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-02T09:50:00Z",
+        "metric_name": "memory_pct",
+        "value": "44",
+        "host": "host-04",
+        "service": "user-service",
+        "tags": "env:prod"
+      }
+    },
+    {
+      "record_id": "alert_000072",
+      "source_type": "alert",
+      "severity": "CRITICAL",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "kafka-consumer-lag-ecommerce-events",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:28:00Z",
+        "service": "checkout-consumer",
+        "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
+        "priority": "P1"
+      }
+    },
+    {
+      "record_id": "alert_000073",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "Error rate exceeded 15% over 5 minute window",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "payment-service-error-rate",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:30:00Z",
+        "service": "payment-service",
+        "message": "Error rate exceeded 15% over 5 minute window",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "alert_000074",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:00Z",
+      "message": "p99 latency exceeded 1000ms",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "order-service-latency",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:31:00Z",
+        "service": "order-service",
+        "message": "p99 latency exceeded 1000ms",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "alert_000075",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "CPU usage exceeded 90% on host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "checkout-consumer-cpu",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:30:00Z",
+        "service": "payment-service",
+        "message": "CPU usage exceeded 90% on host-01",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "alert_000076",
+      "source_type": "alert",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:53:00Z",
+      "message": "Auth failure rate exceeded threshold, possible brute force",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "user-service-auth-failures",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:53:00Z",
+        "service": "user-service",
+        "message": "Auth failure rate exceeded threshold, possible brute force",
+        "priority": "P1"
+      }
+    },
+    {
+      "record_id": "alert_000077",
+      "source_type": "alert",
+      "severity": "WARN",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:20:00Z",
+      "message": "DQ rejection rate exceeded 15%",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "checkout-consumer-dq-rejection-rate",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-02T09:20:00Z",
+        "service": "checkout-consumer",
+        "message": "DQ rejection rate exceeded 15%",
+        "priority": "P3"
+      }
+    },
+    {
+      "record_id": "alert_000078",
+      "source_type": "alert",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T10:00:00Z",
+      "message": "Error rate returned to normal",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "payment-service-recovery",
+        "status": "RESOLVED",
+        "triggered_at": "2026-07-02T10:00:00Z",
+        "service": "payment-service",
+        "message": "Error rate returned to normal",
+        "priority": "P4"
+      }
+    },
+    {
+      "record_id": "trace_000079",
       "source_type": "trace",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "prod",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:00Z",
+      "message": "create_order (t001)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t001",
+        "span_id": "s001",
+        "service": "order-service",
+        "operation": "create_order",
+        "duration_ms": 180,
+        "status": "ok",
+        "timestamp": "2026-07-02T08:00:00Z"
+      }
+    },
+    {
+      "record_id": "trace_000080",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T08:00:01Z",
+      "message": "process_payment (t001)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t001",
+        "span_id": "s002",
+        "service": "payment-service",
+        "operation": "process_payment",
+        "duration_ms": 210,
+        "status": "ok",
+        "timestamp": "2026-07-02T08:00:01Z"
+      }
+    },
+    {
+      "record_id": "trace_000081",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "message": "create_order (t002)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s003",
+        "service": "order-service",
+        "operation": "create_order",
+        "duration_ms": 4200,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:00Z"
+      }
+    },
+    {
+      "record_id": "trace_000082",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:01Z",
+      "message": "process_payment (t002)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s004",
+        "service": "payment-service",
+        "operation": "process_payment",
+        "duration_ms": 3900,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:01Z"
+      }
+    },
+    {
+      "record_id": "trace_000083",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:29:50Z",
+      "message": "consume_event (t002)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t002",
+        "span_id": "s005",
+        "service": "checkout-consumer",
+        "operation": "consume_event",
+        "duration_ms": 3500,
+        "status": "error",
+        "timestamp": "2026-07-02T09:29:50Z"
+      }
+    },
+    {
+      "record_id": "trace_000084",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "order-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:00Z",
+      "message": "create_order (t003)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s006",
+        "service": "order-service",
+        "operation": "create_order",
+        "duration_ms": 3800,
+        "status": "error",
+        "timestamp": "2026-07-02T09:31:00Z"
+      }
+    },
+    {
+      "record_id": "trace_000085",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:31:02Z",
+      "message": "process_payment (t003)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s007",
+        "service": "payment-service",
+        "operation": "process_payment",
+        "duration_ms": 3600,
+        "status": "error",
+        "timestamp": "2026-07-02T09:31:02Z"
+      }
+    },
+    {
+      "record_id": "trace_000086",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "checkout-consumer",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:30:55Z",
+      "message": "consume_event (t003)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t003",
+        "span_id": "s008",
+        "service": "checkout-consumer",
+        "operation": "consume_event",
+        "duration_ms": 3300,
+        "status": "error",
+        "timestamp": "2026-07-02T09:30:55Z"
+      }
+    },
+    {
+      "record_id": "trace_000087",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "order-service",
+      "environment": "unknown",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "create_order (ok)",
+      "message": "create_order (t004)",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -2009,13 +2002,13 @@
       }
     },
     {
-      "record_id": "trace_000010",
+      "record_id": "trace_000088",
       "source_type": "trace",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "prod",
+      "environment": "unknown",
       "timestamp": "2026-07-02T10:00:01Z",
-      "message": "process_payment (ok)",
+      "message": "process_payment (t004)",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -2027,6 +2020,48 @@
         "duration_ms": 220,
         "status": "ok",
         "timestamp": "2026-07-02T10:00:01Z"
+      }
+    },
+    {
+      "record_id": "trace_000089",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:50:00Z",
+      "message": "get_user_profile (t005)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t005",
+        "span_id": "s011",
+        "service": "user-service",
+        "operation": "get_user_profile",
+        "duration_ms": 90,
+        "status": "ok",
+        "timestamp": "2026-07-02T09:50:00Z"
+      }
+    },
+    {
+      "record_id": "trace_000090",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "user-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-02T09:51:00Z",
+      "message": "authenticate (t005)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "t005",
+        "span_id": "s012",
+        "service": "user-service",
+        "operation": "authenticate",
+        "duration_ms": 60,
+        "status": "error",
+        "timestamp": "2026-07-02T09:51:00Z"
       }
     }
   ]
