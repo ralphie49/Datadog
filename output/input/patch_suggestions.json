@@ -1,0 +1,58 @@
+{
+  "summary": {
+    "total_patches_generated": 2,
+    "low_risk": 0,
+    "medium_risk": 2,
+    "high_risk": 0,
+    "manual_review_required": 0
+  },
+  "patches": [
+    {
+      "patch_id": "patch_001",
+      "incident_id": "incident_001",
+      "recommendation_ref": "rank_1",
+      "patch_type": "SCALING_CONFIG_CHANGE",
+      "risk_level": "MEDIUM",
+      "target_file": "config/kafka-consumer.yaml",
+      "explanation": "Increase consumer instance count and review partition assignment for the ecommerce-events pipeline.",
+      "diff": "- consumer_instances: 2\n+ consumer_instances: 6",
+      "requires_human_review": true
+    },
+    {
+      "patch_id": "patch_002",
+      "incident_id": "incident_002",
+      "recommendation_ref": "rank_2",
+      "patch_type": "LOGGING_REDACTION_ADD",
+      "risk_level": "MEDIUM",
+      "target_file": "src/logging/redaction.py",
+      "explanation": "Add log redaction around PII and credential-like content before logs are emitted.",
+      "diff": "- log_message = message\n+ log_message = redact_secret_values(message)",
+      "requires_human_review": true
+    }
+  ],
+  "skipped_recommendations": [],
+  "all_patches": [
+    {
+      "patch_id": "patch_001",
+      "incident_id": "incident_001",
+      "recommendation_ref": "rank_1",
+      "patch_type": "SCALING_CONFIG_CHANGE",
+      "risk_level": "MEDIUM",
+      "target_file": "config/kafka-consumer.yaml",
+      "explanation": "Increase consumer instance count and review partition assignment for the ecommerce-events pipeline.",
+      "diff": "- consumer_instances: 2\n+ consumer_instances: 6",
+      "requires_human_review": true
+    },
+    {
+      "patch_id": "patch_002",
+      "incident_id": "incident_002",
+      "recommendation_ref": "rank_2",
+      "patch_type": "LOGGING_REDACTION_ADD",
+      "risk_level": "MEDIUM",
+      "target_file": "src/logging/redaction.py",
+      "explanation": "Add log redaction around PII and credential-like content before logs are emitted.",
+      "diff": "- log_message = message\n+ log_message = redact_secret_values(message)",
+      "requires_human_review": true
+    }
+  ]
+}

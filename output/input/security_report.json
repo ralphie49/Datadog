@@ -1,0 +1,84 @@
+{
+  "summary": {
+    "total_security_issues": 3,
+    "critical_issues": 2,
+    "error_issues": 1,
+    "warn_issues": 0,
+    "pii_exposures": 1,
+    "credential_leaks": 1,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "findings": [
+    {
+      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "description": "Repeated unauthorized access attempts suggest brute-force activity",
+      "redacted": true,
+      "action": "Review authentication controls and rate-limit exposure"
+    },
+    {
+      "issue_type": "PII_IN_LOGS",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "description": "PII detected in log message and redacted before reporting",
+      "redacted": true,
+      "action": "Redact and review log pipeline handling"
+    },
+    {
+      "issue_type": "CREDENTIAL_LEAK",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:55:00Z",
+      "description": "Credential-like content detected and redacted",
+      "redacted": true,
+      "action": "Remove secrets from logs and rotate any exposed credentials"
+    }
+  ],
+  "auth_failures": [
+    {
+      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "description": "Repeated unauthorized access attempts suggest brute-force activity",
+      "redacted": true,
+      "action": "Review authentication controls and rate-limit exposure"
+    }
+  ],
+  "compliance": [],
+  "all_issues": [
+    {
+      "issue_type": "BRUTE_FORCE_ATTEMPT",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00Z",
+      "description": "Repeated unauthorized access attempts suggest brute-force activity",
+      "redacted": true,
+      "action": "Review authentication controls and rate-limit exposure"
+    },
+    {
+      "issue_type": "PII_IN_LOGS",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:54:00Z",
+      "description": "PII detected in log message and redacted before reporting",
+      "redacted": true,
+      "action": "Redact and review log pipeline handling"
+    },
+    {
+      "issue_type": "CREDENTIAL_LEAK",
+      "severity": "CRITICAL",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:55:00Z",
+      "description": "Credential-like content detected and redacted",
+      "redacted": true,
+      "action": "Remove secrets from logs and rotate any exposed credentials"
+    }
+  ]
+}

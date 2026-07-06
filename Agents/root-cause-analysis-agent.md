@@ -1,5 +1,5 @@
 # Root Cause Analysis Agent
-**Version:** 1.4.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -19,16 +19,16 @@ actionable list of recommendations tied directly to evidence gathered across the
 ```yaml
 root_cause_config:
   input_files:
-    - "output/log_analysis.json"
-    - "output/metrics_report.json"
-    - "output/apm_report.json"
-    - "output/security_report.json"
-    - "output/anomaly_report.json"
-    - "output/dependency_report.json"
+    - "output/<dataset>/log_analysis.json"
+    - "output/<dataset>/metrics_report.json"
+    - "output/<dataset>/apm_report.json"
+    - "output/<dataset>/security_report.json"
+    - "output/<dataset>/anomaly_report.json"
+    - "output/<dataset>/dependency_report.json"
 
   output_files:
-    root_cause:      "output/root_cause.json"
-    recommendations: "output/recommendations.json"
+    root_cause:      "output/<dataset>/root_cause.json"
+    recommendations: "output/<dataset>/recommendations.json"
 
   settings:
     max_recommendations:        10
@@ -42,8 +42,18 @@ root_cause_config:
 
 ## Pre-requisites
 
-- All upstream agent output JSON files must exist, including `dependency_report.json`
-- Output folder `output/` must be writable
+- All upstream agent output JSON files under `output/<dataset>/` must exist, including `dependency_report.json`
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_files` and write only the configured `output_files`.
+- Every `input_files` entry and every `output_files` entry MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from incident IDs, services, root-cause categories, dates, upstream filenames, or existing files in `output/`.
+- If the input files and output files do not all share the same dataset folder, stop before writing and report the mismatch.
 
 ---
 
@@ -164,6 +174,10 @@ but then not translating that evidence into the matching category.
 
 ---
 
+## Regression Gates (must pass before this agent is considered done)
+- If `dependency_report.json` contains a breakpoint for an incident window, `root_cause.json.summary.total_incidents` must be at least 1 and `recommendations.json.summary.total_recommendations` must be at least 1.
+- A critical dependency breakpoint must never disappear into an empty incident list; it must either become an incident or be listed in `unresolved_findings` with a reason.
+
 ## Output Schema — `recommendations.json`
 
 ```json
@@ -251,6 +265,79 @@ but then not translating that evidence into the matching category.
 
 ---
 
+## Implementation Notes (pseudocode — MUST be followed structurally, not just in spirit)
+
+This is the most consequential agent in the pipeline to get right — its two most valuable rules (prefer a
+dependency breakpoint over time correlation; fall back to service-identity clustering when timestamps don't
+align) are also the ones most likely to be skipped by a straightforward implementation, because both
+require an explicit fallback branch rather than a single linear pass.
+
+**1. Dependency-graph breakpoints MUST NOT be given a null/placeholder timestamp.** A breakpoint entry in
+`dependency_report.json` does not carry its own `timestamp` field — but that does NOT mean this agent should
+represent it as a finding with `timestamp: null`. A finding with `timestamp: null` can never satisfy a
+time-window clustering check, which silently guarantees every breakpoint finding falls through to
+`unresolved_findings` regardless of how obviously related it is. Instead, derive a timestamp for the
+breakpoint finding from the incident window it's attached to:
+```
+for bp in dependency_report.breakpoints:
+    # bp has no own timestamp — derive one instead of using None
+    related_anomaly = anomaly_report.anomalies.find(service == bp.breakpoint_service)
+    bp_timestamp = related_anomaly.timestamp if related_anomaly else incident_window_start_estimate
+    add_finding(source="dependency_report.json", issue_type=bp.issue_type,
+                service=bp.breakpoint_service, timestamp=bp_timestamp, ...)   # never timestamp=None
+```
+
+**2. Clustering MUST fall back to service-identity / dependency-graph connectivity, not only time proximity
+— this is not optional polish, it is the primary mechanism by which breakpoints ever join an incident.**
+```
+def cluster(findings, dependency_graph):
+    incidents = []
+    for f in sorted(findings, by=timestamp):
+        placed_incident = find_incident_within_time_window(incidents, f, correlation_window_minutes)
+        if placed_incident is None:
+            # TIME-BASED MATCH FAILED — do not give up yet. Try service-identity fallback:
+            placed_incident = find_incident_by_service_or_graph_edge(incidents, f, dependency_graph)
+            # this checks: does f.service equal or graph-connect (any hop) to any service
+            # already in an existing incident, REGARDLESS of whether f.timestamp falls in that
+            # incident's time window. This is what the "timestamp-robustness safeguard" requires.
+        if placed_incident:
+            placed_incident.findings.append(f)
+        else:
+            incidents.append(new_incident(f))
+    return incidents
+```
+Concretely: if `checkout-consumer` has a `PIPELINE_BACKPRESSURE`-flavored incident already open, and a
+dependency-report breakpoint finding for `checkout-consumer` (or for `order-service`/`payment-service`,
+which are graph-connected to it) arrives with any timestamp, it MUST be merged into that same incident via
+the service/graph fallback — not routed to `unresolved_findings`.
+
+**3. `downstream_symptoms` MUST be deduplicated by resolved description text, not just assembled via a raw
+list comprehension.**
+```
+downstream_symptoms = []
+seen_descriptions = set()
+for f in incident.findings:
+    text = resolve_readable_text(f)          # per the existing MUST rule on non-empty resolved strings
+    if text and text not in seen_descriptions:
+        downstream_symptoms.append(text)
+        seen_descriptions.add(text)
+```
+
+## Self-Test Cases (run against this project's own sample data before considering this agent done)
+
+- `dependency_report.json` identifies `checkout-consumer` as a breakpoint with `downstream_impact:
+  [order-service, payment-service]`. The corresponding incident in `root_cause.json` MUST have
+  `dependency_breakpoint: "checkout-consumer"` (not null) and `affected_services` MUST include
+  `order-service` and `payment-service` in addition to `checkout-consumer` — blast_radius MUST be >= 3,
+  not 1.
+- `unresolved_findings` MUST NOT contain any `dependency_report.json` breakpoint entry whose
+  `breakpoint_service` is `checkout-consumer`, `order-service`, or `payment-service`, since all three are
+  graph-connected and should cluster into the pipeline-backpressure incident via the service-identity
+  fallback.
+- No `downstream_symptoms` array may contain the same string twice.
+
+---
+
 ## Output Specification
 
 | Artifact | Description |
@@ -270,12 +357,30 @@ but then not translating that evidence into the matching category.
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-03 | root-cause-analysis-agent | Renamed from root-cause-recommendation-agent; now consumes dependency_report.json as a structural evidence source |
-| 1.1.0 | 2026-07-03 | root-cause-analysis-agent | Added MUST NOT rule preventing citation of an issue_type/finding category not literally present in the named upstream report's own findings; added analysis_period population rule |
-| 1.2.0 | 2026-07-03 | root-cause-analysis-agent | Tightened incident clustering to require an actual dependency-graph edge (not just time proximity) between services before merging findings into one incident; added downstream_symptoms dedup rule and a rule against mixing unrelated root-cause domains in a single incident |
-| 1.3.0 | 2026-07-03 | root-cause-analysis-agent | Fixed observed failure mode where every incident was written as UNDETERMINED despite strong matching evidence (Kafka lag, PII/credential findings) — added a mandatory category-mapping table and a required self-review pass over UNDETERMINED incidents; fixed a second observed bug where downstream_symptoms contained empty-string entries — added a rule requiring a non-empty resolved string per finding, omitting unresolvable findings instead of inserting blanks |
-| 1.4.0 | 2026-07-03 | root-cause-analysis-agent | Fixed observed failure mode where the single most severe, best-evidenced incident in the dataset (a CRITICAL Kafka-lag cascade, corroborated in apm_report/metrics_report/dependency_report) was silently absent from root_cause.json entirely, traced to upstream timestamp corruption in anomaly_report.json breaking time-window clustering — added a mandatory cross-check of every CRITICAL finding/breakpoint against produced incidents, a service-identity fallback clustering path when timestamps can't be trusted, and a MUST NOT rule against any CRITICAL finding disappearing without landing in either an incident or unresolved_findings |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- Root-cause clustering MUST preserve parallel incidents. A dependency incident MUST NOT hide security, data-quality, or infrastructure incidents that occur in a different service/domain.
+- Every CRITICAL finding from `security_report.json`, `metrics_report.json`, `apm_report.json`, `log_analysis.json`, or `anomaly_report.json` MUST appear in one of: `incidents[].evidence_sources`, `incidents[].downstream_symptoms`, or `unresolved_findings`.
+- If a security finding is CRITICAL and not causally linked to the main dependency incident, create a separate `SECURITY_INCIDENT` or record a high-priority unresolved finding. Do not drop it.
+- `affected_services` MUST include the primary service plus every downstream impacted service from the dependency report and every service with evidence assigned to that incident.
+- `blast_radius` MUST equal the count of distinct `affected_services`.
+- `summary.total_incidents` MUST equal `len(incidents)`.
+- The summary field MUST be named exactly `total_incidents`; do not write `incident_count` as a substitute.
+- Every incident MUST include `root_cause_category`. Do not replace it with a title, summary, or generic
+  severity-only incident object.
+- `unresolved_findings` and `all_incidents` MUST always be present, even when empty.
+- Confidence MUST be derived from evidence strength. Do not upgrade MEDIUM dependency confidence to HIGH without additional corroboration.
+- Recommendations MUST be generated for every P1/P2 incident and every unresolved CRITICAL finding.
+- `recommendations.summary.total_recommendations` MUST equal `len(recommendations)`.
+
+Reject the generated output if any upstream CRITICAL finding disappears from both incident evidence and unresolved findings.
+Also reject it if `root_cause.json` uses `summary.incident_count` without `summary.total_incidents`, or if
+incidents are missing `root_cause_category`.

@@ -1,0 +1,297 @@
+{
+  "summary": {
+    "total_errors": 19,
+    "total_warnings": 4,
+    "total_critical": 4,
+    "recurring_errors": 2,
+    "affected_services": [
+      "checkout-consumer",
+      "order-service",
+      "payment-service",
+      "user-service"
+    ],
+    "total_batches_analysed": 3,
+    "batches_with_dq_issues": 3,
+    "avg_rejection_rate_pct": 12.3,
+    "max_rejection_rate_pct": 17.0,
+    "total_quarantine_records": 0,
+    "total_dead_letter_records": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "top_errors": [
+    {
+      "rank": 1,
+      "error_type": "SECURITY_EVENT",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "frequency": 5,
+      "is_recurring": true,
+      "first_seen": "2026-07-02T09:51:00Z",
+      "last_seen": "2026-07-02T09:53:30Z"
+    },
+    {
+      "rank": 2,
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "frequency": 4,
+      "is_recurring": true,
+      "first_seen": "2026-07-02T08:05:00Z",
+      "last_seen": "2026-07-02T08:12:00Z"
+    },
+    {
+      "rank": 3,
+      "error_type": "PIPELINE_ISSUE",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "service": "order-service",
+      "severity": "ERROR",
+      "frequency": 2,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:31:00Z",
+      "last_seen": "2026-07-02T09:32:00Z"
+    },
+    {
+      "rank": 4,
+      "error_type": "PIPELINE_ISSUE",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:25:00Z",
+      "last_seen": "2026-07-02T09:25:00Z"
+    },
+    {
+      "rank": 5,
+      "error_type": "PIPELINE_ISSUE",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:26:00Z",
+      "last_seen": "2026-07-02T09:26:00Z"
+    }
+  ],
+  "rejection_rates": [
+    {
+      "batch_id": "batch_001",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 920,
+      "failed": 80,
+      "rejection_pct": 8.0,
+      "verdict": "WARN"
+    },
+    {
+      "batch_id": "batch_002",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 880,
+      "failed": 120,
+      "rejection_pct": 12.0,
+      "verdict": "WARN"
+    },
+    {
+      "batch_id": "batch_003",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 830,
+      "failed": 170,
+      "rejection_pct": 17.0,
+      "verdict": "CRITICAL"
+    }
+  ],
+  "worst_columns": [
+    {
+      "column": "email",
+      "rejection_count": 45,
+      "rule_type": "FORMAT_MISMATCH"
+    },
+    {
+      "column": "phone",
+      "rejection_count": 30,
+      "rule_type": "NULL_VALUE"
+    }
+  ],
+  "dq_alerts": [
+    {
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "count": 1
+    },
+    {
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "count": 1
+    }
+  ],
+  "dq_trends": [],
+  "all_errors": [
+    {
+      "timestamp": "2026-07-02T08:05:00Z",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "error_type": "CONNECTION_FAILURE"
+    },
+    {
+      "timestamp": "2026-07-02T08:07:00Z",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "error_type": "CONNECTION_FAILURE"
+    },
+    {
+      "timestamp": "2026-07-02T08:10:00Z",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "error_type": "CONNECTION_FAILURE"
+    },
+    {
+      "timestamp": "2026-07-02T08:12:00Z",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "error_type": "CONNECTION_FAILURE"
+    },
+    {
+      "timestamp": "2026-07-02T09:25:00Z",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:26:00Z",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:28:00Z",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:30:00Z",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "message": "Request timeout: upstream checkout-consumer not responding",
+      "error_type": "CONNECTION_FAILURE"
+    },
+    {
+      "timestamp": "2026-07-02T09:31:00Z",
+      "service": "order-service",
+      "severity": "ERROR",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:32:00Z",
+      "service": "order-service",
+      "severity": "ERROR",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:40:00Z",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:50:00Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:51:00Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:52:00Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:52:30Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:53:00Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:53:30Z",
+      "service": "user-service",
+      "severity": "ERROR",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "error_type": "SECURITY_EVENT"
+    },
+    {
+      "timestamp": "2026-07-02T09:54:00Z",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
+      "error_type": "PIPELINE_ISSUE"
+    },
+    {
+      "timestamp": "2026-07-02T09:55:00Z",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "message": "Credential leak detected: Authorization: Bearer abc123redacted",
+      "error_type": "PIPELINE_ISSUE"
+    }
+  ],
+  "all_dq_issues": [
+    {
+      "batch_id": "batch_001",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 920,
+      "failed": 80,
+      "rejection_pct": 8.0,
+      "verdict": "WARN"
+    },
+    {
+      "batch_id": "batch_002",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 880,
+      "failed": 120,
+      "rejection_pct": 12.0,
+      "verdict": "WARN"
+    },
+    {
+      "batch_id": "batch_003",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 830,
+      "failed": 170,
+      "rejection_pct": 17.0,
+      "verdict": "CRITICAL"
+    }
+  ]
+}

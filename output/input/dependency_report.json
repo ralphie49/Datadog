@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total_services_mapped": 4,
+    "total_edges": 2,
+    "breakpoints_identified": 1,
+    "cascading_failures": 1,
+    "effective_min_call_count_for_edge": 2,
+    "parent_span_id_available": false,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "dependency_graph": {
+    "nodes": [
+      "checkout-consumer",
+      "order-service",
+      "payment-service"
+    ],
+    "edges": [
+      {
+        "from": "checkout-consumer",
+        "to": "order-service",
+        "call_count": 2,
+        "avg_latency_ms": 130
+      },
+      {
+        "from": "checkout-consumer",
+        "to": "payment-service",
+        "call_count": 2,
+        "avg_latency_ms": 140
+      }
+    ]
+  },
+  "breakpoints": [
+    {
+      "incident_id": "incident_001",
+      "breakpoint_service": "checkout-consumer",
+      "issue_type": "BREAKPOINT_IDENTIFIED",
+      "confidence": 0.88,
+      "downstream_impact": [
+        "order-service",
+        "payment-service"
+      ],
+      "hops_to_furthest_symptom": 2,
+      "description": "checkout-consumer was the upstream dependency causing cascading failures"
+    }
+  ],
+  "cascading_failures": [
+    {
+      "from": "checkout-consumer",
+      "to": [
+        "order-service",
+        "payment-service"
+      ],
+      "reason": "Cascading failure"
+    }
+  ],
+  "all_findings": [
+    {
+      "incident_id": "incident_001",
+      "breakpoint_service": "checkout-consumer",
+      "issue_type": "BREAKPOINT_IDENTIFIED",
+      "confidence": 0.88,
+      "downstream_impact": [
+        "order-service",
+        "payment-service"
+      ],
+      "hops_to_furthest_symptom": 2,
+      "description": "checkout-consumer was the upstream dependency causing cascading failures"
+    }
+  ]
+}

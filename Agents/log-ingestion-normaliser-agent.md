@@ -1,5 +1,5 @@
 # Log Ingestion & Normaliser Agent
-**Version:** 2.0.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -22,9 +22,9 @@ ingestion_config:
   # scanned and auto-classified by content, not by name. This is what lets the
   # exact same agent work on a teammate's exports, a real Datadog account
   # export, or any future test data without editing this config.
-  input_folder: "input/"
+  input_folder: "<path-to-your-input-folder>/"
 
-  output_file: "output/normalised_data.json"
+  output_file: "output/<dataset>/normalised_data.json"
 
   settings:
     skip_unreadable_files: true   # true = skip files that fail to parse and continue | false = stop on first failure
@@ -41,7 +41,18 @@ ingestion_config:
 - `input_folder` must exist and contain at least one readable file
 - No specific filenames are required or assumed — any file matching `file_extensions_scanned`
   is inspected and classified by content
-- Output folder `output/` must be writable
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST write only to the exact configured `output_file`.
+- The configured `output_file` MUST be inside the resolved `output/<dataset>/` folder for the current input folder.
+- For a folder input such as `input/`, all classified files in that folder are one dataset and produce one `normalised_data.json` under `output/input/`.
+- This agent MUST NOT create output folders based on individual source filenames, source types, dates, service names, or existing files in `output/`.
+- If `input_folder` and `output_file` do not map to the same dataset route, stop before writing and report the mismatch.
 
 ---
 
@@ -83,12 +94,69 @@ Since real Datadog exports are never guaranteed to have predictable filenames, e
 | `metric` | File extension is `.csv` **and** header row contains a `value` or `metric_name` column |
 | `trace` | JSON array where records contain both `trace_id` and `span_id` fields |
 | `alert` | JSON array where records contain `monitor_name` and (`priority` or `status`) fields |
-| `infrastructure` | JSON array where records contain `host` plus at least 2 of: `cpu_pct`, `memory_pct`, `disk_pct`, `network_in`, `network_out` |
-| `log` | JSON array where records contain `message` or `level`/`severity`, and do NOT match trace/alert/infrastructure signatures above |
+| `log` | JSON array where records contain `timestamp` plus `message` or `level`/`severity`. A log record may also contain `host`; `host` alone MUST NOT make it infrastructure |
+| `infrastructure` | JSON array where records contain `host` plus at least 3 numeric resource fields from: `cpu_pct`, `memory_pct`, `disk_pct`, `network_in`, `network_out`, and do NOT contain log-signature fields such as `message` plus `level`/`severity` |
 | `unknown` | File does not match any signature above — logged and excluded from `normalised_data.json`, reported in the ingestion summary |
 
 If a file matches more than one signature (e.g. ambiguous schema), the most specific match wins
-in this priority order: `trace` > `alert` > `infrastructure` > `metric` > `log`.
+in this priority order: `trace` > `alert` > `metric` > `log` > `infrastructure`.
+
+**Critical anti-regression rule:** Datadog log exports commonly contain a `host` field. A generated
+implementation MUST NOT classify a JSON file as infrastructure merely because the first record contains
+`host`. Infrastructure classification requires actual resource metric fields (`cpu_pct`, `memory_pct`,
+`disk_pct`, `network_in`, `network_out`) with numeric values. If a record has `timestamp`, `message`,
+and `level`/`severity`, classify it as `log` even when it also has `host`, `environment`, and `tags`.
+
+---
+
+## Output File Schema - `normalised_data.json`
+
+`normalised_data.json` MUST be a JSON object containing both run metadata and the complete normalized
+record array. A summary-only file is invalid because downstream agents need the actual records.
+
+```json
+{
+  "dataset_name": "input",
+  "input_root": "<absolute-or-relative-input-folder>",
+  "analysis_period": { "from": "2026-07-02T08:00:00Z", "to": "2026-07-02T10:00:01Z" },
+  "record_counts": {
+    "log": 26,
+    "metric": 35,
+    "trace": 12,
+    "alert": 7,
+    "infrastructure": 10,
+    "total": 90
+  },
+  "classified_files": [
+    { "path": "datadog_logs_export_20260702.json", "source_type": "log", "record_count": 26 },
+    { "path": "datadog_metrics_export_20260702.csv", "source_type": "metric", "record_count": 35 }
+  ],
+  "skipped_files": [],
+  "records": [
+    {
+      "record_id": "log_000001",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "payment-service",
+      "environment": "prod",
+      "timestamp": "2026-07-02T08:05:00Z",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "tags": ["team:payments"],
+      "source_ip": null,
+      "user": null,
+      "raw": { "original record fields": "preserved here" }
+    }
+  ]
+}
+```
+
+Rules:
+- `records` MUST contain every normalized record from every classified file. It is not optional.
+- `record_counts.total` MUST equal `len(records)`.
+- `record_counts.<source_type>` MUST equal the number of records in `records[]` with that `source_type`.
+- `classified_files[]` MUST list each physical input file once with the detected `source_type` and record count.
+- `samples` may be included for debugging, but samples MUST NOT replace `records`.
+- Downstream agents MUST read from `records[]`; they MUST NOT depend on `samples[]` or summary-only counts.
 
 ---
 
@@ -126,6 +194,9 @@ in this priority order: `trace` > `alert` > `infrastructure` > `metric` > `log`.
 3. If `require_all_types=true` and one of the 5 expected types has zero matching files → STOP and
    report which type is missing
 4. Files classified as `unknown` are excluded from ingestion and listed in the summary
+5. Before accepting classification, run the negative check: any file whose records contain
+   `timestamp`, `level`/`severity`, and `message` MUST appear in the `logs` classified-files list,
+   not in `infrastructure`, even if the records also contain `host`
 
 ### Phase 2 — Ingest Logs (files classified as `log`)
 1. Parse JSON array of log entries
@@ -163,10 +234,11 @@ in this priority order: `trace` > `alert` > `infrastructure` > `metric` > `log`.
 5. Tag each record: `environment` per the derivation rule above
 
 ### Phase 7 — Write Output
-1. Merge all normalised records into a single array
-2. Sort by timestamp ascending
-3. Write to `output/normalised_data.json`
-4. Print ingestion summary showing which physical file each source type was read from
+1. Merge all normalised records into `records[]`
+2. Sort `records[]` by timestamp ascending, then `record_id`
+3. Build `record_counts`, `classified_files`, `skipped_files`, and `analysis_period`
+4. Write the full object to `output/<dataset>/normalised_data.json`
+5. Print ingestion summary showing which physical file each source type was read from
 
 ---
 
@@ -174,7 +246,7 @@ in this priority order: `trace` > `alert` > `infrastructure` > `metric` > `log`.
 
 | Artifact | Description |
 |---|---|
-| `normalised_data.json` | Unified array of all ingested records, tagged by source type, severity, service, environment, timestamp |
+| `normalised_data.json` | Object containing metadata, `record_counts`, `classified_files`, `skipped_files`, and a full `records[]` array of all ingested records tagged by source type, severity, service, environment, timestamp |
 
 ---
 
@@ -189,14 +261,38 @@ in this priority order: `trace` > `alert` > `infrastructure` > `metric` > `log`.
 | CSV headers missing | Metrics file has no header row | Add header row to CSV |
 | Timestamps inconsistent | Mixed formats in input | `timestamp_format: "auto"` already handles this by detecting format per record |
 | Pipeline stops at Phase 0 | `require_all_types=true` but one type has zero matching files | Either add that export type to the folder, or set `require_all_types: false` to proceed with whatever's available |
-| Output folder not writable | Permissions issue | Create `output/` folder manually |
+| Output folder not writable | Permissions issue | Create `output/<dataset>/` folder manually |
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-02 | log-ingestion-normaliser-agent | Initial release — multi-format ingestion, unified normalisation, source tagging |
-| 2.0.0 | 2026-07-03 | log-ingestion-normaliser-agent | Removed all hardcoded filename assumptions — agent now scans an input folder and classifies each file's type purely by content/schema, so it works unmodified against real Datadog exports with arbitrary filenames |
-| 2.1.0 | 2026-07-03 | log-ingestion-normaliser-agent | Added consistent `environment` derivation across all source types; added `parent_span_id` extraction with documented fallback flag for traces; added `source_ip`/`user` extraction from logs for downstream security correlation |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- Every input record from every classified input file MUST produce exactly one normalized record unless it is unreadable or malformed; skipped records must be counted with reasons.
+- `normalised_data.json.records` MUST exist and MUST be a non-empty array whenever input records were classified.
+- `record_id` MUST be unique across the entire `normalised_data.json`.
+- `source_type` MUST be one of `log`, `metric`, `trace`, `alert`, or `infrastructure`.
+- `timestamp` MUST be normalized to ISO-8601 UTC where possible. If a timestamp cannot be parsed, preserve the raw value under `raw` and set normalized `timestamp` to null rather than inventing one.
+- Severity mapping MUST be deterministic. Do not infer CRITICAL/ERROR from vague text unless the rule is explicitly listed.
+- For metrics, preserve `metric_name`, numeric `value`, `service`, `host`, and tags in `raw`.
+- For traces, preserve `trace_id`, `span_id`, optional `parent_span_id`, `service`, `operation`, `duration_ms`, and `status` in `raw`.
+- For alerts, preserve `monitor_name`, `status`, `priority`, `triggered_at`, `service`, and message in `raw`.
+- For infrastructure, preserve host resource fields in `raw`; do not rename host as service except in the normalized service field where the schema requires a grouping key.
+- The ingestion summary MUST list each file, classification, status, and record count.
+- The output path MUST exactly match the configured `output_file`; do not rewrite it from the input filename or source type.
+- A file shaped like `datadog_logs_export_20260702.json` with records containing `timestamp`, `level`,
+  `service`, `message`, `host`, `environment`, and `tags` MUST be classified as `log`.
+- The same log-shaped file MUST NOT appear under `classified_files.infrastructure`.
+- If log-shaped input files exist, `record_counts.log` MUST be greater than 0 and downstream `log_analysis.json`
+  MUST see those log records.
+- A summary-only `normalised_data.json` that contains `classified_files` and counts but no full `records[]`
+  array MUST be rejected.
+
+Reject the generated output if source row counts and normalized record counts do not reconcile.

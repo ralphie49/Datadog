@@ -1,5 +1,5 @@
 # Security Audit Agent
-**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -17,8 +17,8 @@ permission escalations, and compliance breaches across any system monitored in D
 
 ```yaml
 security_audit_config:
-  input_file:  "output/normalised_data.json"
-  output_file: "output/security_report.json"
+  input_file:  "output/<dataset>/normalised_data.json"
+  output_file: "output/<dataset>/security_report.json"
 
   settings:
     pii_columns:          ["email", "phone", "ssn", "dob", "address", "credit_card", "national_id", "password", "token", "secret"]
@@ -37,8 +37,18 @@ security_audit_config:
 
 ## Pre-requisites
 
-- `normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
-- Output folder `output/` must be writable
+- `output/<dataset>/normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_file` and write only the configured `output_file`.
+- `input_file` and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from users, IPs, services, dates, the input filename, or existing files in `output/`.
+- If the input and output paths point to different dataset folders, stop before writing and report the mismatch.
 
 ---
 
@@ -48,6 +58,8 @@ security_audit_config:
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
   across every record this agent actually processed (never leave them null when input records exist).
   `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
+- MUST read security-relevant records from `normalised_data.json.records[]`, especially records with
+  `source_type == "log"` and `source_type == "alert"`. Do not scan only `samples` or classified-file summaries.
 - MUST scan all log messages two ways: (1) by `pii_columns` field-name labels (e.g. `email=...`), and (2)
   independently by `pii_value_patterns` regex against the raw message text, so unlabelled PII (a bare email or
   phone number with no field prefix) is still caught — never log raw PII values in findings
@@ -60,6 +72,7 @@ security_audit_config:
 - MUST write all findings to `security_report.json`
 
 ### MUST NOT
+- MUST NOT accept a summary-only `normalised_data.json` that has no `records[]` array
 - MUST NOT write raw PII values or credentials into the output report — always redact
 - MUST NOT modify the input `normalised_data.json`
 - MUST NOT ignore CRITICAL severity security findings
@@ -159,6 +172,44 @@ security_audit_config:
 
 ---
 
+## Implementation Notes (pseudocode — MUST be followed structurally, not just in spirit)
+
+Observed defect: the field-name pass and the regex-value pass for PII detection are commonly implemented
+as two independent `if` blocks that each unconditionally append a finding — with no shared state between
+them, so a single log line matching both passes (e.g. a message containing `email=someone@x.com`, which
+matches the `email` field-name check AND the email regex) produces two duplicate `PII_IN_LOGS` findings for
+the one underlying event. Track which records have already produced a PII finding, per record, not per pass:
+
+```
+for record in log_and_alert_records:
+    pii_already_flagged_for_this_record = False        # reset per record, not per pass
+
+    if any(f"{col}=" in record.message.lower() for col in pii_columns):
+        if not pii_already_flagged_for_this_record:
+            findings.append(make_pii_finding(record))
+            pii_already_flagged_for_this_record = True
+
+    for pattern in pii_value_patterns.values():
+        if regex_search(pattern, record.message):
+            if not pii_already_flagged_for_this_record:   # this check is what prevents the duplicate
+                findings.append(make_pii_finding(record))
+                pii_already_flagged_for_this_record = True
+            break
+```
+The two passes still both run (a value-only match with no field-name label must still be caught), but the
+per-record flag ensures at most one `PII_IN_LOGS` finding is emitted per record even when both passes fire.
+
+## Self-Test Cases (run against this project's own sample data before considering this agent done)
+
+Given the single log line "PII field 'email' detected in log message: user record
+email=redacted@example.com" (which matches both the `email` field-name pass and the email regex pass):
+- `security_report.json.summary.pii_exposures` MUST equal `1` for this line, not `2`.
+- `security_report.json.findings` MUST contain exactly one `PII_IN_LOGS` entry with `timestamp:
+  2026-07-02T09:54:00Z`, not two. If two entries exist with the same `issue_type`, `service`, and
+  `timestamp`, the per-record dedup was not implemented and must be added.
+
+---
+
 ## Output Specification
 
 | Artifact | Description |
@@ -177,11 +228,31 @@ security_audit_config:
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-02 | security-audit-agent | Initial release — PII scan, credential leak, brute force, permission escalation, compliance |
-| 1.1.0 | 2026-07-03 | security-audit-agent | Added regex-based PII value detection (catches unlabelled PII, not just field-name matches); fixed brute-force grouping to use available `source_ip`/`user`/`service` fields with a documented fallback instead of assuming fields that ingestion never produced |
-| 1.2.0 | 2026-07-03 | security-audit-agent | Added rule preventing ingested alert-type records from being passed through as a confirmed BRUTE_FORCE_ATTEMPT; such alerts now surface as SUSPICIOUS_ACTIVITY citing the source monitor instead; added analysis_period population rule |
-| 1.3.0 | 2026-07-03 | security-audit-agent | Fixed observed bug: analysis_period was being written as a bare array instead of a {from, to} object — now explicitly specified as an object-only field |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- PII and credential findings MUST be redacted in descriptions and evidence. Do not copy raw secrets, tokens, email addresses, or credentials into output.
+- `summary.total_security_issues` MUST equal `len(findings)`.
+- `summary.critical_issues`, `summary.error_issues`, and `summary.warn_issues` MUST be counted from `findings[].severity`.
+- `summary.pii_exposures` MUST count findings with `issue_type == "PII_IN_LOGS"`.
+- `summary.credential_leaks` MUST count findings with `issue_type == "CREDENTIAL_LEAK"`.
+- Auth-failure grouping MUST be deterministic by service, source IP, user, or the best available stable key. If user/IP is missing, group by service and explain that fallback.
+- Do not count the same raw auth event twice because it appears in both logs and alerts unless the alert is separately reported as monitor evidence.
+- Every CRITICAL security finding MUST include `service`, `timestamp`, `description`, `redacted`, and `action`.
+- `all_issues` MUST mirror security findings in a compact form; no finding may be absent from `all_issues`.
+- If `normalised_data.json` contains log records with PII/credential evidence such as `email=`, `PII`,
+  `Credential leak`, `Authorization: Bearer`, `password`, `token`, or repeated unauthorized access messages,
+  `security_report.json.findings` MUST NOT be empty.
+- For the sample `input/` folder, findings MUST include at least one `PII_IN_LOGS`, one `CREDENTIAL_LEAK`,
+  and one brute-force/unauthorized-access finding for `user-service`.
+- Reject the output if security findings are zero because logs were not ingested or because only alert records
+  were scanned.
+
+Reject the generated output if any unredacted secret-like or PII-like value appears in the report.

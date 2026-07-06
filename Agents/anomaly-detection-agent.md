@@ -1,5 +1,5 @@
 # Anomaly Detection Agent
-**Version:** 1.2.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -19,12 +19,12 @@ critical failures.
 ```yaml
 anomaly_config:
   input_files:
-    - "output/log_analysis.json"
-    - "output/metrics_report.json"
-    - "output/apm_report.json"
-    - "output/security_report.json"
+    - "output/<dataset>/log_analysis.json"
+    - "output/<dataset>/metrics_report.json"
+    - "output/<dataset>/apm_report.json"
+    - "output/<dataset>/security_report.json"
 
-  output_file: "output/anomaly_report.json"
+  output_file: "output/<dataset>/anomaly_report.json"
 
   settings:
     sensitivity:              "medium"
@@ -38,8 +38,18 @@ anomaly_config:
 
 ## Pre-requisites
 
-- All upstream agent output JSON files must exist
-- Output folder `output/` must be writable
+- All upstream agent output JSON files under `output/<dataset>/` must exist
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_files` and write only the configured `output_file`.
+- Every `input_files` entry and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from anomaly types, services, timestamps, upstream filenames, or existing files in `output/`.
+- If the input files do not all share the same dataset folder, or if the output path points elsewhere, stop before writing and report the mismatch.
 
 ---
 
@@ -168,6 +178,66 @@ anomaly_config:
 
 ---
 
+## Implementation Notes (pseudocode — MUST be followed structurally, not just in spirit)
+
+Three specific defects have been observed in prior generated code for this agent.
+
+**1. A spike MUST be computed, not inferred from another report's threshold verdict.** A common shortcut is
+to re-emit every service already marked WARN/CRITICAL in `metrics_report.json` as a `LATENCY_SPIKE`, without
+checking whether the current value actually exceeds `spike_multiplier × baseline`. This produces false
+positives whenever the "critical" verdict came from an absolute threshold (e.g. p99 >= 1000ms) rather than a
+relative jump — a service can be CRITICAL by absolute threshold while its current value is *below* its own
+baseline, which is not a spike.
+```
+for service_row in metrics_report.latency.by_service:
+    value = service_row.p99_ms
+    baseline = service_row.avg_ms
+    if baseline > 0 and value > spike_multiplier * baseline:   # this comparison is mandatory
+        anomalies.append({anomaly_type: "LATENCY_SPIKE", service: ..., value: value, baseline: baseline,
+                           deviation_pct: round(100*(value-baseline)/baseline, 1), ...})
+    # do NOT emit a LATENCY_SPIKE just because service_row.verdict is WARN/CRITICAL —
+    # verdict reflects an absolute threshold breach in metrics_report.json, not a relative spike
+```
+
+**2. Each anomaly's `timestamp` MUST be the specific record's own timestamp, never a report-level summary
+field.** A common shortcut re-uses `metrics_report.summary.analysis_period.to` (or `.from`) as a stand-in
+timestamp for every anomaly derived from that report. This is explicitly forbidden by the MUST rule above —
+use the timestamp on the specific trace/metric/log record that triggered the anomaly, e.g. the timestamp of
+the actual slowest trace for that service, not the report's overall date range.
+
+**3. Correlation MUST also catch same-`anomaly_type` anomalies across different, dependency-connected
+services at the same timestamp — not only different-type anomalies on the same service.** A common
+shortcut only pairs `a.anomaly_type != b.anomaly_type`, which silently excludes the case of e.g. three
+different services all spiking in latency at the same moment (a real, high-value correlation signal for a
+cascading failure) because they share the same `anomaly_type`.
+```
+for a, b in all_pairs(anomalies):
+    same_moment = abs(a.timestamp - b.timestamp) <= 5_minutes
+    related = (a.service == b.service) or dependency_graph_connects(a.service, b.service)
+    if same_moment and related and (a.service != b.service or a.anomaly_type != b.anomaly_type):
+        # correlate on (a) same service + different type, OR (b) different service + same type,
+        # as long as they are graph-connected — both are valid corroboration signals
+        emit_correlated_anomaly(a, b)
+```
+
+## Regression Gates (must pass before this agent is considered done)
+- The output must contain at least one `CORRELATED_ANOMALY` entry when two or more dependency-connected anomalies occur within the same 5-minute window.
+- Each anomaly's `timestamp` must be taken from the triggering record or finding, never from the overall report analysis period start.
+- The generated `anomaly_report.json` must not contain empty or placeholder timestamps for critical findings when the upstream records carry real timestamps.
+
+## Self-Test Cases (run against this project's own sample data before considering this agent done)
+
+- `checkout-consumer`'s latency anomaly (p99=3300ms, avg/baseline=3400ms) MUST NOT appear in
+  `anomaly_report.json.anomalies` as a `LATENCY_SPIKE`, since 3300 < 3400 (the value is below baseline,
+  not above `spike_multiplier × baseline`). If it appears, spike math was not actually implemented.
+- The three simultaneous latency findings on `order-service`, `payment-service`, and `checkout-consumer`
+  (all at `09:50:00Z`, all dependency-connected per `dependency_report.json`) MUST produce at least one
+  `CORRELATED_ANOMALY` entry. If none exists, cross-service same-type correlation was not implemented.
+- No anomaly's `timestamp` field may equal `metrics_report.json.summary.analysis_period.to` unless that is
+  genuinely also the specific triggering record's own timestamp.
+
+---
+
 ## Output Specification
 
 | Artifact | Description |
@@ -186,10 +256,24 @@ anomaly_config:
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-02 | anomaly-detection-agent | Initial release — spike detection, trend analysis, cross-source correlation, confidence scoring |
-| 1.1.0 | 2026-07-03 | anomaly-detection-agent | Added MUST rule requiring analysis_period.from/to to be populated from actual record timestamps instead of left null |
-| 1.2.0 | 2026-07-03 | anomaly-detection-agent | Fixed observed failure mode where individual anomalies were timestamped at analysis_period.from as a placeholder instead of their real occurrence time, which broke downstream time-window correlation in the Dependency/Flow and Root Cause agents; fixed duplicate CORRELATED_ANOMALY entries for the same underlying correlation; fixed description/anomaly_type mismatches (e.g. a THROUGHPUT_DROP entry carrying an unrelated Kafka-lag log message); analysis_period is now explicitly specified as an object, never an array |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- Do not convert every WARN or CRITICAL upstream finding into an anomaly. An anomaly requires a relative spike, drop, worsening trend, or correlation rule to be satisfied.
+- A `LATENCY_SPIKE` MUST compare a current or triggering latency value against a baseline. If `value <= baseline * spike_multiplier`, do not emit `LATENCY_SPIKE` even if the upstream metrics verdict is CRITICAL.
+- A single-source anomaly MUST NOT be `HIGH` confidence unless its deviation crosses a documented high-confidence threshold and that rule is implemented explicitly. Default single-source anomalies to `MEDIUM` or `LOW`.
+- If two or more anomalies occur within the correlation window and their services are dependency-connected, emit at least one `CORRELATED_ANOMALY` or record a machine-readable `correlation_skipped_reason`.
+- `summary.correlated_anomalies` MUST equal the count of emitted correlated anomaly records according to the schema. The counting rule must be implemented consistently.
+- Every anomaly timestamp MUST come from the specific triggering record/finding. Never use a report-level `analysis_period.from` or `analysis_period.to` as a placeholder.
+- Every anomaly description MUST describe that anomaly's own `anomaly_type`, service, value, and baseline. Do not paste an unrelated source message.
+- Deduplicate anomalies by `anomaly_type`, `service`, rounded timestamp/correlation window, and `corroborated_by` set.
+- `summary.total_anomalies` MUST equal `len(anomalies)`.
+
+Reject the generated output if a high-confidence anomaly has neither corroboration nor an explicit high-deviation rule.

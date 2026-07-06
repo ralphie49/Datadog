@@ -1,5 +1,5 @@
 # Error & Data Quality Agent
-**Version:** 1.2.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -20,8 +20,8 @@ core, a specialised category of error.
 
 ```yaml
 error_dq_config:
-  input_file:  "output/normalised_data.json"
-  output_file: "output/log_analysis.json"
+  input_file:  "output/<dataset>/normalised_data.json"
+  output_file: "output/<dataset>/log_analysis.json"
 
   error_settings:
     error_threshold:      "ERROR"   # Minimum level to flag: DEBUG | INFO | WARN | ERROR | CRITICAL
@@ -40,8 +40,18 @@ error_dq_config:
 
 ## Pre-requisites
 
-- `normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
-- Output folder `output/` must be writable
+- `output/<dataset>/normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_file` and write only the configured `output_file`.
+- `input_file` and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from the input filename, source type, date, service name, or existing files in `output/`.
+- If the input and output paths point to different dataset folders, stop before writing and report the mismatch.
 
 ---
 
@@ -50,6 +60,8 @@ error_dq_config:
 ### MUST
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
   across every record this agent actually processed (never leave them null when input records exist)
+- MUST read log records from `normalised_data.json.records[]`, filtering `source_type == "log"`.
+  Do not read from `samples`, `classified_files`, or summary counts as a substitute.
 - MUST scan all records with severity >= `error_threshold`
 - MUST classify every application error into one of the defined error types
 - MUST count frequency of each unique error and flag recurring ones
@@ -62,6 +74,7 @@ error_dq_config:
 - MUST write both application-error and DQ findings to `log_analysis.json`
 
 ### MUST NOT
+- MUST NOT accept a summary-only `normalised_data.json` that has no `records[]` array
 - MUST NOT ignore CRITICAL severity records regardless of threshold setting
 - MUST NOT deduplicate errors without preserving frequency count
 - MUST NOT ignore DQ alerts even if rejection rate is below threshold
@@ -236,10 +249,32 @@ This ordering must be applied consistently across every run so the same message 
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-03 | error-data-quality-agent | Merged release — combines application error classification with data quality metrics tracking into a single agent |
-| 1.1.0 | 2026-07-03 | error-data-quality-agent | Added fixed priority order for error-type classification so overlapping message patterns resolve consistently across runs |
-| 1.2.0 | 2026-07-03 | error-data-quality-agent | Disambiguated dq_alerts[].count (alert recurrence) from the embedded count=N rejection figure used for worst_columns; clarified worst_columns must sum parsed rejection counts; added analysis_period population rule |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- `top_errors` MUST contain at most `top_errors_limit` entries. Put the full unbounded list in `all_errors`; never let `top_errors` grow past the configured limit.
+- `summary.total_errors` MUST equal the count of processed records with severity `ERROR` or `CRITICAL`, not the number of grouped error rows.
+- `summary.total_warnings` MUST equal the count of processed records with severity `WARN`.
+- `summary.total_critical` MUST equal the count of processed records with severity `CRITICAL`.
+- `recurring_errors` MUST count grouped errors where `frequency > recurring_threshold`, not raw error records.
+- `affected_services` MUST be derived from grouped error findings and sorted for deterministic output.
+- `rejection_rates[].rejection_pct` MUST be recomputed as `failed / total * 100` and cross-checked against any logged `rejection_rate_pct`; if they disagree by more than 0.1, prefer the computed value and record a warning field.
+- `worst_columns[].rejection_count` MUST use the embedded `count=N` value from `DQ_ALERT` messages, not the number of log lines.
+- `dq_alerts[].count` MUST mean alert recurrence count only. It MUST NOT reuse or overwrite the embedded `count=N` rejection total.
+- If any `DQ_ALERT rejection_reason=... count=N` appears in input, `worst_columns` MUST NOT be empty.
+- The actual written path MUST exactly equal the configured `output_file`, and that path MUST share the same dataset folder as `input_file`.
+- If `normalised_data.json` contains any `source_type: "log"` record whose severity/level is `ERROR` or
+  `CRITICAL`, then `summary.total_errors` MUST be greater than 0 and that record MUST appear in `all_errors`.
+- For the sample `input/` folder, `summary.total_errors` MUST equal 19 and `all_errors[]` MUST include all
+  15 ERROR rows plus all 4 CRITICAL rows from the log export.
+- Reject the output if logs exist upstream but the generated implementation reports zero errors because it
+  accidentally consumed only metrics, traces, alerts, or infrastructure records.
+
+Reject the generated output if any of these assertions fail. Do not describe the output as valid when a regression gate fails.

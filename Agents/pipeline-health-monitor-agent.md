@@ -1,5 +1,5 @@
 # Pipeline Health Monitor Agent
-**Version:** 1.3.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -17,8 +17,8 @@ processing backlogs across any streaming or batch pipeline monitored in Datadog.
 
 ```yaml
 pipeline_health_config:
-  input_file:  "output/normalised_data.json"
-  output_file: "output/apm_report.json"
+  input_file:  "output/<dataset>/normalised_data.json"
+  output_file: "output/<dataset>/apm_report.json"
 
   thresholds:
     kafka_lag_warn:          10000
@@ -33,8 +33,18 @@ pipeline_health_config:
 
 ## Pre-requisites
 
-- `normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
-- Output folder `output/` must be writable
+- `output/<dataset>/normalised_data.json` must exist (produced by Log Ingestion & Normaliser Agent)
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_file` and write only the configured `output_file`.
+- `input_file` and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from topic names, consumer groups, pipeline names, dates, the input filename, or existing files in `output/`.
+- If the input and output paths point to different dataset folders, stop before writing and report the mismatch.
 
 ---
 
@@ -44,6 +54,8 @@ pipeline_health_config:
 - MUST populate `analysis_period.from` and `analysis_period.to` as the min and max `timestamp` values
   across every record this agent actually processed (never leave them null when input records exist).
   `analysis_period` MUST be a JSON object with exactly the keys `from` and `to` — never a bare array/list
+- MUST read Kafka, checkpoint, trace, log, and alert evidence from `normalised_data.json.records[]`;
+  do not use `samples`, `classified_files`, or summary-only metadata as a substitute for actual records.
 - MUST scan all records for Kafka lag metrics and flag breaches
 - MUST preserve `topic` and `consumer_group` as two distinct fields, each populated from its own actual
   source field in the normalised data — NEVER substitute one for the other when a value is missing or
@@ -73,6 +85,7 @@ pipeline_health_config:
 - MUST write all findings to `apm_report.json`
 
 ### MUST NOT
+- MUST NOT accept a summary-only `normalised_data.json` that has no `records[]` array
 - MUST NOT flag checkpoint warnings in test/dev environments as CRITICAL
 - MUST NOT modify the input `normalised_data.json`
 
@@ -162,6 +175,46 @@ pipeline_health_config:
 
 ---
 
+## Implementation Notes (pseudocode — MUST be followed structurally, not just in spirit)
+
+Observed defect: when Kafka lag comes from a metrics CSV/metric record, that record's own fields are
+`metric_name` (e.g. `kafka_consumer_lag`) and `service` (e.g. `checkout-consumer`) — it does NOT contain a
+real Kafka topic name. A naive implementation writes `topic = metric_name`, which produces a nonsense
+topic value (the metric's own name, not a topic). `metric_name` and `service` are NEVER valid values for
+`topic` — enforce this explicitly:
+
+```
+for lag_metric_record in kafka_lag_metric_records:
+    topic = None                                    # never default to metric_name or service
+    consumer_group = lag_metric_record.service       # this field is legitimately the consumer group/service
+    # attempt to recover the real topic name by cross-referencing log/alert records with matching
+    # lag value and overlapping timestamp/service — real Datadog exports commonly log the topic name
+    # in a companion log line even when the metric itself doesn't carry it:
+    for log_or_alert in log_and_alert_records:
+        if log_or_alert.service == consumer_group and abs(time_diff) < 2_minutes:
+            match = regex_search(r"topic[= ]([\w.-]+)", log_or_alert.message)
+            if match:
+                topic = match.group(1)
+                break
+    # if no match found after checking companion log/alert records, topic stays null — do NOT fall back
+    # to metric_name, service, or any other field as a substitute value
+    kafka_issues.append({topic: topic, consumer_group: consumer_group, lag: ..., ...})
+```
+
+## Self-Test Cases (run against this project's own sample data before considering this agent done)
+
+Given `datadog_metrics_export_20260702.csv` (metric_name=`kafka_consumer_lag`, service=`checkout-consumer`,
+no topic column) and `datadog_logs_export_20260702.json` (which contains the line "Kafka consumer lag
+critical for topic ecommerce-events, lag=125000"):
+- `apm_report.json.kafka.topics[].topic` for the lag=125000 and lag=118000 entries MUST equal
+  `"ecommerce-events"` — the value recovered from the companion log line — and MUST NOT equal
+  `"kafka_consumer_lag"` (the metric_name) or `"checkout-consumer"` (the consumer_group/service).
+- If any `topic` value in the output is identical to any `consumer_group` value or identical to the string
+  `"kafka_consumer_lag"`, this is a data-integrity defect and the implementation must be corrected before
+  the output is accepted.
+
+---
+
 ## Output Specification
 
 | Artifact | Description |
@@ -180,11 +233,29 @@ pipeline_health_config:
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-02 | pipeline-health-monitor-agent | Initial release — Kafka lag, checkpoint health, SLA breach, backlog detection |
-| 1.1.0 | 2026-07-03 | pipeline-health-monitor-agent | Clarified pipelines_with_issues counts distinct pipelines, not total issue count, and can never exceed total_pipelines_analysed; added analysis_period population rule |
-| 1.2.0 | 2026-07-03 | pipeline-health-monitor-agent | Backlog description text must reflect the actual computed verdict (WARN/CRITICAL) instead of a hardcoded severity word |
-| 1.3.0 | 2026-07-03 | pipeline-health-monitor-agent | Fixed observed failure mode where pipelines_with_issues exceeded total_pipelines_analysed — added an explicit arithmetic self-check; fixed topic field being overwritten with the consumer_group value; fixed SLA_BREACH entries being fabricated from generic retry/timeout log lines with no measured duration; added requirement that every kafka.topics[] entry carry its own timestamp; analysis_period is now explicitly specified as an object, never an array |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- Kafka lag findings MUST come only from actual Kafka lag metrics/logs/alerts, not generic latency or timeout records.
+- `apm_report.json` MUST include the top-level `kafka` object with a `topics` array. Do not replace Kafka
+  analysis with only `sla_breaches`, `trace_failures`, or a generic issues list.
+- `topic` and `consumer_group` MUST remain separate. Never copy `consumer_group`, service name, or `metric_name` into `topic` as a fallback.
+- If the real topic cannot be determined, set `topic: null` and explain the missing source in a note or skipped-detail field.
+- Every `kafka.topics[]` entry MUST include the source record timestamp.
+- WARN and CRITICAL Kafka lag severities MUST follow configured thresholds exactly.
+- `PROCESSING_BACKLOG` entries derived from Kafka lag MUST use the same verdict as the underlying lag finding.
+- Do not create `SLA_BREACH` from a generic timeout message unless an explicit duration exceeds `sla_breach_threshold_ms`.
+- `summary.total_pipelines_analysed` MUST be the count of distinct topic/consumer-group/pipeline identifiers observed in relevant input.
+- `summary.pipelines_with_issues` MUST be the count of distinct identifiers with at least one issue and MUST NOT exceed `total_pipelines_analysed`.
+- `summary.critical_issues` and `summary.warn_issues` MUST be counted from `all_issues`.
+
+Reject the generated output if topic equals `kafka_consumer_lag`, equals the consumer group, or is invented without evidence.
+Also reject it if the `kafka` section is missing while the input contains `kafka_consumer_lag` metrics or
+Kafka lag log/alert messages.

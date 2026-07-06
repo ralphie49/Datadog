@@ -1,5 +1,5 @@
 # Report Generation Agent
-**Version:** 1.4.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 
 ---
 
@@ -19,18 +19,18 @@ suitable for sharing with engineering leadership or an incident review.
 ```yaml
 report_config:
   input_files:
-    - "output/normalised_data.json"
-    - "output/log_analysis.json"
-    - "output/metrics_report.json"
-    - "output/apm_report.json"
-    - "output/security_report.json"
-    - "output/anomaly_report.json"
-    - "output/dependency_report.json"
-    - "output/root_cause.json"
-    - "output/recommendations.json"
-    - "output/patch_suggestions.json"
+    - "output/<dataset>/normalised_data.json"
+    - "output/<dataset>/log_analysis.json"
+    - "output/<dataset>/metrics_report.json"
+    - "output/<dataset>/apm_report.json"
+    - "output/<dataset>/security_report.json"
+    - "output/<dataset>/anomaly_report.json"
+    - "output/<dataset>/dependency_report.json"
+    - "output/<dataset>/root_cause.json"
+    - "output/<dataset>/recommendations.json"
+    - "output/<dataset>/patch_suggestions.json"
 
-  output_file: "output/datadog_analysis_report.md"
+  output_file: "output/<dataset>/datadog_analysis_report.md"
 
   settings:
     include_executive_summary:   true
@@ -44,8 +44,19 @@ report_config:
 
 ## Pre-requisites
 
-- All upstream agent output JSON files must exist
-- Output folder `output/` must be writable
+- All upstream agent output JSON files under `output/<dataset>/` must exist
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_files` and write only the configured `output_file`.
+- Every `input_files` entry and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from report titles, timestamps, services, upstream filenames, or existing files in `output/`.
+- If the input files do not all share the same dataset folder, or if the output path points elsewhere, stop before writing and report the mismatch.
+- The final markdown must identify the dataset name or input target it summarizes so a human can verify it belongs to the expected input.
 
 ---
 
@@ -53,6 +64,7 @@ report_config:
 
 ### MUST
 - MUST load all upstream report JSON files
+- MUST preserve the per-dataset runner contract by noting that every generated dataset folder MUST contain a companion `run_datadog_analysis.py` for future reruns, and that the script MUST be written only inside that resolved output dataset folder
 - MUST produce an executive summary at the top — overall health verdict, incident count, top 3 risks
 - MUST include one section per domain: Errors & Data Quality, Performance & Infrastructure,
   Pipeline Health, Security, Anomalies, Dependency/Breakpoint Analysis
@@ -233,12 +245,27 @@ pressure — these are the specific failure modes observed in prior runs of this
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-03 | report-generation-agent | Renamed from summary-report-agent; adds Dependency/Breakpoint and Patch Suggestions sections |
-| 1.1.0 | 2026-07-03 | report-generation-agent | Fixed CRITICAL verdict clause — it referenced "unredacted" security findings, which can never occur since Security Audit Agent always redacts before writing; now triggers on any CRITICAL-severity security finding |
-| 1.2.0 | 2026-07-03 | report-generation-agent | Defined the exact executive-summary aggregation formula for total_critical/total_error/total_warn across domain reports; top risks must now be full descriptive sentences, not bare issue_type labels |
-| 1.3.0 | 2026-07-03 | report-generation-agent | The 1.2.0 "top risks must be full sentences" rule was observed being violated in practice (rendered as "UNDETERMINED impacting X"). Added a mandatory Phase 6 pre-write validation checklist that mechanically catches bare-label top risks, silently-empty recommendation sections when incidents exist, blank table rows, and duplicate entity rows, instead of relying on a one-line prose instruction |
-| 1.4.0 | 2026-07-03 | report-generation-agent | The 1.3.0 checklist still didn't catch a variant of the same bug: bare issue_type labels reappeared when top risks fell back to standalone findings (fewer than 3 root-cause incidents available) rather than root_cause.json incidents — extended the sentence-rendering rule to explicitly cover that fallback path, and added a duplicate-top-risk check after two identical "KAFKA_LAG_HIGH on checkout-consumer" entries were observed in the same report |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- The markdown report MUST be written as valid UTF-8. Characters such as arrows, dashes, or quotes must not render as mojibake like `â†’` or `â€”`.
+- Every count in the executive summary MUST be computed from upstream JSON fields using documented formulas; do not manually restate stale numbers.
+- If an upstream report has known validation failures or unresolved critical findings, the report MUST surface them in the executive summary or a validation notes section.
+- Do not hide critical security findings behind a single dependency incident. Top risks must include the highest-severity issues across all domains.
+- The report MUST preserve traceability: each major claim must map to at least one upstream report section or finding.
+- If `patch_suggestions.patches[].requires_human_review` is true, the patch section heading or row must make human review visible.
+- Before writing, scan the generated markdown for replacement characters, mojibake sequences, empty tables, and unresolved placeholders.
+- The final markdown MUST include all required top-level sections: Executive Summary, Errors & Data Quality,
+  Performance & Infrastructure, Pipeline Health, Security, Anomalies & Trends, Dependency & Breakpoint
+  Analysis, Root Cause Analysis, Recommendations, Patch Suggestions, and Appendix/Ingestion Summary.
+- Reject the report if it is only a short root-cause/recommendations summary and omits domain sections while
+  the corresponding upstream JSON files contain findings.
+
+Reject the generated report if it contains encoding artifacts, placeholder text, or executive-summary counts that disagree with upstream JSON.

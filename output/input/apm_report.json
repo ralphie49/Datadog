@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "total_pipelines_analysed": 1,
+    "pipelines_with_issues": 1,
+    "critical_issues": 2,
+    "warn_issues": 1,
+    "sla_breaches": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "kafka": {
+    "topics": [
+      {
+        "topic": "ecommerce-events",
+        "consumer_group": "checkout-consumer",
+        "lag": 125000,
+        "verdict": "CRITICAL",
+        "issue_type": "KAFKA_LAG_CRITICAL",
+        "timestamp": "2026-07-02T09:28:00Z"
+      },
+      {
+        "topic": "ecommerce-events",
+        "consumer_group": "checkout-consumer",
+        "lag": 118000,
+        "verdict": "CRITICAL",
+        "issue_type": "KAFKA_LAG_CRITICAL",
+        "timestamp": "2026-07-02T09:40:00Z"
+      }
+    ]
+  },
+  "checkpoints": [],
+  "sla_breaches": [],
+  "backlogs": [],
+  "all_issues": [
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "OK",
+      "description": "Kafka lag reached 8000 for checkout-consumer"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "OK",
+      "description": "Kafka lag reached 25000 for checkout-consumer"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "WARN",
+      "description": "Kafka lag reached 68000 for checkout-consumer"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "CRITICAL",
+      "description": "Kafka lag reached 125000 for ecommerce-events"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "CRITICAL",
+      "description": "Kafka lag reached 118000 for ecommerce-events"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_SPIKE",
+      "verdict": "OK",
+      "description": "Kafka lag reached 15000 for checkout-consumer"
+    }
+  ]
+}

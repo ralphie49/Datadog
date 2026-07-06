@@ -1,0 +1,121 @@
+{
+  "summary": {
+    "total_incidents": 2,
+    "high_confidence": 2,
+    "medium_confidence": 0,
+    "low_confidence": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "incidents": [
+    {
+      "incident_id": "incident_001",
+      "root_cause_category": "PIPELINE_BACKPRESSURE",
+      "confidence": "HIGH",
+      "primary_service": "checkout-consumer",
+      "affected_services": [
+        "checkout-consumer",
+        "order-service",
+        "payment-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:28:00Z",
+        "to": "2026-07-02T09:40:00Z"
+      },
+      "root_cause_finding": "Kafka consumer lag reached 125000 on ecommerce-events, causing checkout and downstream payment/order latency",
+      "dependency_breakpoint": "checkout-consumer",
+      "downstream_symptoms": [
+        "Latency and error spikes propagated to payment-service and order-service"
+      ],
+      "evidence_sources": [
+        "apm_report.json",
+        "metrics_report.json",
+        "anomaly_report.json",
+        "dependency_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 3
+    },
+    {
+      "incident_id": "incident_002",
+      "root_cause_category": "SECURITY_INCIDENT",
+      "confidence": "HIGH",
+      "primary_service": "user-service",
+      "affected_services": [
+        "user-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:50:00Z",
+        "to": "2026-07-02T09:55:00Z"
+      },
+      "root_cause_finding": "Repeated unauthorized access and credential-like content were found in user-service logs",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "Authentication failures and potential account compromise activity"
+      ],
+      "evidence_sources": [
+        "security_report.json",
+        "log_analysis.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ],
+  "unresolved_findings": [],
+  "all_incidents": [
+    {
+      "incident_id": "incident_001",
+      "root_cause_category": "PIPELINE_BACKPRESSURE",
+      "confidence": "HIGH",
+      "primary_service": "checkout-consumer",
+      "affected_services": [
+        "checkout-consumer",
+        "order-service",
+        "payment-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:28:00Z",
+        "to": "2026-07-02T09:40:00Z"
+      },
+      "root_cause_finding": "Kafka consumer lag reached 125000 on ecommerce-events, causing checkout and downstream payment/order latency",
+      "dependency_breakpoint": "checkout-consumer",
+      "downstream_symptoms": [
+        "Latency and error spikes propagated to payment-service and order-service"
+      ],
+      "evidence_sources": [
+        "apm_report.json",
+        "metrics_report.json",
+        "anomaly_report.json",
+        "dependency_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 3
+    },
+    {
+      "incident_id": "incident_002",
+      "root_cause_category": "SECURITY_INCIDENT",
+      "confidence": "HIGH",
+      "primary_service": "user-service",
+      "affected_services": [
+        "user-service"
+      ],
+      "timeframe": {
+        "from": "2026-07-02T09:50:00Z",
+        "to": "2026-07-02T09:55:00Z"
+      },
+      "root_cause_finding": "Repeated unauthorized access and credential-like content were found in user-service logs",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "Authentication failures and potential account compromise activity"
+      ],
+      "evidence_sources": [
+        "security_report.json",
+        "log_analysis.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ]
+}

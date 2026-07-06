@@ -1,0 +1,126 @@
+{
+  "summary": {
+    "total_anomalies": 4,
+    "high_confidence": 3,
+    "medium_confidence": 1,
+    "low_confidence": 0,
+    "correlated_anomalies": 1,
+    "worsening_trends": 0,
+    "improving_trends": 0,
+    "analysis_period": {
+      "from": "2026-07-02T08:00:00Z",
+      "to": "2026-07-02T10:00:01Z"
+    }
+  },
+  "anomalies": [
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "value": 125000,
+      "baseline": 8000,
+      "deviation_pct": 1462.5,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE"
+      ],
+      "description": "Kafka consumer lag spiked sharply for checkout-consumer"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "value": 4200,
+      "baseline": 180,
+      "deviation_pct": 2233.3,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Order-service latency rose sharply above baseline"
+    },
+    {
+      "anomaly_type": "ERROR_RATE_SPIKE",
+      "service": "payment-service",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "value": 45.2,
+      "baseline": 8.1,
+      "deviation_pct": 457.0,
+      "confidence": "MEDIUM",
+      "corroborated_by": [
+        "LATENCY_SPIKE"
+      ],
+      "description": "Payment-service error rate spiked above baseline"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "value": 1,
+      "baseline": 0,
+      "deviation_pct": 100.0,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "LATENCY_SPIKE"
+      ],
+      "description": "Kafka lag and latency anomalies aligned for the checkout pipeline"
+    }
+  ],
+  "trends": [],
+  "all_anomalies": [
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "value": 125000,
+      "baseline": 8000,
+      "deviation_pct": 1462.5,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "LATENCY_SPIKE"
+      ],
+      "description": "Kafka consumer lag spiked sharply for checkout-consumer"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "value": 4200,
+      "baseline": 180,
+      "deviation_pct": 2233.3,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE"
+      ],
+      "description": "Order-service latency rose sharply above baseline"
+    },
+    {
+      "anomaly_type": "ERROR_RATE_SPIKE",
+      "service": "payment-service",
+      "timestamp": "2026-07-02T09:30:00Z",
+      "value": 45.2,
+      "baseline": 8.1,
+      "deviation_pct": 457.0,
+      "confidence": "MEDIUM",
+      "corroborated_by": [
+        "LATENCY_SPIKE"
+      ],
+      "description": "Payment-service error rate spiked above baseline"
+    },
+    {
+      "anomaly_type": "CORRELATED_ANOMALY",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T09:28:00Z",
+      "value": 1,
+      "baseline": 0,
+      "deviation_pct": 100.0,
+      "confidence": "HIGH",
+      "corroborated_by": [
+        "KAFKA_LAG_SPIKE",
+        "LATENCY_SPIKE"
+      ],
+      "description": "Kafka lag and latency anomalies aligned for the checkout pipeline"
+    }
+  ]
+}

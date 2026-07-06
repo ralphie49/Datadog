@@ -7,7 +7,7 @@ Create a project folder (name it anything you like — nothing in the pipeline h
 project name). Inside it, create exactly these three sibling folders:
 
 your-project-folder/
-├── agents/
+├── Agents/
 │   ├── datadog-analyser-orchestrator.md
 │   ├── log-ingestion-normaliser-agent.md
 │   ├── error-data-quality-agent.md
@@ -20,20 +20,21 @@ your-project-folder/
 │   ├── code-patch-generator-agent.md
 │   └── report-generation-agent.md
 │
-├── input/
+├── <your-input-folder>/
 │   └── (drop your Datadog export files here — any filenames,
 │        any mix of .json / .csv / .log / .ndjson. The pipeline
 │        auto-detects logs / metrics / traces / alerts /
 │        infrastructure by content, not by filename.)
 │
 └── output/
-    └── (starts empty — the pipeline writes all 10 result files
-         here when it runs: normalised_data.json, log_analysis.json,
-         metrics_report.json, apm_report.json, security_report.json,
-         anomaly_report.json, dependency_report.json, root_cause.json,
-         recommendations.json, patch_suggestions.json, and the final
-         datadog_analysis_report.md)
-
+    └── (starts empty — the pipeline writes one subfolder per input
+         dataset, e.g. output/datadog_logs_export_20260702/, and inside
+         each subfolder it writes the expected files: normalised_data.json,
+         log_analysis.json, metrics_report.json, apm_report.json,
+         security_report.json, anomaly_report.json, dependency_report.json,
+         root_cause.json, recommendations.json, patch_suggestions.json,
+         and datadog_analysis_report.md)
+You used up all of my limit and still you are not able to give me right md files why still 0 right files youare writing so confidently feel shame mann... this time generate md file and run it on you own and generate the output and then give it to me or even you can also add something like when copilot generates it .. it should check the content of output files whether they are right or wrong ?
 
 2) HOW TO RUN IT
 -----------------------------------------------------------------
@@ -41,15 +42,18 @@ PROMPT:
 
 Run the **Datadog Analyser Orchestrator**: read `datadog-analyser-orchestrator.md`,
 then follow each of the 10 agent `.md` files it references, in order, phase by
-phase — obeying every MUST/MUST NOT rule literally. Use my export files in
-`input/`, write each phase's output to `output/` with the exact filenames
-specified, and finish by generating `output/datadog_analysis_report.md`.
+phase — obeying every MUST/MUST NOT rule literally. Use your export files from
+an input folder of your choosing, write each phase's output to `output/` with the
+exact filenames specified, and finish by generating `output/datadog_analysis_report.md`.
+If code generation is used, generated `run_datadog_analysis.py` should be placed
+inside the matching `output/<dataset>/` subfolder for that dataset.
 -----------------------------------------------------------------
 
 
 3) WHAT SHOULD COME OUT
 --------------------------
-After a full run, output/ should contain 11 files:
+After a full run, output/ should contain one subfolder per input dataset,
+and each subfolder should contain these 11 files:
 
   normalised_data.json       (Phase 0 — ingestion)
   log_analysis.json          (Phase 1 — errors + data quality)
@@ -63,9 +67,9 @@ After a full run, output/ should contain 11 files:
   patch_suggestions.json     (Phase 8 — draft diffs, human review only)
   datadog_analysis_report.md (Phase 9 — final consolidated report)
 
-If any of these are missing, check the assistant's run log for which phase
-stopped and why — the agent specs are written to fail loudly (stop + report)
-rather than silently skip a phase.
+If any of these are missing from a dataset subfolder, check the assistant's run
+log for which phase stopped and why — the agent specs are written to fail
+loudly (stop + report) rather than silently skip a phase.
 
 
 4) AGENT FILE VERSIONS (as of last update)

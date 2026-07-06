@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "total_recommendations": 2,
+    "p1_immediate": 1,
+    "p2_urgent": 1,
+    "p3_planned": 0,
+    "p4_advisory": 0
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "priority": "P1_IMMEDIATE",
+      "incident_id": "incident_001",
+      "title": "Scale the checkout consumer for the ecommerce-events topic",
+      "description": "Consumer lag reached 125000 and is creating downstream payment and order-service pressure.",
+      "action": "Increase consumer parallelism and validate partitioning for the ecommerce-events topic.",
+      "affected_services": [
+        "checkout-consumer",
+        "payment-service",
+        "order-service"
+      ],
+      "evidence": "apm_report.json: KAFKA_LAG_CRITICAL; dependency_report.json: breakpoint checkout-consumer"
+    },
+    {
+      "rank": 2,
+      "priority": "P2_URGENT",
+      "incident_id": "incident_002",
+      "title": "Redact and rate-limit authentication logs for user-service",
+      "description": "Repeated unauthorized access patterns and credential-like content require immediate containment.",
+      "action": "Apply redaction and tighten authentication monitoring around user-service.",
+      "affected_services": [
+        "user-service"
+      ],
+      "evidence": "security_report.json: PII_IN_LOGS and BRUTE_FORCE_ATTEMPT evidence"
+    }
+  ]
+}

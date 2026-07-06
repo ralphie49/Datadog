@@ -1,0 +1,153 @@
+{
+  "dataset_name": "input",
+  "status": "valid",
+  "checks": [
+    {
+      "check_id": "normalised_records_present",
+      "artifact": "normalised_data.json",
+      "status": "passed",
+      "detail": "records array present"
+    },
+    {
+      "check_id": "record_count_matches",
+      "artifact": "normalised_data.json",
+      "status": "passed",
+      "detail": "record count matches total"
+    },
+    {
+      "check_id": "log_error_count",
+      "artifact": "log_analysis.json",
+      "status": "passed",
+      "detail": "log error count matches expected"
+    },
+    {
+      "check_id": "worst_columns",
+      "artifact": "log_analysis.json",
+      "status": "passed",
+      "detail": "email and phone DQ findings included"
+    },
+    {
+      "check_id": "security_findings",
+      "artifact": "security_report.json",
+      "status": "passed",
+      "detail": "required security findings present"
+    },
+    {
+      "check_id": "kafka_topics",
+      "artifact": "apm_report.json",
+      "status": "passed",
+      "detail": "Kafka lag topics present"
+    },
+    {
+      "check_id": "dependency_graph",
+      "artifact": "dependency_report.json",
+      "status": "passed",
+      "detail": "dependency_graph object present"
+    },
+    {
+      "check_id": "breakpoint_service",
+      "artifact": "dependency_report.json",
+      "status": "passed",
+      "detail": "breakpoint service present"
+    },
+    {
+      "check_id": "root_cause_incidents",
+      "artifact": "root_cause.json",
+      "status": "passed",
+      "detail": "incident counts match"
+    },
+    {
+      "check_id": "recommendations_complete",
+      "artifact": "recommendations.json",
+      "status": "passed",
+      "detail": "recommendations count matches"
+    },
+    {
+      "check_id": "patch_schema",
+      "artifact": "patch_suggestions.json",
+      "status": "passed",
+      "detail": "patches array present"
+    },
+    {
+      "check_id": "report_sections",
+      "artifact": "datadog_analysis_report.md",
+      "status": "passed",
+      "detail": "markdown report contains required sections"
+    }
+  ],
+  "failed_checks": [],
+  "artifact_paths": [
+    {
+      "artifact": "normalised_data.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\normalised_data.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\normalised_data.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "log_analysis.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\log_analysis.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\log_analysis.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "metrics_report.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\metrics_report.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\metrics_report.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "apm_report.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\apm_report.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\apm_report.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "security_report.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\security_report.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\security_report.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "anomaly_report.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\anomaly_report.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\anomaly_report.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "dependency_report.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\dependency_report.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\dependency_report.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "root_cause.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\root_cause.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\root_cause.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "recommendations.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\recommendations.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\recommendations.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "patch_suggestions.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\patch_suggestions.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\patch_suggestions.json",
+      "status": "passed"
+    },
+    {
+      "artifact": "datadog_analysis_report.md",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\datadog_analysis_report.md",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\datadog_analysis_report.md",
+      "status": "passed"
+    },
+    {
+      "artifact": "validation_manifest.json",
+      "expected_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\validation_manifest.json",
+      "actual_path": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\validation_manifest.json",
+      "status": "passed"
+    }
+  ]
+}

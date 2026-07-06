@@ -1,5 +1,5 @@
 # Dependency/Flow Analysis Agent
-**Version:** 1.5.0 | **Domain:** Datadog Observability Analysis
+**Version:** 1.0.0 | **Domain:** Datadog Observability Analysis
 **Design credit:** originally proposed by teammate as part of her pipeline flow
 
 ---
@@ -21,12 +21,12 @@ instead of relying purely on time-based correlation.
 ```yaml
 dependency_flow_config:
   input_files:
-    - "output/normalised_data.json"
-    - "output/metrics_report.json"
-    - "output/apm_report.json"
-    - "output/anomaly_report.json"
+    - "output/<dataset>/normalised_data.json"
+    - "output/<dataset>/metrics_report.json"
+    - "output/<dataset>/apm_report.json"
+    - "output/<dataset>/anomaly_report.json"
 
-  output_file: "output/dependency_report.json"
+  output_file: "output/<dataset>/dependency_report.json"
 
   settings:
     min_call_count_for_edge:   5     # Minimum observed calls between two services to count as a dependency edge.
@@ -44,9 +44,19 @@ dependency_flow_config:
 
 ## Pre-requisites
 
-- `normalised_data.json`, `metrics_report.json`, `apm_report.json`, and `anomaly_report.json` must exist
+- `output/<dataset>/normalised_data.json`, `output/<dataset>/metrics_report.json`, `output/<dataset>/apm_report.json`, and `output/<dataset>/anomaly_report.json` must exist
 - Input must contain trace records with `trace_id` and `span_id` for call-chain reconstruction
-- Output folder `output/` must be writable
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_files` and write only the configured `output_file`.
+- Every `input_files` entry and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent MUST NOT derive a new output folder from services, dependency graph nodes, breakpoint services, dates, upstream filenames, or existing files in `output/`.
+- If the input files do not all share the same dataset folder, or if the output path points elsewhere, stop before writing and report the mismatch.
 
 ---
 
@@ -197,6 +207,10 @@ dependency_flow_config:
 
 ---
 
+## Regression Gates (must pass before this agent is considered done)
+- If `anomaly_report.json` contains a multi-service incident and the dependency graph has at least one edge between those services, `dependency_report.json.summary.breakpoints_identified` must be at least 1.
+- A breakpoint must be emitted only when it has non-empty `downstream_impact`; otherwise the agent should record the finding in the source report instead of fabricating a breakpoint.
+
 ## Output Specification
 
 | Artifact | Description |
@@ -215,13 +229,32 @@ dependency_flow_config:
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-03 | dependency-flow-analysis-agent | Initial release — service dependency graph construction, breakpoint identification, cascading failure detection |
-| 1.1.0 | 2026-07-03 | dependency-flow-analysis-agent | Added timestamp-order fallback for graph construction when `parent_span_id` is unavailable, with capped confidence; made `min_call_count_for_edge` adaptive so small datasets no longer produce an empty graph |
-| 1.2.0 | 2026-07-03 | dependency-flow-analysis-agent | Added MUST rule requiring analysis_period.from/to to be populated from actual record timestamps instead of left null |
-| 1.3.0 | 2026-07-03 | dependency-flow-analysis-agent | Added MUST NOT rules preventing host-level infra anomalies from being fabricated into service-graph breakpoints they cannot structurally belong to, and preventing zero-downstream-impact 'breakpoints' |
-| 1.4.0 | 2026-07-03 | dependency-flow-analysis-agent | Fixed observed failure mode where a populated graph plus a known multi-service correlated incident still produced zero breakpoints — replaced vague "score confidence based on consistency" with a concrete, reproducible confidence formula, and added a mandatory self-check before writing an empty breakpoints array |
-| 1.5.0 | 2026-07-03 | dependency-flow-analysis-agent | Fixed a regression from 1.4.0's fix: breakpoints[] was producing 10+ near-duplicate entries for the same service pair (one per raw anomaly record instead of one per real incident) — added explicit dedup-by-(breakpoint_service, downstream_impact) rule; fixed downstream_impact only ever tracing one hop, causing real 2+-hop cascades to be under-reported — added explicit full-chain tracing requirement; analysis_period is now explicitly specified as an object, never an array |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- `dependency_graph.nodes` MUST include every service that appears in trace spans and participates in at least one retained edge.
+- The top-level graph field MUST be named exactly `dependency_graph`. The generated output MUST NOT use
+  `service_graph`, `graph`, or any other replacement field name.
+- If `parent_span_id` is missing and timestamp fallback is used, set `parent_span_id_available: false` and cap confidence at `0.75`.
+- The adaptive edge threshold MUST be computed before filtering edges and written to `summary.effective_min_call_count_for_edge`.
+- `downstream_impact` MUST be computed by graph traversal from the breakpoint candidate through the full connected downstream chain, not only the first neighbor.
+- `hops_to_furthest_symptom` MUST equal the longest graph distance from the breakpoint to any service in `downstream_impact`.
+- If a breakpoint has 2 or more downstream impacted services, emit a `CASCADING_FAILURE` entry and increment `summary.cascading_failures`.
+- Do not emit a breakpoint whose `breakpoint_service` is absent from `dependency_graph.nodes`.
+- Each breakpoint MUST use the field name `breakpoint_service`; do not write only `service` and expect
+  downstream agents to infer that it means the breakpoint.
+- Do not emit a breakpoint with empty `downstream_impact`.
+- Deduplicate breakpoints by `(breakpoint_service, sorted downstream_impact, incident window)`.
+- `summary.breakpoints_identified` MUST equal `len(breakpoints)`.
+- Every service named in `downstream_impact` MUST exist in `dependency_graph.nodes`.
+
+Reject the generated output if the graph contains a chain A -> B -> C, the breakpoint is A, and only B is listed when C is also affected in the same incident window.
+Also reject it if `dependency_report.json` has `service_graph` instead of `dependency_graph`, or
+`breakpoints[].service` instead of `breakpoints[].breakpoint_service`.

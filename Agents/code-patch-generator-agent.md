@@ -21,10 +21,10 @@ commit, push, or auto-merge anything. A human must review and apply each patch.
 ```yaml
 code_patch_config:
   input_files:
-    - "output/recommendations.json"
-    - "output/root_cause.json"
+    - "output/<dataset>/recommendations.json"
+    - "output/<dataset>/root_cause.json"
 
-  output_file: "output/patch_suggestions.json"
+  output_file: "output/<dataset>/patch_suggestions.json"
 
   settings:
     repo_path:                "."     # Path to the target repository to scan for relevant files
@@ -40,9 +40,20 @@ code_patch_config:
 
 ## Pre-requisites
 
-- `recommendations.json` and `root_cause.json` must exist
+- `output/<dataset>/recommendations.json` and `output/<dataset>/root_cause.json` must exist
 - Read access to the target repository specified in `repo_path` (read-only — this agent never writes directly to source files)
-- Output folder `output/` must be writable
+- Output folder `output/<dataset>/` must be writable
+
+---
+
+## Dataset-to-Output Routing Contract
+
+- `<dataset>` MUST already be resolved by the orchestrator or caller before this agent runs.
+- This agent MUST read only the configured `input_files` and write only the configured `output_file`.
+- Every `input_files` entry and `output_file` MUST be inside the same resolved `output/<dataset>/` folder.
+- This agent scans `repo_path` read-only for patch context, but its own JSON artifact MUST still be written only to the configured `output_file`.
+- This agent MUST NOT derive a new output folder from target files, recommendations, incident IDs, patch types, dates, upstream filenames, or existing files in `output/`.
+- If the input files and output file do not all share the same dataset folder, stop before writing and report the mismatch.
 
 ---
 
@@ -146,6 +157,27 @@ code_patch_config:
 
 ---
 
+## Implementation Notes (pseudocode — MUST be followed structurally, not just in spirit)
+
+Observed defect: `summary.manual_review_required` was implemented as a count of patches where
+`requires_human_review == true` — but `requires_human_review` is `true` on every patch, always, by design
+(see the `require_human_review: true` MUST-remain-true setting above). Counting it produces
+`manual_review_required == total_patches_generated` every run, which is meaningless. This field means
+something different: it is the count of *recommendations that were skipped* because the fix was too
+structural for an automated patch (i.e. `len(skipped_recommendations)`), not a property of the patches that
+were actually generated.
+```
+manual_review_required = len(skipped_recommendations)   # NOT len([p for p in patches if p.requires_human_review])
+```
+
+## Self-Test Case
+
+Given 2 recommendations where both were feasible and produced concrete patches (`skipped_recommendations`
+is empty): `summary.manual_review_required` MUST equal `0`. If it equals `2` (the total patch count)
+instead, the wrong field was counted.
+
+---
+
 ## Output Specification
 
 | Artifact | Description |
@@ -164,8 +196,27 @@ code_patch_config:
 
 ---
 
-## Version History
+## Version Notes
 
-| Version | Date | Author | Change |
-|---|---|---|---|
-| 1.0.0 | 2026-07-03 | code-patch-generator-agent | Initial release — feasibility-checked patch drafting, risk classification, human-review-only output |
+- This agent is version 1.0.0 and follows the current Datadog analysis contract.
+- If a replay runner script such as `run_datadog_analysis.py` is generated, it MUST be written only inside the resolved output dataset folder for that input target and MUST NOT be created in the project root, the top-level `output/` folder, or any other dataset folder.
+---
+
+## LLM Output Contract
+
+When this file is used as a prompt for Copilot, Claude, or another code generator, the generated implementation is not complete until it proves these checks in code:
+
+- Generate patches only from recommendations that cite a concrete incident or unresolved critical finding.
+- Do not invent target files. If a target file is inferred rather than present in the input, set `requires_human_review: true` and explain the assumption.
+- The output array MUST be named exactly `patches`. Do not write `patch_suggestions`, `suggestions`, or
+  prose-only patch objects as a substitute for the required schema.
+- Every patch MUST include `patch_id`, `incident_id`, `recommendation_ref`, `patch_type`, `risk_level`, `target_file`, `explanation`, `diff`, and `requires_human_review`.
+- `summary.total_patches_generated` MUST equal `len(patches)`.
+- `summary.manual_review_required` MUST equal `len(skipped_recommendations)`. It MUST NOT count generated patches merely because `requires_human_review == true`; every generated patch requires human review by design.
+- `summary.low_risk`, `summary.medium_risk`, and `summary.high_risk` MUST count patches by `risk_level`.
+- The diff MUST be syntactically recognizable as a unified or minimal before/after diff. Do not output vague prose as `diff`.
+- If no patch can be safely generated, write zero patches and explain all skipped recommendations. Do not fabricate a config change.
+
+Reject the generated output if `manual_review_required` is anything other than the count of skipped recommendations requiring manual investigation.
+Also reject it if the file contains a `patch_suggestions` array instead of `patches`, or if any generated
+patch has prose in `patch` but no syntactically recognizable `diff`.
