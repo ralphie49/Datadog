@@ -300,6 +300,14 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
   `service_graph`, `graph`, or any other replacement field name.
 - If `parent_span_id` is missing and timestamp fallback is used, set `parent_span_id_available: false` and cap confidence at `0.75`.
 - The adaptive edge threshold MUST be computed before filtering edges and written to `summary.effective_min_call_count_for_edge`.
+- **Empty-graph gate:** if `dependency_graph.nodes` and `.edges` are both empty AND the input trace file
+  contains 2 or more spans sharing the same `trace_id` across different `service` values, that is a defect,
+  not a valid "no dependencies found" result — it means the static `min_call_count_for_edge` (5) was used
+  instead of the adaptive formula `max(1, min(5, floor(total_spans / 20)))`. For example, with 12 total
+  trace spans, the effective threshold must be `max(1, min(5, floor(12/20))) = 1`, so any service pair
+  observed even once must produce an edge. Recompute using the adaptive formula before writing an empty
+  graph, and only write empty `nodes`/`edges` if the trace file itself has no multi-service `trace_id`
+  groups at all.
 - `downstream_impact` MUST be computed by graph traversal from the breakpoint candidate through the full connected downstream chain, not only the first neighbor.
 - `hops_to_furthest_symptom` MUST equal the longest graph distance from the breakpoint to any service in `downstream_impact`.
 - If a breakpoint has 2 or more downstream impacted services, emit a `CASCADING_FAILURE` entry and increment `summary.cascading_failures`.

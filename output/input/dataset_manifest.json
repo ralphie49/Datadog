@@ -1,0 +1,28 @@
+{
+  "dataset_name": "input",
+  "input_target": "C:\\Users\\Vaishnavi\\Datadog\\input",
+  "output_dir": "C:\\Users\\Vaishnavi\\Datadog\\output\\input",
+  "input_files": [
+    "C:\\Users\\Vaishnavi\\Datadog\\input\\datadog_infrastructure_export_20260702.json",
+    "C:\\Users\\Vaishnavi\\Datadog\\input\\datadog_logs_export_20260702.json",
+    "C:\\Users\\Vaishnavi\\Datadog\\input\\datadog_metrics_export_20260702.csv",
+    "C:\\Users\\Vaishnavi\\Datadog\\input\\datadog_monitor_alerts_20260702.json",
+    "C:\\Users\\Vaishnavi\\Datadog\\input\\datadog_traces_export_20260702.json"
+  ],
+  "artifacts": {
+    "dataset_manifest": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\dataset_manifest.json",
+    "normalised_data": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\normalised_data.json",
+    "log_analysis": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\log_analysis.json",
+    "metrics_report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\metrics_report.json",
+    "apm_report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\apm_report.json",
+    "security_report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\security_report.json",
+    "anomaly_report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\anomaly_report.json",
+    "dependency_report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\dependency_report.json",
+    "root_cause": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\root_cause.json",
+    "recommendations": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\recommendations.json",
+    "patch_suggestions": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\patch_suggestions.json",
+    "report": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\datadog_analysis_report.md",
+    "validation_manifest": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\validation_manifest.json",
+    "run_script": "C:\\Users\\Vaishnavi\\Datadog\\output\\input\\run_datadog_analysis.py"
+  }
+}

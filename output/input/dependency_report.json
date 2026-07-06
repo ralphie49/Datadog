@@ -8,7 +8,7 @@
     "parent_span_id_available": false,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:01Z"
+      "to": "2026-07-02T10:00:02Z"
     }
   },
   "dependency_graph": {
@@ -19,14 +19,14 @@
     ],
     "edges": [
       {
-        "from": "payment-service",
-        "to": "order-service",
+        "from": "order-service",
+        "to": "payment-service",
         "call_count": 4,
-        "avg_latency_ms": 1523.75
+        "avg_latency_ms": 1982.5
       },
       {
-        "from": "order-service",
-        "to": "checkout-consumer",
+        "from": "checkout-consumer",
+        "to": "order-service",
         "call_count": 2,
         "avg_latency_ms": 4000.0
       }
@@ -34,48 +34,40 @@
   },
   "breakpoints": [
     {
-      "incident_id": "incident_1",
+      "incident_id": "incident_001",
       "breakpoint_service": "checkout-consumer",
       "issue_type": "BREAKPOINT_IDENTIFIED",
-      "confidence": 0.75,
+      "confidence": 0.82,
       "downstream_impact": [
-        "payment-service",
-        "order-service"
+        "order-service",
+        "payment-service"
       ],
       "hops_to_furthest_symptom": 2,
-      "description": "checkout-consumer identified as the origin of the downstream impact"
+      "description": "checkout-consumer identified as the most upstream point where the pipeline bottleneck propagated to dependent services"
     }
   ],
   "cascading_failures": [
     {
       "breakpoint_service": "checkout-consumer",
-      "downstream_services": [
-        "payment-service",
-        "order-service"
+      "downstream_impact": [
+        "order-service",
+        "payment-service"
       ],
-      "issue_type": "CASCADING_FAILURE"
+      "hops": 2
     }
   ],
   "all_findings": [
     {
-      "incident_id": "incident_1",
+      "incident_id": "incident_001",
       "breakpoint_service": "checkout-consumer",
       "issue_type": "BREAKPOINT_IDENTIFIED",
-      "confidence": 0.75,
+      "confidence": 0.82,
       "downstream_impact": [
-        "payment-service",
-        "order-service"
+        "order-service",
+        "payment-service"
       ],
       "hops_to_furthest_symptom": 2,
-      "description": "checkout-consumer identified as the origin of the downstream impact"
-    },
-    {
-      "breakpoint_service": "checkout-consumer",
-      "downstream_services": [
-        "payment-service",
-        "order-service"
-      ],
-      "issue_type": "CASCADING_FAILURE"
+      "description": "checkout-consumer identified as the most upstream point where the pipeline bottleneck propagated to dependent services"
     }
   ]
 }

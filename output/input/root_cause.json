@@ -6,7 +6,7 @@
     "low_confidence": 0,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:01Z"
+      "to": "2026-07-02T10:00:02Z"
     }
   },
   "incidents": [
@@ -17,24 +17,22 @@
       "primary_service": "checkout-consumer",
       "affected_services": [
         "checkout-consumer",
-        "payment-service",
-        "order-service"
+        "order-service",
+        "payment-service"
       ],
       "timeframe": {
         "from": "2026-07-02T09:28:00Z",
-        "to": "2026-07-02T09:31:00Z"
+        "to": "2026-07-02T09:28:00Z"
       },
-      "root_cause_finding": "Kafka consumer lag critical on ecommerce-events, causing downstream latency and error spikes",
+      "root_cause_finding": "KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000)",
       "dependency_breakpoint": "checkout-consumer",
       "downstream_symptoms": [
-        "Latency spike on payment-service",
-        "Latency spike on order-service"
+        "Latency and errors propagated to payment-service and order-service"
       ],
       "evidence_sources": [
         "apm_report.json",
         "dependency_report.json",
-        "anomaly_report.json",
-        "metrics_report.json"
+        "anomaly_report.json"
       ],
       "severity": "CRITICAL",
       "blast_radius": 3
@@ -49,12 +47,12 @@
       ],
       "timeframe": {
         "from": "2026-07-02T09:50:00Z",
-        "to": "2026-07-02T09:55:00Z"
+        "to": "2026-07-02T09:53:30Z"
       },
-      "root_cause_finding": "PII and credential exposure in user-service logs plus repeated unauthorised access attempts",
+      "root_cause_finding": "PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service",
       "dependency_breakpoint": null,
       "downstream_symptoms": [
-        "Repeated unauthorised access attempts fell under a brute-force pattern"
+        "Authentication and authorization failures were exposed in service logs"
       ],
       "evidence_sources": [
         "security_report.json"
@@ -72,24 +70,22 @@
       "primary_service": "checkout-consumer",
       "affected_services": [
         "checkout-consumer",
-        "payment-service",
-        "order-service"
+        "order-service",
+        "payment-service"
       ],
       "timeframe": {
         "from": "2026-07-02T09:28:00Z",
-        "to": "2026-07-02T09:31:00Z"
+        "to": "2026-07-02T09:28:00Z"
       },
-      "root_cause_finding": "Kafka consumer lag critical on ecommerce-events, causing downstream latency and error spikes",
+      "root_cause_finding": "KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000)",
       "dependency_breakpoint": "checkout-consumer",
       "downstream_symptoms": [
-        "Latency spike on payment-service",
-        "Latency spike on order-service"
+        "Latency and errors propagated to payment-service and order-service"
       ],
       "evidence_sources": [
         "apm_report.json",
         "dependency_report.json",
-        "anomaly_report.json",
-        "metrics_report.json"
+        "anomaly_report.json"
       ],
       "severity": "CRITICAL",
       "blast_radius": 3
@@ -104,12 +100,12 @@
       ],
       "timeframe": {
         "from": "2026-07-02T09:50:00Z",
-        "to": "2026-07-02T09:55:00Z"
+        "to": "2026-07-02T09:53:30Z"
       },
-      "root_cause_finding": "PII and credential exposure in user-service logs plus repeated unauthorised access attempts",
+      "root_cause_finding": "PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service",
       "dependency_breakpoint": null,
       "downstream_symptoms": [
-        "Repeated unauthorised access attempts fell under a brute-force pattern"
+        "Authentication and authorization failures were exposed in service logs"
       ],
       "evidence_sources": [
         "security_report.json"

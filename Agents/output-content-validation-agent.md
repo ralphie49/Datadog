@@ -201,6 +201,18 @@ it MUST also check field *values* against the other artifacts' own data. Add the
 manifest cannot say `"valid"` merely because every artifact exists and parses; it must also be
 internally consistent and free of the specific defect classes above.
 
+**Structural completeness gate on the manifest itself:** `validation_manifest.json.checks[]` MUST include
+at least one check with each of these `check_id` prefixes on every run, regardless of whether the dataset
+happens to have zero anomalies/incidents: `baseline_sanity`, `correlation_completeness`,
+`breakpoint_edge_consistency`, `markdown_table_integrity`, `markdown_severity_completeness`,
+`redaction_check`, `manual_review_required_check`. If `checks[]` contains only `path_*`,
+`schema_summary`, and `record_count_match` entries and none of the semantic check_ids above, the manifest
+itself is non-compliant with this spec — this is true even if `status` happens to say `"valid"` — because
+it proves the semantic checks were never actually executed, only described. A validator run missing these
+check_ids MUST be treated as incomplete and fixed before being considered done, since its absence is
+exactly how a prior real run reported `"valid"` while shipping an unredacted PII/credential leak and a
+missing incident.
+
 ## Mandatory Acceptance Test For Sample `input/` (regression check only — see Anti-Hardcoding Contract above; these values MUST be produced by the general algorithm, never embedded as literals)
 
 When the dataset name is `input` and the source files match this project sample, all checks below MUST pass.

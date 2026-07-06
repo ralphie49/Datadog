@@ -110,8 +110,19 @@ anomaly_config:
   Kafka lag log line — if the only available context for a throughput drop IS the Kafka lag event, phrase the
   description to make that causal link explicit rather than pasting the unrelated raw message verbatim)
 - MUST write all anomalies and trends to `anomaly_report.json`
+- MUST run every `description` string through the same PII/credential redaction logic as the Security
+  Audit Agent (same `pii_value_patterns` and `credential_patterns` config) before writing output, whenever
+  that description is built from or contains a raw upstream `message`/log line. This agent frequently
+  copies a raw log message into `description` (e.g. "Kafka consumer lag critical..." or a PII/credential
+  log line) — copying it verbatim is the single most common way secrets leak into `anomaly_report.json`
+  and the final markdown report even when `security_report.json` itself is correctly redacted. Redaction
+  is NOT the Security Audit Agent's job alone; every agent that touches raw log text is independently
+  responsible for not re-emitting unredacted PII/credentials in its own output.
 
 ### MUST NOT
+- MUST NOT copy an unredacted email address, bearer token, API key, password, or other credential-like
+  value from an upstream log message into any field of `anomaly_report.json` — redact it the same way
+  `security_report.json` would, even if the anomaly's `description` is otherwise a verbatim log line
 - MUST NOT flag single-point anomalies as HIGH confidence without corroboration
 - MUST NOT require more than `min_data_points` to report an anomaly
 - MUST NOT emit more than one `CORRELATED_ANOMALY` entry for the same pair (or set) of corroborating

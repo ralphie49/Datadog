@@ -1,21 +1,48 @@
 Run the Datadog Analyser Orchestrator on the input folder named `input`.
 
-Follow every MUST/MUST NOT rule in the 12 spec files exactly — do not hardcode any value 
-from the specs' examples or self-test sections. Every number, service name, and ID in the 
-output must be computed from what is actually inside `input/` at runtime.
+I am attaching all 12 spec files for this pipeline as context:
+datadog-analyser-orchestrator.md, log-ingestion-normaliser-agent.md, error-data-quality-agent.md,
+performance-infrastructure-health-agent.md, pipeline-health-monitor-agent.md, security-audit-agent.md,
+anomaly-detection-agent.md, dependency-flow-analysis-agent.md, root-cause-analysis-agent.md,
+code-patch-generator-agent.md, report-generation-agent.md, output-content-validation-agent.md.
 
-Treat `input/` as one dataset. Read all Datadog export files inside it together, resolve 
-the dataset name as `input`, and write every artifact only under `output/input/`. Do not 
-write outputs to `output/`, the project root, or any other dataset folder. If any phase 
-tries to read from one dataset folder and write to another, stop and report the mismatch.
+Before writing any code, confirm you have actually read the full current content of all 12 attached
+files in this conversation — not a memory or summary of a previous version of them. If any of these
+files is missing from what was attached, stop and tell me which one is missing before proceeding.
+
+Follow every MUST/MUST NOT rule in all 12 spec files exactly, including every rule added under headings
+like "Implementation Notes," "Regression Gates," "Self-Test Cases," "Concrete regression case," or
+"Structural completeness gate" — these describe real defects found in prior runs and are not optional
+extras. Do not hardcode any value from the specs' examples or self-test sections. Every number, service
+name, and ID in the output must be computed from what is actually inside `input/` at runtime.
+
+Treat `input/` as one dataset. Read all Datadog export files inside it together, resolve the dataset
+name as `input`, and write every artifact only under `output/input/`. Do not write outputs to `output/`,
+the project root, or any other dataset folder. If any phase tries to read from one dataset folder and
+write to another, stop and report the mismatch.
 
 Expected final report path: `output/input/datadog_analysis_report.md`.
 
 After generating output, validate it against the input files yourself:
 - Every record count in normalised_data.json must match what's actually in the source files.
-- Every finding in log_analysis.json, security_report.json, apm_report.json, metrics_report.json, 
-  anomaly_report.json, dependency_report.json, root_cause.json must trace back to a real 
-  record in the input — not to an example from the spec files.
+- Every finding in log_analysis.json, security_report.json, apm_report.json, metrics_report.json,
+  anomaly_report.json, dependency_report.json, root_cause.json must trace back to a real record in the
+  input — not to an example from the spec files.
 - Cross-file references (incident IDs, service names) must be consistent everywhere they appear.
+- No PII, email address, or credential-like value (bearer token, password, API key) may appear
+  unredacted anywhere in anomaly_report.json, security_report.json, or datadog_analysis_report.md.
+- validation_manifest.json's checks[] must include semantic checks (baseline sanity, correlation
+  completeness, breakpoint/edge consistency, markdown table integrity, markdown severity completeness),
+  not only path/schema/existence checks.
 
-Regenerate any file that fails these checks. Show me what failed and what you changed.
+Regenerate any file that fails these checks.
+
+Finally, compare every newly generated artifact (normalised_data.json, log_analysis.json,
+metrics_report.json, apm_report.json, security_report.json, anomaly_report.json, dependency_report.json,
+root_cause.json, recommendations.json, patch_suggestions.json, datadog_analysis_report.md,
+validation_manifest.json) against the previous run's versions of the same files, which I am also
+attaching. If any file is byte-for-byte or near-identical to its previous version despite the spec
+updates, that means the new rules were not actually applied — stop and explain specifically why before
+telling me you're done, rather than reporting success.
+
+Show me what failed, what you changed, and confirm which files actually differ from the previous run.

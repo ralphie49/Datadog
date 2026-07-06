@@ -111,6 +111,14 @@ root_cause_config:
 - MUST NOT cite an `issue_type` / finding category (e.g. `BRUTE_FORCE_ATTEMPT`, `KAFKA_LAG_CRITICAL`) in `root_cause_finding`, `evidence_sources`, or a recommendation's `evidence` field unless that exact issue type literally appears in the named upstream JSON file's own findings/issues list. A raw log line, alert message, or record elsewhere in the pipeline that merely *uses similar wording* is not evidence that the responsible domain agent (e.g. Security Audit Agent) confirmed it — if that agent didn't independently flag it, this agent must not either
 - MUST NOT assign a single `root_cause_category` to an incident whose findings don't causally belong together. If an incident's evidence spans unrelated domains (e.g. a `PIPELINE_BACKPRESSURE` finding on one service plus a `CREDENTIAL_LEAK`/`PII_IN_LOGS` finding on an unconnected service) that were only clustered by time proximity, split them into separate incidents — a security finding is never a "downstream symptom" of a pipeline or infrastructure root cause unless a concrete causal path (e.g. a dependency-graph edge, or the same service) connects them
 - MUST NOT allow a CRITICAL-severity finding from `apm_report.json`, `metrics_report.json`, `security_report.json`, or a `dependency_report.json` breakpoint to disappear from the output entirely. Every such finding must end up either represented in an incident's `evidence_sources`, or explicitly listed in `unresolved_findings` with a reason — never neither (see the timestamp-robustness safeguard in Phase 1)
+- **Concrete regression case:** if `apm_report.json.kafka.topics[]` contains one or more entries with
+  `verdict: "CRITICAL"` (e.g. Kafka consumer lag) in the same run where `security_report.json` also has
+  CRITICAL findings, `root_cause.json.incidents[]` MUST contain a `PIPELINE_BACKPRESSURE` (or equally
+  matched) incident for the Kafka finding IN ADDITION TO any `SECURITY_INCIDENT` — a run producing only
+  the security incident while a separate CRITICAL apm/pipeline finding is silently dropped is exactly the
+  defect this MUST NOT rule exists to prevent. Before finalizing output, count the CRITICAL findings across
+  all four source files listed above and confirm each one maps to an incident or an `unresolved_findings`
+  entry; do not stop after finding the first/highest-severity incident.
 - MUST NOT modify any upstream input files
 
 ---

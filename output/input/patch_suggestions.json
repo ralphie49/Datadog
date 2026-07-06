@@ -1,57 +1,29 @@
 {
   "summary": {
     "total_patches_generated": 2,
-    "low_risk": 0,
-    "medium_risk": 2,
-    "high_risk": 0,
-    "manual_review_required": 0
+    "manual_review_required": 2
   },
   "patches": [
     {
-      "patch_id": "patch_1",
+      "patch_id": "patch_001",
       "incident_id": "incident_001",
       "recommendation_ref": "rank_1",
-      "patch_type": "SCALING_CONFIG_CHANGE",
+      "patch_type": "KAFKA_CONSUMER_SCALING",
       "risk_level": "MEDIUM",
-      "target_file": "config/kafka-consumer.yaml",
-      "explanation": "Increase consumer concurrency for the affected topic to reduce lag.",
-      "diff": "- consumer_instances: 2\n+ consumer_instances: 6",
+      "target_file": "deploy/consumer.yaml",
+      "explanation": "Scale the consumer group and verify partitioning for the lagging topic.",
+      "diff": "+++ deploy/consumer.yaml\n+replicas: 4\n+partitionCount: 8\n",
       "requires_human_review": true
     },
     {
-      "patch_id": "patch_2",
+      "patch_id": "patch_002",
       "incident_id": "incident_002",
       "recommendation_ref": "rank_2",
-      "patch_type": "LOGGING_REDACTION_ADD",
-      "risk_level": "MEDIUM",
-      "target_file": "src/logging/redaction.py",
-      "explanation": "Add redaction before logs are emitted to prevent PII and credential leakage.",
-      "diff": "- log_event(message)\n+ log_event(redact_sensitive(message))",
-      "requires_human_review": true
-    }
-  ],
-  "skipped_recommendations": [],
-  "all_patches": [
-    {
-      "patch_id": "patch_1",
-      "incident_id": "incident_001",
-      "recommendation_ref": "rank_1",
-      "patch_type": "SCALING_CONFIG_CHANGE",
-      "risk_level": "MEDIUM",
-      "target_file": "config/kafka-consumer.yaml",
-      "explanation": "Increase consumer concurrency for the affected topic to reduce lag.",
-      "diff": "- consumer_instances: 2\n+ consumer_instances: 6",
-      "requires_human_review": true
-    },
-    {
-      "patch_id": "patch_2",
-      "incident_id": "incident_002",
-      "recommendation_ref": "rank_2",
-      "patch_type": "LOGGING_REDACTION_ADD",
-      "risk_level": "MEDIUM",
-      "target_file": "src/logging/redaction.py",
-      "explanation": "Add redaction before logs are emitted to prevent PII and credential leakage.",
-      "diff": "- log_event(message)\n+ log_event(redact_sensitive(message))",
+      "patch_type": "REDACTION_POLICY_CHANGE",
+      "risk_level": "LOW",
+      "target_file": "logging/redaction_policy.yaml",
+      "explanation": "Enforce structured redaction for PII and credentials before logs are emitted.",
+      "diff": "+++ logging/redaction_policy.yaml\n+redact: [email, token, password, secret]\n",
       "requires_human_review": true
     }
   ]

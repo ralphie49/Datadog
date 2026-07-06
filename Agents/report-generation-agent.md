@@ -149,9 +149,18 @@ report_config:
 
 ## 2. Performance & Infrastructure
 {{table from metrics_report.json}}
+**MUST include, not just `hosts[]`:** every entry in `metrics_report.json.latency.by_service` (service,
+avg_ms, p95_ms, p99_ms, verdict — especially any `verdict: "CRITICAL"` service), the full
+`metrics_report.json.latency.slowest_traces` list, and every entry in `metrics_report.json.all_issues`.
+A Performance & Infrastructure section that renders only `hosts[]` while `latency.by_service` contains
+CRITICAL-verdict services is incomplete — those services' latency status must appear here, not only be
+inferable from other sections.
 
 ## 3. Pipeline Health
 {{table from apm_report.json}}
+**MUST include every entry in `apm_report.json.all_issues`**, not only `kafka.topics[]` — e.g. a
+`CHECKPOINT_STALE` or other WARN/ERROR entry in `all_issues` that isn't a Kafka topic row must still get
+its own row in this table. Do not silently drop non-Kafka pipeline issues.
 
 ## 4. Security
 {{table of redacted findings from security_report.json}}

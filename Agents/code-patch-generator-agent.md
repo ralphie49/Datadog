@@ -248,6 +248,15 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
 - If no patch can be safely generated, write zero patches and explain all skipped recommendations. Do not fabricate a config change.
 
 Reject the generated output if `manual_review_required` is anything other than the count of skipped recommendations requiring manual investigation.
+
+**Concrete regression case observed in a real run:** `patch_suggestions.json` contained
+`summary.total_patches_generated: 1`, `summary.manual_review_required: 1`, and a `patches[]` array with
+exactly one patch (`requires_human_review: true`, as every patch always has) — but no
+`skipped_recommendations` array/key was present at all, and none of the recommendations were actually
+skipped. The correct value in this exact case is `manual_review_required: 0`, with an explicit (possibly
+empty) `skipped_recommendations: []` array always present in the output, even when nothing was skipped.
+Reject any implementation that omits the `skipped_recommendations` key entirely or that derives
+`manual_review_required` from anything other than that array's length.
 Also reject it if the file contains a `patch_suggestions` array instead of `patches`, or if any generated
 patch has prose in `patch` but no syntactically recognizable `diff`.
 

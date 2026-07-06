@@ -11,6 +11,7 @@
     "trace": 12,
     "alert": 7,
     "infrastructure": 10,
+    "unknown": 0,
     "total": 90
   },
   "classified_files": [
@@ -43,13 +44,13 @@
   "skipped_files": [],
   "records": [
     {
-      "record_id": "infrastructure_000001",
+      "record_id": "infra_000001",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-01",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host metrics host-01",
+      "message": "{\"cpu_pct\": 45, \"memory_pct\": 50, \"disk_pct\": 40, \"network_in\": 200, \"network_out\": 180}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -61,16 +62,17 @@
         "network_in": 200,
         "network_out": 180,
         "timestamp": "2026-07-02T08:00:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000002",
+      "record_id": "infra_000002",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-01",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "host metrics host-01",
+      "message": "{\"cpu_pct\": 93, \"memory_pct\": 89, \"disk_pct\": 42, \"network_in\": 850, \"network_out\": 780}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -82,16 +84,17 @@
         "network_in": 850,
         "network_out": 780,
         "timestamp": "2026-07-02T09:30:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000003",
+      "record_id": "infra_000003",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-01",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "host metrics host-01",
+      "message": "{\"cpu_pct\": 95, \"memory_pct\": 91, \"disk_pct\": 43, \"network_in\": 910, \"network_out\": 860}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -103,16 +106,17 @@
         "network_in": 910,
         "network_out": 860,
         "timestamp": "2026-07-02T09:40:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000004",
+      "record_id": "infra_000004",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-01",
       "environment": "unknown",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "host metrics host-01",
+      "message": "{\"cpu_pct\": 60, \"memory_pct\": 58, \"disk_pct\": 41, \"network_in\": 300, \"network_out\": 250}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -124,16 +128,17 @@
         "network_in": 300,
         "network_out": 250,
         "timestamp": "2026-07-02T10:00:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000005",
+      "record_id": "infra_000005",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-02",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host metrics host-02",
+      "message": "{\"cpu_pct\": 40, \"memory_pct\": 45, \"disk_pct\": 35, \"network_in\": 150, \"network_out\": 130}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -145,16 +150,17 @@
         "network_in": 150,
         "network_out": 130,
         "timestamp": "2026-07-02T08:00:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000006",
+      "record_id": "infra_000006",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-02",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "host metrics host-02",
+      "message": "{\"cpu_pct\": 72, \"memory_pct\": 68, \"disk_pct\": 36, \"network_in\": 400, \"network_out\": 380}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -166,16 +172,17 @@
         "network_in": 400,
         "network_out": 380,
         "timestamp": "2026-07-02T09:40:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000007",
+      "record_id": "infra_000007",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-03",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host metrics host-03",
+      "message": "{\"cpu_pct\": 50, \"memory_pct\": 55, \"disk_pct\": 60, \"network_in\": 300, \"network_out\": 280}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -187,16 +194,17 @@
         "network_in": 300,
         "network_out": 280,
         "timestamp": "2026-07-02T08:00:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000008",
+      "record_id": "infra_000008",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-03",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:28:00Z",
-      "message": "host metrics host-03",
+      "message": "{\"cpu_pct\": 88, \"memory_pct\": 82, \"disk_pct\": 61, \"network_in\": 700, \"network_out\": 650}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -208,16 +216,17 @@
         "network_in": 700,
         "network_out": 650,
         "timestamp": "2026-07-02T09:28:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000009",
+      "record_id": "infra_000009",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-04",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "host metrics host-04",
+      "message": "{\"cpu_pct\": 35, \"memory_pct\": 40, \"disk_pct\": 30, \"network_in\": 100, \"network_out\": 90}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -229,16 +238,17 @@
         "network_in": 100,
         "network_out": 90,
         "timestamp": "2026-07-02T08:00:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
-      "record_id": "infrastructure_000010",
+      "record_id": "infra_000010",
       "source_type": "infrastructure",
       "severity": "INFO",
       "service": "host-04",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:50:00Z",
-      "message": "host metrics host-04",
+      "message": "{\"cpu_pct\": 42, \"memory_pct\": 44, \"disk_pct\": 31, \"network_in\": 220, \"network_out\": 200}",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -250,7 +260,8 @@
         "network_in": 220,
         "network_out": 200,
         "timestamp": "2026-07-02T09:50:00Z"
-      }
+      },
+      "source_file": "datadog_infrastructure_export_20260702.json"
     },
     {
       "record_id": "log_000011",
@@ -275,7 +286,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000012",
@@ -300,7 +312,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000013",
@@ -325,7 +338,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000014",
@@ -350,7 +364,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000015",
@@ -375,7 +390,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000016",
@@ -400,7 +416,8 @@
         "tags": [
           "team:orders"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000017",
@@ -425,7 +442,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000018",
@@ -450,7 +468,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000019",
@@ -475,7 +494,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000020",
@@ -500,7 +520,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000021",
@@ -525,7 +546,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000022",
@@ -550,7 +572,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000023",
@@ -575,7 +598,8 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000024",
@@ -600,7 +624,8 @@
         "tags": [
           "team:orders"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000025",
@@ -625,7 +650,8 @@
         "tags": [
           "team:orders"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000026",
@@ -650,7 +676,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000027",
@@ -675,7 +702,8 @@
         "tags": [
           "team:data"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000028",
@@ -700,7 +728,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000029",
@@ -725,7 +754,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000030",
@@ -750,7 +780,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000031",
@@ -775,7 +806,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000032",
@@ -800,7 +832,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000033",
@@ -825,7 +858,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000034",
@@ -850,7 +884,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000035",
@@ -875,7 +910,8 @@
         "tags": [
           "team:identity"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "log_000036",
@@ -900,16 +936,17 @@
         "tags": [
           "team:payments"
         ]
-      }
+      },
+      "source_file": "datadog_logs_export_20260702.json"
     },
     {
       "record_id": "metric_000037",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "cpu_pct=45",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"45\"}",
       "tags": [
         "env:prod"
       ],
@@ -922,16 +959,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000038",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "memory_pct=50",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"50\"}",
       "tags": [
         "env:prod"
       ],
@@ -944,16 +982,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000039",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "throughput_rps=120",
+      "message": "{\"metric\": \"throughput_rps\", \"value\": \"120\"}",
       "tags": [
         "env:prod"
       ],
@@ -966,16 +1005,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000040",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:00:00Z",
-      "message": "cpu_pct=55",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"55\"}",
       "tags": [
         "env:prod"
       ],
@@ -988,16 +1028,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000041",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:00:00Z",
-      "message": "memory_pct=60",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"60\"}",
       "tags": [
         "env:prod"
       ],
@@ -1010,16 +1051,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000042",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:00:00Z",
-      "message": "throughput_rps=118",
+      "message": "{\"metric\": \"throughput_rps\", \"value\": \"118\"}",
       "tags": [
         "env:prod"
       ],
@@ -1032,16 +1074,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000043",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:20:00Z",
-      "message": "cpu_pct=78",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"78\"}",
       "tags": [
         "env:prod"
       ],
@@ -1054,16 +1097,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000044",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:20:00Z",
-      "message": "memory_pct=72",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"72\"}",
       "tags": [
         "env:prod"
       ],
@@ -1076,16 +1120,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000045",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "cpu_pct=93",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"93\"}",
       "tags": [
         "env:prod"
       ],
@@ -1098,16 +1143,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000046",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "memory_pct=89",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"89\"}",
       "tags": [
         "env:prod"
       ],
@@ -1120,16 +1166,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000047",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "throughput_rps=40",
+      "message": "{\"metric\": \"throughput_rps\", \"value\": \"40\"}",
       "tags": [
         "env:prod"
       ],
@@ -1142,16 +1189,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000048",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "cpu_pct=95",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"95\"}",
       "tags": [
         "env:prod"
       ],
@@ -1164,16 +1212,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000049",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "memory_pct=91",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"91\"}",
       "tags": [
         "env:prod"
       ],
@@ -1186,16 +1235,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000050",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "throughput_rps=35",
+      "message": "{\"metric\": \"throughput_rps\", \"value\": \"35\"}",
       "tags": [
         "env:prod"
       ],
@@ -1208,16 +1258,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000051",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "cpu_pct=60",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"60\"}",
       "tags": [
         "env:prod"
       ],
@@ -1230,16 +1281,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000052",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "memory_pct=58",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"58\"}",
       "tags": [
         "env:prod"
       ],
@@ -1252,16 +1304,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000053",
       "source_type": "metric",
       "severity": "INFO",
       "service": "payment-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "throughput_rps=115",
+      "message": "{\"metric\": \"throughput_rps\", \"value\": \"115\"}",
       "tags": [
         "env:prod"
       ],
@@ -1274,16 +1327,17 @@
         "host": "host-01",
         "service": "payment-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000054",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "cpu_pct=40",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"40\"}",
       "tags": [
         "env:prod"
       ],
@@ -1296,16 +1350,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000055",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "memory_pct=45",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"45\"}",
       "tags": [
         "env:prod"
       ],
@@ -1318,16 +1373,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000056",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "cpu_pct=70",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"70\"}",
       "tags": [
         "env:prod"
       ],
@@ -1340,16 +1396,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000057",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "memory_pct=65",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"65\"}",
       "tags": [
         "env:prod"
       ],
@@ -1362,16 +1419,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000058",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "cpu_pct=72",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"72\"}",
       "tags": [
         "env:prod"
       ],
@@ -1384,16 +1442,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000059",
       "source_type": "metric",
       "severity": "INFO",
       "service": "order-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "memory_pct=68",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"68\"}",
       "tags": [
         "env:prod"
       ],
@@ -1406,16 +1465,17 @@
         "host": "host-02",
         "service": "order-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000060",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "cpu_pct=50",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"50\"}",
       "tags": [
         "env:prod"
       ],
@@ -1428,16 +1488,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000061",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "memory_pct=55",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"55\"}",
       "tags": [
         "env:prod"
       ],
@@ -1450,16 +1511,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000062",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:00:00Z",
-      "message": "kafka_consumer_lag=8000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"8000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1472,16 +1534,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000063",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:10:00Z",
-      "message": "kafka_consumer_lag=25000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"25000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1494,16 +1557,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000064",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:20:00Z",
-      "message": "kafka_consumer_lag=68000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"68000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1516,16 +1580,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000065",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:28:00Z",
-      "message": "kafka_consumer_lag=125000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"125000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1538,16 +1603,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000066",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:40:00Z",
-      "message": "kafka_consumer_lag=118000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"118000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1560,16 +1626,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000067",
       "source_type": "metric",
       "severity": "INFO",
       "service": "checkout-consumer",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "kafka_consumer_lag=15000",
+      "message": "{\"metric\": \"kafka_consumer_lag\", \"value\": \"15000\"}",
       "tags": [
         "env:prod"
       ],
@@ -1582,16 +1649,17 @@
         "host": "host-03",
         "service": "checkout-consumer",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000068",
       "source_type": "metric",
       "severity": "INFO",
       "service": "user-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "cpu_pct=35",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"35\"}",
       "tags": [
         "env:prod"
       ],
@@ -1604,16 +1672,17 @@
         "host": "host-04",
         "service": "user-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000069",
       "source_type": "metric",
       "severity": "INFO",
       "service": "user-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "memory_pct=40",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"40\"}",
       "tags": [
         "env:prod"
       ],
@@ -1626,16 +1695,17 @@
         "host": "host-04",
         "service": "user-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000070",
       "source_type": "metric",
       "severity": "INFO",
       "service": "user-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:50:00Z",
-      "message": "cpu_pct=42",
+      "message": "{\"metric\": \"cpu_pct\", \"value\": \"42\"}",
       "tags": [
         "env:prod"
       ],
@@ -1648,16 +1718,17 @@
         "host": "host-04",
         "service": "user-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "metric_000071",
       "source_type": "metric",
       "severity": "INFO",
       "service": "user-service",
-      "environment": "unknown",
+      "environment": "prod",
       "timestamp": "2026-07-02T09:50:00Z",
-      "message": "memory_pct=44",
+      "message": "{\"metric\": \"memory_pct\", \"value\": \"44\"}",
       "tags": [
         "env:prod"
       ],
@@ -1670,7 +1741,8 @@
         "host": "host-04",
         "service": "user-service",
         "tags": "env:prod"
-      }
+      },
+      "source_file": "datadog_metrics_export_20260702.csv"
     },
     {
       "record_id": "alert_000072",
@@ -1690,7 +1762,8 @@
         "service": "checkout-consumer",
         "message": "Consumer lag exceeded 100000 on topic ecommerce-events",
         "priority": "P1"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000073",
@@ -1710,7 +1783,8 @@
         "service": "payment-service",
         "message": "Error rate exceeded 15% over 5 minute window",
         "priority": "P2"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000074",
@@ -1730,7 +1804,8 @@
         "service": "order-service",
         "message": "p99 latency exceeded 1000ms",
         "priority": "P2"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000075",
@@ -1750,7 +1825,8 @@
         "service": "payment-service",
         "message": "CPU usage exceeded 90% on host-01",
         "priority": "P2"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000076",
@@ -1770,7 +1846,8 @@
         "service": "user-service",
         "message": "Auth failure rate exceeded threshold, possible brute force",
         "priority": "P1"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000077",
@@ -1790,7 +1867,8 @@
         "service": "checkout-consumer",
         "message": "DQ rejection rate exceeded 15%",
         "priority": "P3"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "alert_000078",
@@ -1810,7 +1888,8 @@
         "service": "payment-service",
         "message": "Error rate returned to normal",
         "priority": "P4"
-      }
+      },
+      "source_file": "datadog_monitor_alerts_20260702.json"
     },
     {
       "record_id": "trace_000079",
@@ -1819,7 +1898,7 @@
       "service": "order-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:00Z",
-      "message": "create_order (t001)",
+      "message": "create_order",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1831,7 +1910,9 @@
         "duration_ms": 180,
         "status": "ok",
         "timestamp": "2026-07-02T08:00:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 180.0
     },
     {
       "record_id": "trace_000080",
@@ -1840,7 +1921,7 @@
       "service": "payment-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T08:00:01Z",
-      "message": "process_payment (t001)",
+      "message": "process_payment",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1852,7 +1933,9 @@
         "duration_ms": 210,
         "status": "ok",
         "timestamp": "2026-07-02T08:00:01Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 210.0
     },
     {
       "record_id": "trace_000081",
@@ -1861,7 +1944,7 @@
       "service": "order-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:30:00Z",
-      "message": "create_order (t002)",
+      "message": "create_order",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1873,7 +1956,9 @@
         "duration_ms": 4200,
         "status": "error",
         "timestamp": "2026-07-02T09:30:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 4200.0
     },
     {
       "record_id": "trace_000082",
@@ -1882,7 +1967,7 @@
       "service": "payment-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:30:01Z",
-      "message": "process_payment (t002)",
+      "message": "process_payment",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1894,7 +1979,9 @@
         "duration_ms": 3900,
         "status": "error",
         "timestamp": "2026-07-02T09:30:01Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 3900.0
     },
     {
       "record_id": "trace_000083",
@@ -1903,7 +1990,7 @@
       "service": "checkout-consumer",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:29:50Z",
-      "message": "consume_event (t002)",
+      "message": "consume_event",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1915,7 +2002,9 @@
         "duration_ms": 3500,
         "status": "error",
         "timestamp": "2026-07-02T09:29:50Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 3500.0
     },
     {
       "record_id": "trace_000084",
@@ -1924,7 +2013,7 @@
       "service": "order-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:31:00Z",
-      "message": "create_order (t003)",
+      "message": "create_order",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1936,7 +2025,9 @@
         "duration_ms": 3800,
         "status": "error",
         "timestamp": "2026-07-02T09:31:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 3800.0
     },
     {
       "record_id": "trace_000085",
@@ -1945,7 +2036,7 @@
       "service": "payment-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:31:02Z",
-      "message": "process_payment (t003)",
+      "message": "process_payment",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1957,7 +2048,9 @@
         "duration_ms": 3600,
         "status": "error",
         "timestamp": "2026-07-02T09:31:02Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 3600.0
     },
     {
       "record_id": "trace_000086",
@@ -1966,7 +2059,7 @@
       "service": "checkout-consumer",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:30:55Z",
-      "message": "consume_event (t003)",
+      "message": "consume_event",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1978,7 +2071,9 @@
         "duration_ms": 3300,
         "status": "error",
         "timestamp": "2026-07-02T09:30:55Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 3300.0
     },
     {
       "record_id": "trace_000087",
@@ -1987,7 +2082,7 @@
       "service": "order-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T10:00:00Z",
-      "message": "create_order (t004)",
+      "message": "create_order",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -1999,7 +2094,9 @@
         "duration_ms": 195,
         "status": "ok",
         "timestamp": "2026-07-02T10:00:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 195.0
     },
     {
       "record_id": "trace_000088",
@@ -2008,7 +2105,7 @@
       "service": "payment-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T10:00:01Z",
-      "message": "process_payment (t004)",
+      "message": "process_payment",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -2020,7 +2117,9 @@
         "duration_ms": 220,
         "status": "ok",
         "timestamp": "2026-07-02T10:00:01Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 220.0
     },
     {
       "record_id": "trace_000089",
@@ -2029,7 +2128,7 @@
       "service": "user-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:50:00Z",
-      "message": "get_user_profile (t005)",
+      "message": "get_user_profile",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -2041,7 +2140,9 @@
         "duration_ms": 90,
         "status": "ok",
         "timestamp": "2026-07-02T09:50:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 90.0
     },
     {
       "record_id": "trace_000090",
@@ -2050,7 +2151,7 @@
       "service": "user-service",
       "environment": "unknown",
       "timestamp": "2026-07-02T09:51:00Z",
-      "message": "authenticate (t005)",
+      "message": "authenticate",
       "tags": [],
       "source_ip": null,
       "user": null,
@@ -2062,7 +2163,9 @@
         "duration_ms": 60,
         "status": "error",
         "timestamp": "2026-07-02T09:51:00Z"
-      }
+      },
+      "source_file": "datadog_traces_export_20260702.json",
+      "duration_ms": 60.0
     }
   ]
 }

@@ -1,13 +1,13 @@
 {
   "summary": {
-    "total_pipelines_analysed": 3,
-    "pipelines_with_issues": 2,
-    "critical_issues": 3,
-    "warn_issues": 0,
+    "total_pipelines_analysed": 1,
+    "pipelines_with_issues": 1,
+    "critical_issues": 2,
+    "warn_issues": 1,
     "sla_breaches": 0,
     "analysis_period": {
       "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:01Z"
+      "to": "2026-07-02T10:00:02Z"
     }
   },
   "kafka": {
@@ -18,7 +18,8 @@
         "lag": 125000,
         "verdict": "CRITICAL",
         "issue_type": "KAFKA_LAG_CRITICAL",
-        "timestamp": "2026-07-02T09:28:00Z"
+        "timestamp": "2026-07-02T09:28:00Z",
+        "service": "checkout-consumer"
       },
       {
         "topic": "ecommerce-events",
@@ -26,7 +27,8 @@
         "lag": 118000,
         "verdict": "CRITICAL",
         "issue_type": "KAFKA_LAG_CRITICAL",
-        "timestamp": "2026-07-02T09:40:00Z"
+        "timestamp": "2026-07-02T09:40:00Z",
+        "service": "checkout-consumer"
       }
     ]
   },
@@ -34,41 +36,29 @@
     {
       "service": "checkout-consumer",
       "timestamp": "2026-07-02T09:35:00Z",
-      "severity": "WARN",
-      "issue_type": "CHECKPOINT_STALE",
+      "status": "stale",
       "detail": "checkpoint offset missing, last checkpoint 45 minutes old"
     }
   ],
   "sla_breaches": [],
-  "backlogs": [
-    {
-      "service": "checkout-consumer",
-      "severity": "CRITICAL",
-      "description": "Kafka lag reached 125000 on ecommerce-events",
-      "issue_type": "PROCESSING_BACKLOG",
-      "timestamp": "2026-07-02T09:28:00Z"
-    }
-  ],
+  "backlogs": [],
   "all_issues": [
     {
       "issue_type": "KAFKA_LAG_CRITICAL",
-      "severity": "CRITICAL",
       "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "detail": "Lag 125000"
+      "severity": "CRITICAL",
+      "detail": "Kafka lag 125000 for ecommerce-events"
     },
     {
       "issue_type": "KAFKA_LAG_CRITICAL",
-      "severity": "CRITICAL",
       "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "detail": "Lag 118000"
+      "severity": "CRITICAL",
+      "detail": "Kafka lag 118000 for ecommerce-events"
     },
     {
       "issue_type": "CHECKPOINT_STALE",
-      "severity": "WARN",
       "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:35:00Z",
+      "severity": "WARN",
       "detail": "checkpoint offset missing, last checkpoint 45 minutes old"
     }
   ]

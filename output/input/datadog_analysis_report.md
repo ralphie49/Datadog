@@ -1,74 +1,103 @@
 # Datadog Observability Analysis Report
-**Generated:** 2026-07-06T20:59:43Z | **Analysis Period:** 2026-07-02T08:00:00Z → 2026-07-02T10:00:02Z
+**Generated:** 2026-07-06T22:36:00Z | **Analysis Period:** 2026-07-02T08:00:00Z → 2026-07-02T10:00:02Z
+**Dataset:** input
 **Overall Health:** CRITICAL
 
 ## Executive Summary
 - Total incidents identified: 2
-- Critical issues: 14 | Error issues: 19 | Warnings: 6
+- Critical issues: 9 | Error issues: 19 | Warnings: 7
 - Top risks:
-  1. PIPELINE_BACKPRESSURE impacting checkout-consumer, payment-service, order-service with critical severity
-  2. SECURITY_INCIDENT impacting user-service with critical severity
+  1. Kafka consumer lag on checkout-consumer reached 125,000 messages on ecommerce-events, cascading to order-service and payment-service latency.
+  2. PII and credential exposure in user-service logs created a critical security incident that affected authentication and authorization workflows.
+  3. Correlated anomalies in checkout-consumer and payment-service indicated that the lag spike was driving downstream throughput degradation.
 
 ## 1. Errors & Data Quality
 | Service | Issue | Severity | Detail |
 | --- | --- | --- | --- |
-| 1 | AUTHENTICATION_FAILURE | user-service | ERROR | 5 |
-| 2 | CONNECTION_FAILURE | payment-service | ERROR | 4 |
-| 3 | NULL_POINTER | order-service | ERROR | 2 |
-| 4 | UNKNOWN | checkout-consumer | ERROR | 1 |
-| 5 | UNKNOWN | checkout-consumer | ERROR | 1 |
+| user-service | Unauthorised access attempt: 401 Unauthorized invalid token | 🔴 ERROR | Repeated authentication failures for the admin endpoint |
+| payment-service | DB connection refused: connection to payments-db timed out | 🟠 ERROR | Database connectivity issue affecting payment processing |
+| order-service | Unhandled exception: NullPointerException at OrderProcessor.finalize | 🟠 ERROR | Order processing error propagated through the transaction path |
+| checkout-consumer | DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45 | 🟠 ERROR | Data quality alert for email formatting |
+| checkout-consumer | DQ_ALERT rejection_reason=NULL_VALUE:phone count=30 | 🟠 ERROR | Data quality alert for missing phone values |
 
 ## 2. Performance & Infrastructure
-| Service | Avg ms | P99 ms | Verdict |
+### Latency by service
+| Service | Issue | Severity | Detail |
 | --- | --- | --- | --- |
-| order-service | 2093.75 | 4200.0 | CRITICAL |
-| payment-service | 1982.5 | 3900.0 | CRITICAL |
-| checkout-consumer | 3400.0 | 3500.0 | CRITICAL |
-| user-service | 75.0 | 90.0 | OK |
+| checkout-consumer | Latency p95/p99 | 🔴 CRITICAL | avg_ms=3400.0, p95_ms=3300.0, p99_ms=3300.0 |
+| order-service | Latency p95/p99 | 🔴 CRITICAL | avg_ms=2093.75, p95_ms=3800.0, p99_ms=3800.0 |
+| payment-service | Latency p95/p99 | 🔴 CRITICAL | avg_ms=1982.5, p95_ms=3600.0, p99_ms=3600.0 |
+| user-service | Latency p95/p99 | 🟢 OK | avg_ms=75.0, p95_ms=60.0, p99_ms=60.0 |
+
+### Slowest traces
+| Service | Issue | Severity | Detail |
+| --- | --- | --- | --- |
+| order-service | create_order | 🔴 CRITICAL | duration_ms=4200.0 at 2026-07-02T09:30:00Z |
+| payment-service | process_payment | 🔴 CRITICAL | duration_ms=3900.0 at 2026-07-02T09:30:01Z |
+| order-service | create_order | 🔴 CRITICAL | duration_ms=3800.0 at 2026-07-02T09:31:00Z |
+| payment-service | process_payment | 🔴 CRITICAL | duration_ms=3600.0 at 2026-07-02T09:31:02Z |
+| checkout-consumer | consume_event | 🟠 ERROR | duration_ms=3500.0 at 2026-07-02T09:29:50Z |
+
+### Host health
+| Service | Issue | Severity | Detail |
+| --- | --- | --- | --- |
+| host-01 | Host health | 🟢 OK | CPU 60%, Memory 58%, Disk 41% |
+| host-02 | Host health | 🟢 OK | CPU 72%, Memory 68%, Disk 36% |
+| host-03 | Host health | 🟡 WARN | CPU 88%, Memory 82%, Disk 61% |
+| host-04 | Host health | 🟢 OK | CPU 42%, Memory 44%, Disk 31% |
+
+### Infrastructure issues
+| Service | Issue | Severity | Detail |
+| --- | --- | --- | --- |
+| host-03 | HIGH_CPU | 🟡 WARN | CPU 88% |
+| host-03 | HIGH_MEMORY | 🟡 WARN | Memory 82% |
 
 ## 3. Pipeline Health
-| Topic | Consumer Group | Lag | Verdict |
+| Service | Issue | Severity | Detail |
 | --- | --- | --- | --- |
-| ecommerce-events | checkout-consumer | 125000 | CRITICAL |
-| ecommerce-events | checkout-consumer | 118000 | CRITICAL |
+| checkout-consumer | KAFKA_LAG_CRITICAL | 🔴 CRITICAL | Kafka lag 125000 for ecommerce-events |
+| checkout-consumer | KAFKA_LAG_CRITICAL | 🔴 CRITICAL | Kafka lag 118000 for ecommerce-events |
+| checkout-consumer | CHECKPOINT_STALE | 🟡 WARN | checkpoint offset missing, last checkpoint 45 minutes old |
 
 ## 4. Security
-| Issue | Severity | Service | Detail |
+| Service | Issue | Severity | Detail |
 | --- | --- | --- | --- |
-| UNAUTHORISED_ACCESS | ERROR | user-service | Unauthorised access observed |
-| UNAUTHORISED_ACCESS | ERROR | user-service | Unauthorised access observed |
-| UNAUTHORISED_ACCESS | ERROR | user-service | Unauthorised access observed |
-| UNAUTHORISED_ACCESS | ERROR | user-service | Unauthorised access observed |
-| UNAUTHORISED_ACCESS | ERROR | user-service | Unauthorised access observed |
+| user-service | UNAUTHORISED_ACCESS | 🟠 ERROR | Authentication failures were observed against the admin endpoint |
+| user-service | UNAUTHORISED_ACCESS | 🟠 ERROR | Repeated invalid token attempts were recorded |
+| user-service | PII_IN_LOGS | 🔴 CRITICAL | PII field exposure was detected in user-service logs |
+| user-service | CREDENTIAL_LEAK | 🔴 CRITICAL | Credential-like data was detected and redacted |
+| user-service | BRUTE_FORCE_ATTEMPT | 🔴 CRITICAL | Six authentication failures were grouped as a suspicious access pattern |
 
 ## 5. Anomalies & Trends
-| Type | Service | Confidence | Detail |
+| Service | Issue | Severity | Detail |
 | --- | --- | --- | --- |
-| LATENCY_SPIKE | order-service | HIGH | Latency spiked for order-service at 2026-07-02T09:30:00Z |
-| LATENCY_SPIKE | payment-service | HIGH | Latency spiked for payment-service at 2026-07-02T09:30:01Z |
-| KAFKA_LAG_SPIKE | checkout-consumer | HIGH | Kafka lag spike on checkout-consumer |
-| KAFKA_LAG_SPIKE | checkout-consumer | HIGH | Kafka lag spike on checkout-consumer |
+| checkout-consumer | KAFKA_LAG_SPIKE | 🔴 HIGH | Kafka consumer lag spiked for checkout-consumer |
+| checkout-consumer | KAFKA_LAG_SPIKE | 🔴 HIGH | Kafka consumer lag spiked for checkout-consumer |
+| payment-service | THROUGHPUT_DROP | 🟡 MEDIUM | Throughput dropped for payment-service |
+| payment-service | THROUGHPUT_DROP | 🟡 MEDIUM | Throughput dropped for payment-service |
+| checkout-consumer | CORRELATED_ANOMALY | 🔴 HIGH | Correlated anomalies across checkout-consumer and payment-service |
 
 ## 6. Dependency & Breakpoint Analysis
-- Breakpoint checkout-consumer: checkout-consumer identified as the origin of the downstream impact
+| Service | Issue | Severity | Detail |
+| --- | --- | --- | --- |
+| order-service | ->payment-service | 🟢 INFO | call_count=4 avg_latency_ms=1982.5 |
+| checkout-consumer | ->order-service | 🟢 INFO | call_count=2 avg_latency_ms=4000.0 |
+| checkout-consumer | BREAKPOINT_IDENTIFIED | 🔴 CRITICAL | checkout-consumer was identified as the upstream breakpoint for downstream impact |
 
 ## Root Cause Analysis
-- incident_001: PIPELINE_BACKPRESSURE on checkout-consumer — Kafka consumer lag critical on ecommerce-events, causing downstream latency and error spikes
-- incident_002: SECURITY_INCIDENT on user-service — PII and credential exposure in user-service logs plus repeated unauthorised access attempts
+- incident_001: PIPELINE_BACKPRESSURE on checkout-consumer — KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000) and downstream latency in order-service and payment-service.
+- incident_002: SECURITY_INCIDENT on user-service — PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service, exposing authentication and authorization risk.
 
 ## Recommendations
-| Rank | Priority | Incident | Title |
+| Priority | Incident | Title | Detail |
 | --- | --- | --- | --- |
-| 1 | P1_IMMEDIATE | incident_001 | Scale the checkout-consumer pipeline to relieve Kafka lag |
-| 2 | P2_URGENT | incident_002 | Redact PII and credential values in user-service logging |
+| P1_IMMEDIATE | incident_001 | Investigate pipeline backpressure for checkout-consumer | KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000) |
+| P1_IMMEDIATE | incident_002 | Investigate security incident for user-service | PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service |
 
 ## Patch Suggestions (Human Review Required)
-- patch_1: Increase consumer concurrency for the affected topic to reduce lag.
-  Diff: - consumer_instances: 2
-+ consumer_instances: 6
-- patch_2: Add redaction before logs are emitted to prevent PII and credential leakage.
-  Diff: - log_event(message)
-+ log_event(redact_sensitive(message))
+- patch_001: KAFKA_CONSUMER_SCALING (MEDIUM) — Scale the consumer group and verify partitioning for the lagging topic.
+- patch_002: REDACTION_POLICY_CHANGE (LOW) — Enforce structured redaction for PII and credentials before logs are emitted.
+- ⚠️ All patches require human review before applying.
 
 ## Appendix — Ingestion Summary
 - Total normalized records: 90
