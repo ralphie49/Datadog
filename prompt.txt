@@ -1,0 +1,21 @@
+Run the Datadog Analyser Orchestrator on the input folder named `input`.
+
+Follow every MUST/MUST NOT rule in the 12 spec files exactly — do not hardcode any value 
+from the specs' examples or self-test sections. Every number, service name, and ID in the 
+output must be computed from what is actually inside `input/` at runtime.
+
+Treat `input/` as one dataset. Read all Datadog export files inside it together, resolve 
+the dataset name as `input`, and write every artifact only under `output/input/`. Do not 
+write outputs to `output/`, the project root, or any other dataset folder. If any phase 
+tries to read from one dataset folder and write to another, stop and report the mismatch.
+
+Expected final report path: `output/input/datadog_analysis_report.md`.
+
+After generating output, validate it against the input files yourself:
+- Every record count in normalised_data.json must match what's actually in the source files.
+- Every finding in log_analysis.json, security_report.json, apm_report.json, metrics_report.json, 
+  anomaly_report.json, dependency_report.json, root_cause.json must trace back to a real 
+  record in the input — not to an example from the spec files.
+- Cross-file references (incident IDs, service names) must be consistent everywhere they appear.
+
+Regenerate any file that fails these checks. Show me what failed and what you changed.
