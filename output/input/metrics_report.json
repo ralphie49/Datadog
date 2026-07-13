@@ -2,14 +2,14 @@
   "summary": {
     "total_services_analysed": 4,
     "total_hosts_analysed": 4,
-    "services_with_issues": 3,
-    "hosts_with_issues": 1,
-    "critical_issues": 0,
+    "services_with_issues": 4,
+    "hosts_with_issues": 3,
+    "critical_issues": 16,
     "warn_issues": 2,
-    "hosts_down": 0,
+    "hosts_down": 3,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:01.000Z"
     }
   },
   "latency": {
@@ -17,130 +17,351 @@
       {
         "service": "order-service",
         "operation": "create_order",
-        "duration_ms": 4200.0,
-        "timestamp": "2026-07-02T09:30:00Z",
+        "duration_ms": 4200,
+        "timestamp": "2026-07-02T09:30:00.000Z",
         "trace_id": "t002"
       },
       {
         "service": "payment-service",
         "operation": "process_payment",
-        "duration_ms": 3900.0,
-        "timestamp": "2026-07-02T09:30:01Z",
+        "duration_ms": 3900,
+        "timestamp": "2026-07-02T09:30:01.000Z",
         "trace_id": "t002"
       },
       {
         "service": "order-service",
         "operation": "create_order",
-        "duration_ms": 3800.0,
-        "timestamp": "2026-07-02T09:31:00Z",
+        "duration_ms": 3800,
+        "timestamp": "2026-07-02T09:31:00.000Z",
         "trace_id": "t003"
       },
       {
         "service": "payment-service",
         "operation": "process_payment",
-        "duration_ms": 3600.0,
-        "timestamp": "2026-07-02T09:31:02Z",
+        "duration_ms": 3600,
+        "timestamp": "2026-07-02T09:31:02.000Z",
         "trace_id": "t003"
       },
       {
         "service": "checkout-consumer",
         "operation": "consume_event",
-        "duration_ms": 3500.0,
-        "timestamp": "2026-07-02T09:29:50Z",
+        "duration_ms": 3500,
+        "timestamp": "2026-07-02T09:29:50.000Z",
         "trace_id": "t002"
       }
     ],
     "by_service": [
       {
-        "service": "checkout-consumer",
-        "avg_ms": 3400.0,
-        "p95_ms": 3300.0,
-        "p99_ms": 3300.0,
-        "verdict": "CRITICAL"
-      },
-      {
         "service": "order-service",
-        "avg_ms": 2093.75,
-        "p95_ms": 3800.0,
-        "p99_ms": 3800.0,
+        "avg_ms": 2093.8,
+        "p95_ms": 4140.0,
+        "p99_ms": 4188.0,
         "verdict": "CRITICAL"
       },
       {
         "service": "payment-service",
         "avg_ms": 1982.5,
-        "p95_ms": 3600.0,
-        "p99_ms": 3600.0,
+        "p95_ms": 3855.0,
+        "p99_ms": 3891.0,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "checkout-consumer",
+        "avg_ms": 3400.0,
+        "p95_ms": 3490.0,
+        "p99_ms": 3498.0,
         "verdict": "CRITICAL"
       },
       {
         "service": "user-service",
         "avg_ms": 75.0,
-        "p95_ms": 60.0,
-        "p99_ms": 60.0,
+        "p95_ms": 88.5,
+        "p99_ms": 89.7,
         "verdict": "OK"
       }
     ]
   },
-  "throughput": [],
+  "throughput": [
+    {
+      "service": "payment-service",
+      "baseline_rps": 119.0,
+      "current_rps": 63.3,
+      "drop_pct": 46.8,
+      "verdict": "WARN"
+    }
+  ],
   "hosts": [
     {
       "host": "host-01",
-      "cpu_pct": 60,
-      "memory_pct": 58,
-      "disk_pct": 41,
-      "network_mbps": 300,
-      "health_score": 100,
-      "verdict": "OK",
-      "issues": []
-    },
-    {
-      "host": "host-02",
-      "cpu_pct": 72,
-      "memory_pct": 68,
-      "disk_pct": 36,
-      "network_mbps": 400,
-      "health_score": 100,
-      "verdict": "OK",
-      "issues": []
+      "cpu_pct": 95.0,
+      "memory_pct": 91.0,
+      "disk_pct": 43.0,
+      "network_mbps": 1770.0,
+      "health_score": 40,
+      "verdict": "CRITICAL",
+      "issues": [
+        "HIGH_CPU",
+        "HIGH_MEMORY",
+        "NETWORK_SATURATION",
+        "RESOURCE_EXHAUSTION",
+        "HOST_DOWN"
+      ]
     },
     {
       "host": "host-03",
-      "cpu_pct": 88,
-      "memory_pct": 82,
-      "disk_pct": 61,
-      "network_mbps": 700,
-      "health_score": 70,
-      "verdict": "WARN",
+      "cpu_pct": 88.0,
+      "memory_pct": 82.0,
+      "disk_pct": 61.0,
+      "network_mbps": 1350.0,
+      "health_score": 55,
+      "verdict": "CRITICAL",
       "issues": [
         "HIGH_CPU",
-        "HIGH_MEMORY"
+        "HIGH_MEMORY",
+        "NETWORK_SATURATION",
+        "HOST_DOWN"
+      ]
+    },
+    {
+      "host": "host-02",
+      "cpu_pct": 72.0,
+      "memory_pct": 68.0,
+      "disk_pct": 36.0,
+      "network_mbps": 780.0,
+      "health_score": 100,
+      "verdict": "WARN",
+      "issues": [
+        "HOST_DOWN"
       ]
     },
     {
       "host": "host-04",
-      "cpu_pct": 42,
-      "memory_pct": 44,
-      "disk_pct": 31,
-      "network_mbps": 220,
+      "cpu_pct": 42.0,
+      "memory_pct": 44.0,
+      "disk_pct": 31.0,
+      "network_mbps": 420.0,
       "health_score": 100,
       "verdict": "OK",
       "issues": []
     }
   ],
   "storage_issues": [],
-  "network": [],
-  "all_issues": [
+  "network": [
     {
-      "issue_type": "HIGH_CPU",
-      "service": "host-03",
-      "severity": "WARN",
-      "detail": "CPU 88%"
+      "host": "host-01",
+      "network_mbps": 1770.0
     },
     {
+      "host": "host-03",
+      "network_mbps": 1350.0
+    }
+  ],
+  "downtime_issues": [
+    {
+      "host": "host-01",
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T09:00:00.000Z",
+      "gap_minutes": 60.0
+    },
+    {
+      "host": "host-01",
+      "from": "2026-07-02T09:00:00.000Z",
+      "to": "2026-07-02T09:20:00.000Z",
+      "gap_minutes": 20.0
+    },
+    {
+      "host": "host-01",
+      "from": "2026-07-02T09:20:00.000Z",
+      "to": "2026-07-02T09:30:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "host-01",
+      "from": "2026-07-02T09:30:00.000Z",
+      "to": "2026-07-02T09:40:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "host-01",
+      "from": "2026-07-02T09:40:00.000Z",
+      "to": "2026-07-02T10:00:00.000Z",
+      "gap_minutes": 20.0
+    },
+    {
+      "host": "host-02",
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T09:30:00.000Z",
+      "gap_minutes": 90.0
+    },
+    {
+      "host": "host-02",
+      "from": "2026-07-02T09:30:00.000Z",
+      "to": "2026-07-02T09:40:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T09:00:00.000Z",
+      "gap_minutes": 60.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T09:00:00.000Z",
+      "to": "2026-07-02T09:10:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T09:10:00.000Z",
+      "to": "2026-07-02T09:20:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T09:20:00.000Z",
+      "to": "2026-07-02T09:28:00.000Z",
+      "gap_minutes": 8.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T09:28:00.000Z",
+      "to": "2026-07-02T09:40:00.000Z",
+      "gap_minutes": 12.0
+    },
+    {
+      "host": "host-03",
+      "from": "2026-07-02T09:40:00.000Z",
+      "to": "2026-07-02T10:00:00.000Z",
+      "gap_minutes": 20.0
+    }
+  ],
+  "all_issues": [
+    {
+      "service": "order-service",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "order-service error rate 50.0% across 4 traces"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:01.000Z",
+      "description": "payment-service error rate 50.0% across 4 traces"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:29:50.000Z",
+      "description": "checkout-consumer error rate 100.0% across 2 traces"
+    },
+    {
+      "service": "user-service",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:51:00.000Z",
+      "description": "user-service error rate 50.0% across 2 traces"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "THROUGHPUT_DROP",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "payment-service throughput dropped 46.8% vs baseline"
+    },
+    {
+      "service": "host-01",
+      "issue_type": "HIGH_CPU",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:20:00.000Z",
+      "description": "host host-01 flagged HIGH_CPU (verdict CRITICAL)"
+    },
+    {
+      "service": "host-01",
       "issue_type": "HIGH_MEMORY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "host host-01 flagged HIGH_MEMORY (verdict CRITICAL)"
+    },
+    {
+      "service": "host-01",
+      "issue_type": "NETWORK_SATURATION",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "host host-01 flagged NETWORK_SATURATION (verdict CRITICAL)"
+    },
+    {
+      "service": "host-01",
+      "issue_type": "RESOURCE_EXHAUSTION",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "host host-01 flagged RESOURCE_EXHAUSTION (verdict CRITICAL)"
+    },
+    {
+      "service": "host-01",
+      "issue_type": "HOST_DOWN",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T08:00:00.000Z",
+      "description": "host host-01 flagged HOST_DOWN (verdict CRITICAL)"
+    },
+    {
       "service": "host-03",
-      "severity": "WARN",
-      "detail": "Memory 82%"
+      "issue_type": "HIGH_CPU",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "description": "host host-03 flagged HIGH_CPU (verdict CRITICAL)"
+    },
+    {
+      "service": "host-03",
+      "issue_type": "HIGH_MEMORY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "description": "host host-03 flagged HIGH_MEMORY (verdict CRITICAL)"
+    },
+    {
+      "service": "host-03",
+      "issue_type": "NETWORK_SATURATION",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "description": "host host-03 flagged NETWORK_SATURATION (verdict CRITICAL)"
+    },
+    {
+      "service": "host-03",
+      "issue_type": "HOST_DOWN",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T08:00:00.000Z",
+      "description": "host host-03 flagged HOST_DOWN (verdict CRITICAL)"
+    },
+    {
+      "service": "host-02",
+      "issue_type": "HOST_DOWN",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T08:00:00.000Z",
+      "description": "host host-02 flagged HOST_DOWN (verdict WARN)"
+    },
+    {
+      "service": "order-service",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "description": "order-service p99 latency 4188.0ms"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:30:01.000Z",
+      "description": "payment-service p99 latency 3891.0ms"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:29:50.000Z",
+      "description": "checkout-consumer p99 latency 3498.0ms"
     }
   ]
 }

@@ -1,0 +1,19 @@
+{
+  "summary": {
+    "total_security_issues": 0,
+    "critical_issues": 0,
+    "error_issues": 0,
+    "warn_issues": 0,
+    "pii_exposures": 0,
+    "credential_leaks": 0,
+    "auth_failures": 0,
+    "analysis_period": {
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T15:02:01.000Z"
+    }
+  },
+  "findings": [],
+  "auth_failures": [],
+  "compliance": [],
+  "all_issues": []
+}

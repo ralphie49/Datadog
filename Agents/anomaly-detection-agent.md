@@ -318,11 +318,92 @@ while such a pair exists in the anomalies list, that is a defect in the correlat
 before considering this agent done, and do not write a `correlated_anomalies: 0` output in that
 situation.
 
-## Output Specification
+### Mandatory Pre-Write Gate (hard assertion, not prose to remember)
 
-| Artifact | Description |
-|---|---|
-| `anomaly_report.json` | Detected anomalies with type, confidence, deviation, corroboration, and trend analysis |
+This exact defect has recurred at least once after this section was already written — a run reproduced
+`correlated_anomalies: 0` with a textbook connected pair present, and the accompanying validator check
+in `output-content-validation-agent.md` passed anyway because it only restated the numbers instead of
+re-deriving them. Prose describing the correct behavior is evidently not sufficient on its own. The
+implementation MUST therefore run this literal assertion immediately before writing
+`anomaly_report.json`, and MUST refuse to write the file (raise/exit non-zero) if it fails:
+
+```
+def assert_correlation_completeness(anomalies, dependency_graph, correlation_window_minutes, summary):
+    def connected(a, b):
+        if a["service"] == b["service"]:
+            return True
+        return dependency_graph_connects(a["service"], b["service"], dependency_graph)  # any hop, either direction
+
+    has_connected_pair = any(
+        connected(a, b) and abs(minutes_between(a["timestamp"], b["timestamp"])) <= correlation_window_minutes
+        for a, b in all_pairs(anomalies)
+    )
+    if has_connected_pair and summary["correlated_anomalies"] == 0:
+        raise AssertionError(
+            "A dependency-connected, time-adjacent anomaly pair exists but "
+            "summary.correlated_anomalies == 0. Do not write anomaly_report.json until Phase 3's "
+            "correlation pass actually emits a CORRELATED_ANOMALY entry for it."
+        )
+```
+
+This assertion MUST run as actual code, not merely be read as guidance. If it fires, fix Phase 3 and
+re-run — do not hand-edit the summary count to satisfy the check without a genuine corresponding
+`CORRELATED_ANOMALY` entry in `anomalies[]`.
+
+## Closed-Set Fallback Contract (added to prevent an entire class of coverage-gap defects)
+
+Every bug found in prior testing rounds of this pipeline shared one shape: an agent had a closed list of
+known categories (metric types, error types, anomaly types) and, when the real input didn't match any
+entry, the record was silently dropped rather than degraded gracefully. A disk-usage spike falling through
+because `DISK_SPIKE` wasn't in the anomaly-type enum is one instance of this; the next input file will
+produce a *different* instance (network saturation, queue depth, GC pause time, whatever domain shows up
+next) unless the fallback behavior itself is fixed once, generically, rather than patched enum entry by
+enum entry.
+
+**MUST:** if a metric/finding has 2+ chronological prior readings for the same service (enough to compute
+a baseline) but its specific domain does not match any named `anomaly_type` in this agent's enum, emit it
+anyway as a generic `THRESHOLD_BREACH` anomaly — same fields (`service`, `timestamp`, `value`, `baseline`,
+`deviation_pct`, `confidence`), with `description` stating the raw metric name (e.g. `"enc-host-01 disk_pct
+reading 99.0 exceeded 2.0x its own prior baseline 61.0"`) so it still carries real signal downstream.
+**MUST NOT** silently omit a metric from `anomaly_report.json` merely because its domain isn't one of the
+named `_SPIKE`/`_DROP` types this file happens to enumerate today. Omission is only acceptable when there
+is genuinely no baseline (fewer than 2 prior readings) — never because the domain is unrecognized.
+
+This rule exists so that any future agent (Dependency/Flow, Root Cause) that keys its own logic off
+`anomaly_report.json` entries continues to receive a signal for CRITICAL findings in domains this file's
+author didn't anticipate, instead of that signal disappearing at this stage and silently breaking
+everything downstream that depends on it.
+
+### Mandatory Pre-Write Gate (hard assertion — this rule was previously stated as prose only and skipped)
+
+This exact rule was written above in a prior spec revision as plain MUST/MUST NOT prose, and a later run
+still shipped `anomaly_report.json` with zero `THRESHOLD_BREACH` entries despite the input containing a
+`disk_pct` series that climbed from 60% to 99% with CRITICAL findings in `metrics_report.json` — a clean
+case the rule above was written specifically to cover. The incident was only caught downstream because a
+different agent (Dependency/Flow) happened to have its own independent fallback. Prose alone was
+evidently not sufficient to make this rule stick. The implementation MUST therefore run this literal
+assertion immediately before writing `anomaly_report.json`, and MUST refuse to write the file if it fails:
+
+```
+def assert_no_silent_coverage_gap(all_input_metric_series, known_anomaly_types, anomalies_output):
+    for series in all_input_metric_series:
+        if len(series.readings_before(series.latest_timestamp)) < 2:
+            continue  # genuinely no baseline — omission is legitimate here
+        if series.metric_name not in known_anomaly_types and series.has_deviation(spike_multiplier, drop_multiplier):
+            matching = [a for a in anomalies_output
+                        if a["service"] == series.service and a["timestamp"] == series.deviation_timestamp]
+            if not matching:
+                raise AssertionError(
+                    f"{series.service}/{series.metric_name} has a baseline and a qualifying deviation "
+                    f"but no anomaly entry exists (not even a THRESHOLD_BREACH fallback). "
+                    f"Do not write anomaly_report.json until every metric domain with a computable "
+                    f"baseline and a real deviation is represented — by a named type or THRESHOLD_BREACH."
+                )
+```
+
+This MUST run as actual code, not be read as guidance. If it fires, add the missing `THRESHOLD_BREACH`
+entry (or the correct named type) and re-run — do not special-case the specific metric name that failed
+the assertion; fix the general fallback path so any future unmapped metric domain is caught the same way.
 
 ---
 

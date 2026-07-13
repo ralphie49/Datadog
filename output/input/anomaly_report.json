@@ -1,152 +1,92 @@
 {
   "summary": {
-    "total_anomalies": 5,
-    "high_confidence": 3,
+    "total_anomalies": 3,
+    "high_confidence": 1,
     "medium_confidence": 2,
     "low_confidence": 0,
     "correlated_anomalies": 1,
     "worsening_trends": 0,
     "improving_trends": 0,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:01.000Z"
     }
   },
   "anomalies": [
     {
-      "anomaly_type": "KAFKA_LAG_SPIKE",
-      "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "value": 68000.0,
-      "baseline": 16500.0,
-      "deviation_pct": 312.12,
-      "confidence": "HIGH",
-      "corroborated_by": [
-        "KAFKA_LAG_SPIKE"
-      ],
-      "description": "Kafka consumer lag spiked for checkout-consumer"
-    },
-    {
-      "anomaly_type": "KAFKA_LAG_SPIKE",
-      "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "value": 125000.0,
-      "baseline": 46500.0,
-      "deviation_pct": 168.82,
-      "confidence": "HIGH",
-      "corroborated_by": [
-        "KAFKA_LAG_SPIKE"
-      ],
-      "description": "Kafka consumer lag spiked for checkout-consumer"
-    },
-    {
-      "anomaly_type": "THROUGHPUT_DROP",
-      "service": "payment-service",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "value": 40.0,
-      "baseline": 119.0,
-      "deviation_pct": 66.39,
-      "confidence": "MEDIUM",
-      "corroborated_by": [
-        "THROUGHPUT_DROP"
-      ],
-      "description": "Throughput dropped for payment-service"
-    },
-    {
-      "anomaly_type": "THROUGHPUT_DROP",
-      "service": "payment-service",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "value": 35.0,
-      "baseline": 79.0,
-      "deviation_pct": 55.7,
-      "confidence": "MEDIUM",
-      "corroborated_by": [
-        "THROUGHPUT_DROP"
-      ],
-      "description": "Throughput dropped for payment-service"
-    },
-    {
       "anomaly_type": "CORRELATED_ANOMALY",
-      "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "value": 1,
-      "baseline": 1,
-      "deviation_pct": 0,
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "value": null,
+      "baseline": null,
+      "deviation_pct": null,
       "confidence": "HIGH",
       "corroborated_by": [
         "KAFKA_LAG_SPIKE",
-        "THROUGHPUT_DROP"
+        "LATENCY_SPIKE"
       ],
-      "description": "Correlated anomalies across checkout-consumer and payment-service"
+      "description": "order-service and checkout-consumer showed correlated KAFKA_LAG_SPIKE and LATENCY_SPIKE within the same window"
+    },
+    {
+      "anomaly_type": "KAFKA_LAG_SPIKE",
+      "service": "checkout-consumer",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "value": 125000.0,
+      "baseline": 33666.67,
+      "deviation_pct": 271.3,
+      "confidence": "MEDIUM",
+      "corroborated_by": [],
+      "description": "checkout-consumer kafka_consumer_lag reading 125000.0 exceeded 2.0x its own prior baseline 33666.67"
+    },
+    {
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "value": 4188.0,
+      "baseline": 2093.8,
+      "deviation_pct": 100.0,
+      "confidence": "MEDIUM",
+      "corroborated_by": [],
+      "description": "order-service p99 latency 4188.0ms is 2.0x its own baseline avg 2093.8ms"
     }
   ],
   "trends": [],
   "all_anomalies": [
     {
-      "anomaly_type": "KAFKA_LAG_SPIKE",
-      "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:20:00Z",
-      "value": 68000.0,
-      "baseline": 16500.0,
-      "deviation_pct": 312.12,
-      "confidence": "HIGH",
-      "corroborated_by": [
-        "KAFKA_LAG_SPIKE"
-      ],
-      "description": "Kafka consumer lag spiked for checkout-consumer"
+      "anomaly_type": "LATENCY_SPIKE",
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "value": 4188.0,
+      "baseline": 2093.8,
+      "deviation_pct": 100.0,
+      "confidence": "MEDIUM",
+      "corroborated_by": [],
+      "description": "order-service p99 latency 4188.0ms is 2.0x its own baseline avg 2093.8ms"
     },
     {
       "anomaly_type": "KAFKA_LAG_SPIKE",
       "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:28:00Z",
+      "timestamp": "2026-07-02T09:28:00.000Z",
       "value": 125000.0,
-      "baseline": 46500.0,
-      "deviation_pct": 168.82,
-      "confidence": "HIGH",
-      "corroborated_by": [
-        "KAFKA_LAG_SPIKE"
-      ],
-      "description": "Kafka consumer lag spiked for checkout-consumer"
-    },
-    {
-      "anomaly_type": "THROUGHPUT_DROP",
-      "service": "payment-service",
-      "timestamp": "2026-07-02T09:30:00Z",
-      "value": 40.0,
-      "baseline": 119.0,
-      "deviation_pct": 66.39,
+      "baseline": 33666.67,
+      "deviation_pct": 271.3,
       "confidence": "MEDIUM",
-      "corroborated_by": [
-        "THROUGHPUT_DROP"
-      ],
-      "description": "Throughput dropped for payment-service"
-    },
-    {
-      "anomaly_type": "THROUGHPUT_DROP",
-      "service": "payment-service",
-      "timestamp": "2026-07-02T09:40:00Z",
-      "value": 35.0,
-      "baseline": 79.0,
-      "deviation_pct": 55.7,
-      "confidence": "MEDIUM",
-      "corroborated_by": [
-        "THROUGHPUT_DROP"
-      ],
-      "description": "Throughput dropped for payment-service"
+      "corroborated_by": [],
+      "description": "checkout-consumer kafka_consumer_lag reading 125000.0 exceeded 2.0x its own prior baseline 33666.67"
     },
     {
       "anomaly_type": "CORRELATED_ANOMALY",
-      "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:28:00Z",
-      "value": 1,
-      "baseline": 1,
-      "deviation_pct": 0,
+      "service": "order-service",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "value": null,
+      "baseline": null,
+      "deviation_pct": null,
       "confidence": "HIGH",
       "corroborated_by": [
         "KAFKA_LAG_SPIKE",
-        "THROUGHPUT_DROP"
+        "LATENCY_SPIKE"
       ],
-      "description": "Correlated anomalies across checkout-consumer and payment-service"
+      "description": "order-service and checkout-consumer showed correlated KAFKA_LAG_SPIKE and LATENCY_SPIKE within the same window"
     }
   ]
 }

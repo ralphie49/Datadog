@@ -1,253 +1,375 @@
 {
   "summary": {
-    "total_logs": 26,
     "total_errors": 19,
     "total_warnings": 4,
     "total_critical": 4,
+    "recurring_errors": 2,
+    "affected_services": [
+      "checkout-consumer",
+      "order-service",
+      "payment-service",
+      "user-service"
+    ],
+    "total_batches_analysed": 3,
+    "batches_with_dq_issues": 2,
+    "avg_rejection_rate_pct": 12.33,
+    "max_rejection_rate_pct": 17.0,
+    "total_quarantine_records": 0,
+    "total_dead_letter_records": 0,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:00.000Z"
     }
   },
   "top_errors": [
     {
-      "service": "user-service",
+      "rank": 1,
+      "error_type": "AUTHENTICATION_FAILURE",
       "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
       "severity": "ERROR",
       "frequency": 5,
-      "first_seen": "2026-07-02T09:51:00Z",
-      "last_seen": "2026-07-02T09:53:30Z"
+      "is_recurring": true,
+      "first_seen": "2026-07-02T09:51:00.000Z",
+      "last_seen": "2026-07-02T09:53:30.000Z"
     },
     {
-      "service": "payment-service",
+      "rank": 2,
+      "error_type": "CONNECTION_FAILURE",
       "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
       "severity": "ERROR",
       "frequency": 4,
-      "first_seen": "2026-07-02T08:05:00Z",
-      "last_seen": "2026-07-02T08:12:00Z"
+      "is_recurring": true,
+      "first_seen": "2026-07-02T08:05:00.000Z",
+      "last_seen": "2026-07-02T08:12:00.000Z"
     },
     {
-      "service": "order-service",
+      "rank": 3,
+      "error_type": "NULL_POINTER",
       "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "service": "order-service",
       "severity": "ERROR",
       "frequency": 2,
-      "first_seen": "2026-07-02T09:31:00Z",
-      "last_seen": "2026-07-02T09:32:00Z"
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:31:00.000Z",
+      "last_seen": "2026-07-02T09:32:00.000Z"
     },
     {
-      "service": "checkout-consumer",
+      "rank": 4,
+      "error_type": "UNKNOWN",
       "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "service": "checkout-consumer",
       "severity": "ERROR",
       "frequency": 1,
-      "first_seen": "2026-07-02T09:25:00Z",
-      "last_seen": "2026-07-02T09:25:00Z"
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:25:00.000Z",
+      "last_seen": "2026-07-02T09:25:00.000Z"
     },
     {
-      "service": "checkout-consumer",
+      "rank": 5,
+      "error_type": "UNKNOWN",
       "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "service": "checkout-consumer",
       "severity": "ERROR",
       "frequency": 1,
-      "first_seen": "2026-07-02T09:26:00Z",
-      "last_seen": "2026-07-02T09:26:00Z"
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:26:00.000Z",
+      "last_seen": "2026-07-02T09:26:00.000Z"
     },
     {
-      "service": "checkout-consumer",
-      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
-      "severity": "CRITICAL",
-      "frequency": 1,
-      "first_seen": "2026-07-02T09:40:00Z",
-      "last_seen": "2026-07-02T09:40:00Z"
-    },
-    {
-      "service": "checkout-consumer",
+      "rank": 6,
+      "error_type": "UNKNOWN",
       "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "service": "checkout-consumer",
       "severity": "CRITICAL",
       "frequency": 1,
-      "first_seen": "2026-07-02T09:28:00Z",
-      "last_seen": "2026-07-02T09:28:00Z"
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:28:00.000Z",
+      "last_seen": "2026-07-02T09:28:00.000Z"
     },
     {
-      "service": "payment-service",
+      "rank": 7,
+      "error_type": "TIMEOUT",
       "message": "Request timeout: upstream checkout-consumer not responding",
+      "service": "payment-service",
       "severity": "ERROR",
       "frequency": 1,
-      "first_seen": "2026-07-02T09:30:00Z",
-      "last_seen": "2026-07-02T09:30:00Z"
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:30:00.000Z",
+      "last_seen": "2026-07-02T09:30:00.000Z"
     },
     {
-      "service": "user-service",
-      "message": "Credential leak detected: Authorization: Bearer abc123redacted",
-      "severity": "CRITICAL",
-      "frequency": 1,
-      "first_seen": "2026-07-02T09:55:00Z",
-      "last_seen": "2026-07-02T09:55:00Z"
-    },
-    {
-      "service": "user-service",
-      "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
-      "severity": "CRITICAL",
-      "frequency": 1,
-      "first_seen": "2026-07-02T09:54:00Z",
-      "last_seen": "2026-07-02T09:54:00Z"
-    }
-  ],
-  "all_errors": [
-    {
-      "timestamp": "2026-07-02T08:05:00Z",
-      "service": "payment-service",
-      "severity": "ERROR",
-      "message": "DB connection refused: connection to payments-db timed out",
-      "error_type": "TIMEOUT"
-    },
-    {
-      "timestamp": "2026-07-02T08:07:00Z",
-      "service": "payment-service",
-      "severity": "ERROR",
-      "message": "DB connection refused: connection to payments-db timed out",
-      "error_type": "TIMEOUT"
-    },
-    {
-      "timestamp": "2026-07-02T08:10:00Z",
-      "service": "payment-service",
-      "severity": "ERROR",
-      "message": "DB connection refused: connection to payments-db timed out",
-      "error_type": "TIMEOUT"
-    },
-    {
-      "timestamp": "2026-07-02T08:12:00Z",
-      "service": "payment-service",
-      "severity": "ERROR",
-      "message": "DB connection refused: connection to payments-db timed out",
-      "error_type": "TIMEOUT"
-    },
-    {
-      "timestamp": "2026-07-02T09:25:00Z",
-      "service": "checkout-consumer",
-      "severity": "ERROR",
-      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:26:00Z",
-      "service": "checkout-consumer",
-      "severity": "ERROR",
-      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:28:00Z",
-      "service": "checkout-consumer",
-      "severity": "CRITICAL",
-      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:30:00Z",
-      "service": "payment-service",
-      "severity": "ERROR",
-      "message": "Request timeout: upstream checkout-consumer not responding",
-      "error_type": "TIMEOUT"
-    },
-    {
-      "timestamp": "2026-07-02T09:31:00Z",
-      "service": "order-service",
-      "severity": "ERROR",
-      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:32:00Z",
-      "service": "order-service",
-      "severity": "ERROR",
-      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:40:00Z",
-      "service": "checkout-consumer",
-      "severity": "CRITICAL",
+      "rank": 8,
+      "error_type": "UNKNOWN",
       "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
-      "error_type": "APPLICATION_ERROR"
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:40:00.000Z",
+      "last_seen": "2026-07-02T09:40:00.000Z"
     },
     {
-      "timestamp": "2026-07-02T09:50:00Z",
-      "service": "user-service",
-      "severity": "ERROR",
+      "rank": 9,
+      "error_type": "AUTHENTICATION_FAILURE",
       "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
-      "error_type": "AUTHENTICATION_FAILURE"
-    },
-    {
-      "timestamp": "2026-07-02T09:51:00Z",
       "service": "user-service",
       "severity": "ERROR",
-      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "AUTHENTICATION_FAILURE"
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:50:00.000Z",
+      "last_seen": "2026-07-02T09:50:00.000Z"
     },
     {
-      "timestamp": "2026-07-02T09:52:00Z",
-      "service": "user-service",
-      "severity": "ERROR",
-      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "AUTHENTICATION_FAILURE"
-    },
-    {
-      "timestamp": "2026-07-02T09:52:30Z",
-      "service": "user-service",
-      "severity": "ERROR",
-      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "AUTHENTICATION_FAILURE"
-    },
-    {
-      "timestamp": "2026-07-02T09:53:00Z",
-      "service": "user-service",
-      "severity": "ERROR",
-      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "AUTHENTICATION_FAILURE"
-    },
-    {
-      "timestamp": "2026-07-02T09:53:30Z",
-      "service": "user-service",
-      "severity": "ERROR",
-      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
-      "error_type": "AUTHENTICATION_FAILURE"
-    },
-    {
-      "timestamp": "2026-07-02T09:54:00Z",
+      "rank": 10,
+      "error_type": "UNKNOWN",
+      "message": "PII field 'email' detected in log message: user record email=[REDACTED]",
       "service": "user-service",
       "severity": "CRITICAL",
-      "message": "PII field 'email' detected in log message: user record email=redacted@example.com",
-      "error_type": "APPLICATION_ERROR"
-    },
-    {
-      "timestamp": "2026-07-02T09:55:00Z",
-      "service": "user-service",
-      "severity": "CRITICAL",
-      "message": "Credential leak detected: Authorization: Bearer abc123redacted",
-      "error_type": "APPLICATION_ERROR"
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-02T09:54:00.000Z",
+      "last_seen": "2026-07-02T09:54:00.000Z"
     }
   ],
-  "dq_alerts": [
+  "rejection_rates": [
     {
-      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
-      "column": "email",
-      "count": 45
+      "batch_id": "batch_001",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 920,
+      "failed": 80,
+      "rejection_pct": 8.0,
+      "verdict": "OK",
+      "timestamp": "2026-07-02T09:00:00.000Z"
     },
     {
-      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
-      "column": "phone",
-      "count": 30
+      "batch_id": "batch_002",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 880,
+      "failed": 120,
+      "rejection_pct": 12.0,
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:10:00.000Z"
+    },
+    {
+      "batch_id": "batch_003",
+      "pipeline": "cdc-pipeline",
+      "total": 1000,
+      "passed": 830,
+      "failed": 170,
+      "rejection_pct": 17.0,
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:20:00.000Z"
     }
   ],
   "worst_columns": [
     {
       "column": "email",
       "rejection_count": 45,
-      "rule_type": "UNKNOWN"
+      "rule_type": "FORMAT_MISMATCH"
     },
     {
       "column": "phone",
       "rejection_count": 30,
-      "rule_type": "UNKNOWN"
+      "rule_type": "NULL_VALUE"
+    }
+  ],
+  "dq_alerts": [
+    {
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "count": 1,
+      "recurring": false
+    },
+    {
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "count": 1,
+      "recurring": false
+    }
+  ],
+  "dq_trends": [
+    {
+      "trend": "REJECTION_RATE_WORSENING",
+      "pipeline": "cdc-pipeline",
+      "detail": "rejection rate rose across last 3 batches to 17.0%"
+    }
+  ],
+  "all_errors": [
+    {
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T08:05:00.000Z",
+      "record_id": "log_000002"
+    },
+    {
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T08:07:00.000Z",
+      "record_id": "log_000003"
+    },
+    {
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T08:10:00.000Z",
+      "record_id": "log_000004"
+    },
+    {
+      "error_type": "CONNECTION_FAILURE",
+      "message": "DB connection refused: connection to payments-db timed out",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T08:12:00.000Z",
+      "record_id": "log_000005"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:25:00.000Z",
+      "record_id": "log_000010"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+      "service": "checkout-consumer",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:26:00.000Z",
+      "record_id": "log_000011"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "record_id": "log_000012"
+    },
+    {
+      "error_type": "TIMEOUT",
+      "message": "Request timeout: upstream checkout-consumer not responding",
+      "service": "payment-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "record_id": "log_000013"
+    },
+    {
+      "error_type": "NULL_POINTER",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "service": "order-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:31:00.000Z",
+      "record_id": "log_000014"
+    },
+    {
+      "error_type": "NULL_POINTER",
+      "message": "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+      "service": "order-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:32:00.000Z",
+      "record_id": "log_000015"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "Kafka consumer lag critical for topic ecommerce-events, lag=118000",
+      "service": "checkout-consumer",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-02T09:40:00.000Z",
+      "record_id": "log_000017"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:50:00.000Z",
+      "record_id": "log_000018"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:51:00.000Z",
+      "record_id": "log_000019"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:52:00.000Z",
+      "record_id": "log_000020"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:52:30.000Z",
+      "record_id": "log_000021"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:53:00.000Z",
+      "record_id": "log_000022"
+    },
+    {
+      "error_type": "AUTHENTICATION_FAILURE",
+      "message": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "service": "user-service",
+      "severity": "ERROR",
+      "timestamp": "2026-07-02T09:53:30.000Z",
+      "record_id": "log_000023"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "PII field 'email' detected in log message: user record email=[REDACTED]",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-02T09:54:00.000Z",
+      "record_id": "log_000024"
+    },
+    {
+      "error_type": "UNKNOWN",
+      "message": "Credential leak detected: Authorization:[REDACTED]",
+      "service": "user-service",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-02T09:55:00.000Z",
+      "record_id": "log_000025"
+    }
+  ],
+  "all_dq_issues": [
+    {
+      "issue_type": "HIGH_REJECTION_RATE",
+      "pipeline": "cdc-pipeline",
+      "batch_id": "batch_002",
+      "severity": "WARN",
+      "timestamp": "2026-07-02T09:10:00.000Z"
+    },
+    {
+      "issue_type": "HIGH_REJECTION_RATE",
+      "pipeline": "cdc-pipeline",
+      "batch_id": "batch_003",
+      "severity": "WARN",
+      "timestamp": "2026-07-02T09:20:00.000Z"
+    },
+    {
+      "issue_type": "REJECTION_RATE_WORSENING",
+      "pipeline": "cdc-pipeline",
+      "severity": "WARN",
+      "detail": "rejection rate rose across last 3 batches to 17.0%"
     }
   ]
 }

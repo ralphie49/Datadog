@@ -185,6 +185,28 @@ it MUST also check field *values* against the other artifacts' own data. Add the
   correlation window and their services are identical or connected via any edge in
   `dependency_report.json.dependency_graph` (any hop, either direction), `summary.correlated_anomalies`
   MUST be >= 1. Fail this check if it is `0` while such a pair exists.
+  **This check MUST independently re-derive the connected-pair search itself** (iterate
+  `anomaly_report.json.anomalies[]`, compare timestamps against the correlation window, walk
+  `dependency_report.json.dependency_graph` edges) rather than simply reading `summary.correlated_anomalies`
+  and `dependency_report.json.summary.breakpoints_identified` and asserting a relationship between the two
+  counts. A `detail` string of the form `"correlated_anomalies=N, dependency breakpoints=M"` is NOT
+  sufficient evidence the check ran — it only proves two fields were read, not that a connected pair was
+  searched for. The `detail` field for this check_id MUST instead report the actual search result, e.g.
+  `"connected anomaly pairs found: 1 (checkout-consumer@09:28 <-> order-service@09:30 via edge
+  checkout-consumer->order-service); correlated_anomalies recorded: 1"` — if the check passes with zero
+  connected pairs found, the detail MUST say `"connected anomaly pairs found: 0"` explicitly. A manifest
+  entry for this check_id that does not name at least one candidate pair it evaluated (or explicitly state
+  none existed) must be treated as not having actually run the check, and the run MUST be flagged
+  `invalid` regardless of what `status` was written.
+  **The pairwise search MUST exclude any anomaly whose `anomaly_type == "CORRELATED_ANOMALY"` from the
+  candidate list before searching for pairs.** A `CORRELATED_ANOMALY` entry is itself the *output* of a
+  prior correlation pass (it typically borrows a timestamp from one of the anomalies it summarizes and
+  carries an empty `value`/`baseline`), not a raw anomaly to be re-correlated. Including it in the search
+  produces misleading self-referential "pairs" — e.g. the meta-entry matched against the real anomaly it
+  was derived from, or matched against itself under a different anomaly's timestamp — which inflates the
+  reported pair count without representing a genuine second finding. Filter `anomalies[]` to exclude
+  `CORRELATED_ANOMALY`-type entries first, then run the pairwise connected/time-window search described
+  above only over the remaining raw anomalies.
 - **Breakpoint/edge consistency:** for every entry in `dependency_report.json.breakpoints[]`, no edge in
   `dependency_graph.edges` may have `to == breakpoint_service` where `from` is one of that breakpoint's
   own `downstream_impact` services. Fail this check and name the contradictory edge if found.
@@ -196,6 +218,34 @@ it MUST also check field *values* against the other artifacts' own data. Add the
   `metrics_report.json`, or `apm_report.json` MUST be findable in `datadog_analysis_report.md` (by
   `issue_type` + `service` substring match). Fail this check and name the missing finding if a CRITICAL
   finding from any domain report is absent from the rendered report.
+- **Pipeline-backpressure category presence:** if `apm_report.json.kafka.topics[]` contains any entry with
+  `verdict: "CRITICAL"`, or `apm_report.json.checkpoints[]` contains any entry with `severity: "CRITICAL"`,
+  then `root_cause.json.incidents[]` MUST contain at least one incident with
+  `root_cause_category == "PIPELINE_BACKPRESSURE"`. This mirrors the "Concrete regression case" documented
+  in `root-cause-analysis-agent.md` — that spec's own regression note is not self-enforcing, so this
+  validator independently re-checks it against the actual files rather than trusting the upstream agent to
+  have applied its own rule. Fail this check and name the CRITICAL apm finding(s) that have no matching
+  `PIPELINE_BACKPRESSURE` incident if violated. A run where the only incident covering Kafka/checkpoint
+  evidence is categorized `UPSTREAM_DEPENDENCY_FAILURE` (or any category other than
+  `PIPELINE_BACKPRESSURE`) fails this check even if that incident's evidence_sources otherwise look
+  complete — category correctness is checked separately from evidence completeness.
+- **Anomaly coverage completeness:** for every metric series in `normalised_data.json` with 2+
+  chronological readings for the same service and a deviation meeting the spike/drop multiplier
+  (recompute independently — do not trust `anomaly_report.json.summary` alone), an anomaly entry (named
+  type or `THRESHOLD_BREACH`) MUST exist for that service/timestamp in `anomaly_report.json.anomalies[]`.
+  This check exists because a prior run's `anomaly-detection-agent.md` had this exact rule written as
+  prose and it was still skipped — validated only by a human manually re-deriving the metric series and
+  noticing the gap. Fail this check and name the uncovered service/metric if a qualifying deviation has no
+  corresponding anomaly entry.
+- **Breakpoint impact bidirectionality:** for every entry in `dependency_report.json.breakpoints[]`, check
+  both directions of `dependency_graph.edges` around `breakpoint_service` — services it calls (`from ==
+  breakpoint_service`) AND services that call it (`to == breakpoint_service`). For any inward-edge service
+  with its own CRITICAL/ERROR finding in `metrics_report.json`, `log_analysis.json`, or `apm_report.json`
+  timestamped after the breakpoint's own earliest CRITICAL finding, that service MUST appear in
+  `downstream_impact[]`. Fail this check and name the missing caller-side service if violated — even if
+  `root_cause.json` happens to include that service through independent time-correlation, since
+  `dependency_report.json` must be correct as a standalone artifact and other agents' redundant logic must
+  not be relied upon to compensate for a gap here.
 
 `validation_manifest.json.status` MUST be `"invalid"` if any of the above semantic checks fail — a
 manifest cannot say `"valid"` merely because every artifact exists and parses; it must also be
@@ -205,7 +255,8 @@ internally consistent and free of the specific defect classes above.
 at least one check with each of these `check_id` prefixes on every run, regardless of whether the dataset
 happens to have zero anomalies/incidents: `baseline_sanity`, `correlation_completeness`,
 `breakpoint_edge_consistency`, `markdown_table_integrity`, `markdown_severity_completeness`,
-`redaction_check`, `manual_review_required_check`. If `checks[]` contains only `path_*`,
+`redaction_check`, `manual_review_required_check`, `pipeline_backpressure_category`,
+`anomaly_coverage_completeness`, `breakpoint_impact_bidirectionality`. If `checks[]` contains only `path_*`,
 `schema_summary`, and `record_count_match` entries and none of the semantic check_ids above, the manifest
 itself is non-compliant with this spec — this is true even if `status` happens to say `"valid"` — because
 it proves the semantic checks were never actually executed, only described. A validator run missing these

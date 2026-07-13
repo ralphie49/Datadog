@@ -1,0 +1,164 @@
+{
+  "summary": {
+    "total_incidents": 2,
+    "high_confidence": 1,
+    "medium_confidence": 1,
+    "low_confidence": 0,
+    "analysis_period": {
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T14:35:00.000Z"
+    }
+  },
+  "incidents": [
+    {
+      "incident_id": "incident_004",
+      "root_cause_category": "RESOURCE_SATURATION",
+      "confidence": "HIGH",
+      "primary_service": "video-encoder",
+      "affected_services": [
+        "cdn-gateway",
+        "recommendation-engine",
+        "video-encoder"
+      ],
+      "timeframe": {
+        "from": "2026-07-15T14:00:00.000Z",
+        "to": "2026-07-15T14:35:00.000Z"
+      },
+      "root_cause_finding": "video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes",
+      "dependency_breakpoint": "video-encoder",
+      "downstream_symptoms": [
+        "Encode job failed for asset_id=9932: No space left on device",
+        "Encode job failed for asset_id=9933: No space left on device",
+        "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+        "PIPELINE_ALERT_UNCLASSIFIED on video-encoder",
+        "Encode job failed for asset_id=9934: No space left on device",
+        "Upstream timeout: video-encoder not responding within 5000ms",
+        "cdn-gateway error rate 50.0% across 4 traces",
+        "cdn-gateway p99 latency 5297.0ms",
+        "PIPELINE_ALERT_UNCLASSIFIED on cdn-gateway",
+        "video-encoder error rate 50.0% across 4 traces",
+        "video-encoder p99 latency 5206.7ms",
+        "recommendation-engine error rate 100.0% across 1 traces",
+        "recommendation-engine p99 latency 4800ms",
+        "Disk usage on /var/encode/tmp reached 99%, encoder pool offline"
+      ],
+      "evidence_sources": [
+        "apm_report.json",
+        "dependency_report.json",
+        "log_analysis.json",
+        "metrics_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 3
+    },
+    {
+      "incident_id": "incident_005",
+      "root_cause_category": "RESOURCE_SATURATION",
+      "confidence": "MEDIUM",
+      "primary_service": "enc-host-01",
+      "affected_services": [
+        "enc-host-01"
+      ],
+      "timeframe": {
+        "from": "2026-07-15T14:05:00.000Z",
+        "to": "2026-07-15T14:24:00.000Z"
+      },
+      "root_cause_finding": "host enc-host-01 flagged HIGH_DISK (verdict CRITICAL)",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "host enc-host-01 flagged HIGH_CPU (verdict CRITICAL)",
+        "host enc-host-01 flagged HOST_DOWN (verdict CRITICAL)",
+        "enc-host-01 cpu_pct reading 88.0 exceeded 2.0x its own prior baseline 42.5"
+      ],
+      "evidence_sources": [
+        "anomaly_report.json",
+        "metrics_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ],
+  "unresolved_findings": [
+    {
+      "source": "metrics_report.json",
+      "issue_type": "NETWORK_SATURATION",
+      "service": "cdn-host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HOST_DOWN",
+      "service": "cdn-host-01",
+      "reason": "fewer than 2 corroborating sources"
+    }
+  ],
+  "all_incidents": [
+    {
+      "incident_id": "incident_004",
+      "root_cause_category": "RESOURCE_SATURATION",
+      "confidence": "HIGH",
+      "primary_service": "video-encoder",
+      "affected_services": [
+        "cdn-gateway",
+        "recommendation-engine",
+        "video-encoder"
+      ],
+      "timeframe": {
+        "from": "2026-07-15T14:00:00.000Z",
+        "to": "2026-07-15T14:35:00.000Z"
+      },
+      "root_cause_finding": "video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes",
+      "dependency_breakpoint": "video-encoder",
+      "downstream_symptoms": [
+        "Encode job failed for asset_id=9932: No space left on device",
+        "Encode job failed for asset_id=9933: No space left on device",
+        "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+        "PIPELINE_ALERT_UNCLASSIFIED on video-encoder",
+        "Encode job failed for asset_id=9934: No space left on device",
+        "Upstream timeout: video-encoder not responding within 5000ms",
+        "cdn-gateway error rate 50.0% across 4 traces",
+        "cdn-gateway p99 latency 5297.0ms",
+        "PIPELINE_ALERT_UNCLASSIFIED on cdn-gateway",
+        "video-encoder error rate 50.0% across 4 traces",
+        "video-encoder p99 latency 5206.7ms",
+        "recommendation-engine error rate 100.0% across 1 traces",
+        "recommendation-engine p99 latency 4800ms",
+        "Disk usage on /var/encode/tmp reached 99%, encoder pool offline"
+      ],
+      "evidence_sources": [
+        "apm_report.json",
+        "dependency_report.json",
+        "log_analysis.json",
+        "metrics_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 3
+    },
+    {
+      "incident_id": "incident_005",
+      "root_cause_category": "RESOURCE_SATURATION",
+      "confidence": "MEDIUM",
+      "primary_service": "enc-host-01",
+      "affected_services": [
+        "enc-host-01"
+      ],
+      "timeframe": {
+        "from": "2026-07-15T14:05:00.000Z",
+        "to": "2026-07-15T14:24:00.000Z"
+      },
+      "root_cause_finding": "host enc-host-01 flagged HIGH_DISK (verdict CRITICAL)",
+      "dependency_breakpoint": null,
+      "downstream_symptoms": [
+        "host enc-host-01 flagged HIGH_CPU (verdict CRITICAL)",
+        "host enc-host-01 flagged HOST_DOWN (verdict CRITICAL)",
+        "enc-host-01 cpu_pct reading 88.0 exceeded 2.0x its own prior baseline 42.5"
+      ],
+      "evidence_sources": [
+        "anomaly_report.json",
+        "metrics_report.json"
+      ],
+      "severity": "CRITICAL",
+      "blast_radius": 1
+    }
+  ]
+}

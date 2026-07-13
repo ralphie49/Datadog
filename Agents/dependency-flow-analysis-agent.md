@@ -99,6 +99,19 @@ dependency_flow_config:
 - MUST reconstruct a service call graph from trace spans — parent/child relationships via `trace_id` and `span_id`
 - MUST build a dependency edge between two services only if observed call count >= `min_call_count_for_edge`
 - MUST identify, for each incident window flagged in `anomaly_report.json`, which node in the call graph is the most upstream failing point
+- **MUST NOT rely solely on `anomaly_report.json` as the trigger source for breakpoint detection.** A real
+  incident observed in this project's own testing: a service (`video-encoder`) had two CRITICAL findings in
+  `metrics_report.json` (`HIGH_DISK`, verdict CRITICAL) and CRITICAL log lines in `log_analysis.json`, both
+  timestamped before a dependent service's errors began — a textbook breakpoint — but `anomaly_report.json`
+  contained no anomaly for that service (its metric domain fell outside the Anomaly Detection Agent's
+  enum that run). Because this agent's breakpoint search keyed exclusively off `anomaly_report.json`
+  incident windows, the breakpoint was never detected, `breakpoints[]` was written empty, and every
+  downstream agent inherited the gap. **MUST** therefore also independently scan `metrics_report.json` and
+  `log_analysis.json` for CRITICAL-severity findings on any service that is a node in `dependency_graph.nodes`,
+  and treat each such finding's timestamp as an additional candidate incident window — in addition to, not
+  instead of, `anomaly_report.json` windows. Do not let a gap in one upstream agent silently propagate into
+  a gap in this agent; each critical-finding-bearing report is an independent source of candidate incident
+  windows.
 - MUST distinguish between a breakpoint (originating failure) and a propagated symptom (downstream effect of the breakpoint)
 - MUST assign a breakpoint confidence score (0-1) based on how consistently failures trace back to that node
 - MUST, once a breakpoint candidate is identified, trace `downstream_impact` through the FULL connected chain —
@@ -106,6 +119,24 @@ dependency_flow_config:
   incident's affected services include both B and C, a breakpoint at A must list `downstream_impact: [B, C]`
   and `hops_to_furthest_symptom: 2`, not just `[B]`. Stopping at one hop is the most common way this agent
   under-reports cascading failures
+- **MUST traverse edges in BOTH directions from the breakpoint, not only outward along the caller→callee
+  direction.** `dependency_graph.edges` records call direction (`from` calls `to`), but failure propagation
+  runs the opposite way when the breakpoint is a *callee*: if `X → breakpoint` is an edge (X calls the
+  breakpoint), and X has its own CRITICAL/ERROR findings timestamped after the breakpoint's own failure
+  began, X is a downstream symptom too and MUST appear in `downstream_impact`, even though the edge points
+  *into* the breakpoint rather than out of it. **Concrete regression case:** breakpoint `video-encoder` had
+  exactly one outward edge (`video-encoder → recommendation-engine`) and one inward edge
+  (`cdn-gateway → video-encoder`, i.e. cdn-gateway calls video-encoder). `cdn-gateway` had CRITICAL/ERROR
+  timeout findings timestamped after `video-encoder`'s own disk-exhaustion findings — a clear caller-side
+  symptom. An implementation that only walked edges where `from == breakpoint_service` (outward only)
+  produced `downstream_impact: ["recommendation-engine"]`, silently dropping `cdn-gateway` from this
+  agent's own output — even though a different agent (Root Cause) happened to re-derive `cdn-gateway`'s
+  involvement independently via time-correlation, masking the gap in `dependency_report.json` itself,
+  which is a standalone deliverable and must be correct on its own. Before finalizing `downstream_impact`,
+  walk both `edges` where `from == breakpoint_service` (outward, callee-ward) AND edges where
+  `to == breakpoint_service` (inward, caller-ward) whose `from` service has its own qualifying evidence
+  after the breakpoint's failure onset — union both sets, then continue the full-chain traversal from
+  *each* newly added node in turn (a caller's own caller may also show symptoms).
 - MUST flag cascading failure chains — where a single breakpoint's failure visibly propagates through 2+ downstream services
 - MUST write the dependency graph and breakpoint findings to `dependency_report.json`
 

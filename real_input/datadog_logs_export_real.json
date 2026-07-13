@@ -1,0 +1,27 @@
+﻿{
+    "data":  [
+                 {
+                     "id":  "AwAAAZ88SHfYqFQkGQAAABhBWjg4U0hmWUFBRDRQYU5Nd3lUQnJRQUEAAAAkZjE5ZjNjNDgtNzdkOC00MzRiLTg5OGItYTUxYjkyMTBkYjZkAAAAAA",
+                     "type":  "log",
+                     "attributes":  {
+                                        "service":  "test-service",
+                                        "attributes":  {
+                                                           "service":  "test-service"
+                                                       },
+                                        "message":  "Manual test log entry for pipeline testing",
+                                        "status":  "info",
+                                        "timestamp":  "2026-07-07T11:13:30.072Z",
+                                        "tags":  [
+                                                     "datadog.submission_auth:api_key",
+                                                     "env:test",
+                                                     "source:test"
+                                                 ]
+                                    }
+                 }
+             ],
+    "meta":  {
+                 "elapsed":  46,
+                 "request_id":  "pddv1ChZvU20zOU95clJlaWxfMDVHWU91VjZ3IiwKHOvbfUk7orPtRC20BedyQDchMTO1sGSY1CjklKgSDHirgoylefXgz9BUFw",
+                 "status":  "done"
+             }
+}

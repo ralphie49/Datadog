@@ -1,0 +1,72 @@
+{
+  "summary": {
+    "total_services_mapped": 3,
+    "total_edges": 2,
+    "breakpoints_identified": 1,
+    "cascading_failures": 1,
+    "effective_min_call_count_for_edge": 1,
+    "parent_span_id_available": false,
+    "analysis_period": {
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T15:02:01.000Z"
+    }
+  },
+  "dependency_graph": {
+    "nodes": [
+      "cdn-gateway",
+      "recommendation-engine",
+      "video-encoder"
+    ],
+    "edges": [
+      {
+        "from": "cdn-gateway",
+        "to": "video-encoder",
+        "call_count": 4,
+        "avg_latency_ms": 2623.8
+      },
+      {
+        "from": "video-encoder",
+        "to": "recommendation-engine",
+        "call_count": 1,
+        "avg_latency_ms": 4800.0
+      }
+    ]
+  },
+  "breakpoints": [
+    {
+      "incident_id": "anomaly_ref_001",
+      "breakpoint_service": "video-encoder",
+      "issue_type": "BREAKPOINT_IDENTIFIED",
+      "confidence": 0.65,
+      "downstream_impact": [
+        "cdn-gateway",
+        "recommendation-engine"
+      ],
+      "hops_to_furthest_symptom": 1,
+      "description": "video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes"
+    }
+  ],
+  "cascading_failures": [
+    {
+      "breakpoint_service": "video-encoder",
+      "downstream_impact": [
+        "cdn-gateway",
+        "recommendation-engine"
+      ]
+    }
+  ],
+  "all_findings": [
+    {
+      "incident_id": "anomaly_ref_001",
+      "breakpoint_service": "video-encoder",
+      "issue_type": "BREAKPOINT_IDENTIFIED",
+      "confidence": 0.65,
+      "downstream_impact": [
+        "cdn-gateway",
+        "recommendation-engine"
+      ],
+      "hops_to_furthest_symptom": 1,
+      "description": "video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes"
+    }
+  ]
+}

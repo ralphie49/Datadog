@@ -1,0 +1,12 @@
+[
+  {"trace_id": "tr001", "span_id": "sp001", "service": "cdn-gateway", "operation": "fetch_asset", "duration_ms": 120, "status": "ok", "timestamp": "2026-07-15T14:00:00Z"},
+  {"trace_id": "tr001", "span_id": "sp002", "service": "video-encoder", "operation": "encode_request", "duration_ms": 90, "status": "ok", "timestamp": "2026-07-15T14:00:01Z"},
+  {"trace_id": "tr002", "span_id": "sp003", "service": "cdn-gateway", "operation": "fetch_asset", "duration_ms": 5200, "status": "error", "timestamp": "2026-07-15T14:26:00Z"},
+  {"trace_id": "tr002", "span_id": "sp004", "service": "video-encoder", "operation": "encode_request", "duration_ms": 5100, "status": "error", "timestamp": "2026-07-15T14:26:01Z"},
+  {"trace_id": "tr003", "span_id": "sp005", "service": "cdn-gateway", "operation": "fetch_asset", "duration_ms": 5300, "status": "error", "timestamp": "2026-07-15T14:27:00Z"},
+  {"trace_id": "tr003", "span_id": "sp006", "service": "video-encoder", "operation": "encode_request", "duration_ms": 5210, "status": "error", "timestamp": "2026-07-15T14:27:01Z"},
+  {"trace_id": "tr003", "span_id": "sp007", "service": "recommendation-engine", "operation": "get_recommendations", "duration_ms": 4800, "status": "error", "timestamp": "2026-07-15T14:27:02Z"},
+  {"trace_id": "tr004", "span_id": "sp008", "service": "cdn-gateway", "operation": "fetch_asset", "duration_ms": 115, "status": "ok", "timestamp": "2026-07-15T15:02:00Z"},
+  {"trace_id": "tr004", "span_id": "sp009", "service": "video-encoder", "operation": "encode_request", "duration_ms": 95, "status": "ok", "timestamp": "2026-07-15T15:02:01Z"},
+  {"trace_id": "tr005", "span_id": "sp010", "service": "billing-service", "operation": "process_invoice", "duration_ms": 200, "status": "ok", "timestamp": "2026-07-15T14:40:00Z"}
+]

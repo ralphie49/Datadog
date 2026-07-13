@@ -1,0 +1,153 @@
+{
+  "summary": {
+    "total_errors": 7,
+    "total_warnings": 3,
+    "total_critical": 2,
+    "recurring_errors": 0,
+    "affected_services": [
+      "cdn-gateway",
+      "video-encoder"
+    ],
+    "total_batches_analysed": 0,
+    "batches_with_dq_issues": 0,
+    "avg_rejection_rate_pct": 0.0,
+    "max_rejection_rate_pct": 0.0,
+    "total_quarantine_records": 0,
+    "total_dead_letter_records": 0,
+    "analysis_period": {
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T15:02:00.000Z"
+    }
+  },
+  "top_errors": [
+    {
+      "rank": 1,
+      "error_type": "TIMEOUT",
+      "message": "Upstream timeout: video-encoder not responding within 5000ms",
+      "service": "cdn-gateway",
+      "severity": "ERROR",
+      "frequency": 2,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:26:00.000Z",
+      "last_seen": "2026-07-15T14:27:00.000Z"
+    },
+    {
+      "rank": 2,
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9932: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:22:00.000Z",
+      "last_seen": "2026-07-15T14:22:00.000Z"
+    },
+    {
+      "rank": 3,
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9933: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:23:00.000Z",
+      "last_seen": "2026-07-15T14:23:00.000Z"
+    },
+    {
+      "rank": 4,
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+      "service": "video-encoder",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:24:00.000Z",
+      "last_seen": "2026-07-15T14:24:00.000Z"
+    },
+    {
+      "rank": 5,
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9934: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:25:00.000Z",
+      "last_seen": "2026-07-15T14:25:00.000Z"
+    },
+    {
+      "rank": 6,
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Disk usage on /var/encode/tmp reached 99%, encoder pool offline",
+      "service": "video-encoder",
+      "severity": "CRITICAL",
+      "frequency": 1,
+      "is_recurring": false,
+      "first_seen": "2026-07-15T14:35:00.000Z",
+      "last_seen": "2026-07-15T14:35:00.000Z"
+    }
+  ],
+  "rejection_rates": [],
+  "worst_columns": [],
+  "dq_alerts": [],
+  "dq_trends": [],
+  "all_errors": [
+    {
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9932: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "timestamp": "2026-07-15T14:22:00.000Z",
+      "record_id": "log_000004"
+    },
+    {
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9933: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "timestamp": "2026-07-15T14:23:00.000Z",
+      "record_id": "log_000005"
+    },
+    {
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+      "service": "video-encoder",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "record_id": "log_000006"
+    },
+    {
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Encode job failed for asset_id=9934: No space left on device",
+      "service": "video-encoder",
+      "severity": "ERROR",
+      "timestamp": "2026-07-15T14:25:00.000Z",
+      "record_id": "log_000007"
+    },
+    {
+      "error_type": "TIMEOUT",
+      "message": "Upstream timeout: video-encoder not responding within 5000ms",
+      "service": "cdn-gateway",
+      "severity": "ERROR",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "record_id": "log_000008"
+    },
+    {
+      "error_type": "TIMEOUT",
+      "message": "Upstream timeout: video-encoder not responding within 5000ms",
+      "service": "cdn-gateway",
+      "severity": "ERROR",
+      "timestamp": "2026-07-15T14:27:00.000Z",
+      "record_id": "log_000009"
+    },
+    {
+      "error_type": "RESOURCE_EXHAUSTION",
+      "message": "Disk usage on /var/encode/tmp reached 99%, encoder pool offline",
+      "service": "video-encoder",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "record_id": "log_000011"
+    }
+  ],
+  "all_dq_issues": []
+}

@@ -10,28 +10,28 @@
     {
       "rank": 1,
       "priority": "P1_IMMEDIATE",
-      "incident_id": "incident_001",
-      "title": "Investigate pipeline backpressure for checkout-consumer",
-      "description": "KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000)",
-      "action": "Review the evidence, remediate the underlying issue, and confirm the service is healthy before closing the incident.",
+      "incident_id": "incident_005",
+      "title": "Address PIPELINE_BACKPRESSURE on checkout-consumer",
+      "description": "checkout-consumer identified as origin; failure propagated to order-service, payment-service within 5 minutes",
+      "action": "Investigate and remediate PIPELINE_BACKPRESSURE affecting checkout-consumer, order-service, payment-service",
       "affected_services": [
         "checkout-consumer",
         "order-service",
         "payment-service"
       ],
-      "evidence": "apm_report.json; dependency_report.json; anomaly_report.json"
+      "evidence": "anomaly_report.json; apm_report.json; dependency_report.json; log_analysis.json; metrics_report.json: checkout-consumer identified as origin; failure propagated to order-service, payment-service within 5 minutes"
     },
     {
       "rank": 2,
       "priority": "P1_IMMEDIATE",
-      "incident_id": "incident_002",
-      "title": "Investigate security incident for user-service",
-      "description": "PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service",
-      "action": "Review the evidence, remediate the underlying issue, and confirm the service is healthy before closing the incident.",
+      "incident_id": "incident_006",
+      "title": "Address SECURITY_INCIDENT on user-service",
+      "description": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+      "action": "Investigate and remediate SECURITY_INCIDENT affecting user-service",
       "affected_services": [
         "user-service"
       ],
-      "evidence": "security_report.json"
+      "evidence": "apm_report.json; log_analysis.json; metrics_report.json; security_report.json: Unauthorised access attempt: 403 Forbidden for endpoint /admin/users"
     }
   ]
 }

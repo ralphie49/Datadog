@@ -5,13 +5,13 @@
     "medium_confidence": 0,
     "low_confidence": 0,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:00.000Z"
     }
   },
   "incidents": [
     {
-      "incident_id": "incident_001",
+      "incident_id": "incident_005",
       "root_cause_category": "PIPELINE_BACKPRESSURE",
       "confidence": "HIGH",
       "primary_service": "checkout-consumer",
@@ -21,24 +21,47 @@
         "payment-service"
       ],
       "timeframe": {
-        "from": "2026-07-02T09:28:00Z",
-        "to": "2026-07-02T09:28:00Z"
+        "from": "2026-07-02T09:10:00.000Z",
+        "to": "2026-07-02T10:00:00.000Z"
       },
-      "root_cause_finding": "KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000)",
+      "root_cause_finding": "checkout-consumer identified as origin; failure propagated to order-service, payment-service within 5 minutes",
       "dependency_breakpoint": "checkout-consumer",
       "downstream_symptoms": [
-        "Latency and errors propagated to payment-service and order-service"
+        "KAFKA_LAG_HIGH on checkout-consumer",
+        "PIPELINE_ALERT_UNCLASSIFIED on checkout-consumer",
+        "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+        "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+        "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+        "KAFKA_LAG_CRITICAL on checkout-consumer",
+        "order-service and checkout-consumer showed correlated KAFKA_LAG_SPIKE and LATENCY_SPIKE within the same window",
+        "checkout-consumer kafka_consumer_lag reading 125000.0 exceeded 2.0x its own prior baseline 33666.67",
+        "checkout-consumer error rate 100.0% across 2 traces",
+        "checkout-consumer p99 latency 3498.0ms",
+        "Request timeout: upstream checkout-consumer not responding",
+        "order-service error rate 50.0% across 4 traces",
+        "payment-service throughput dropped 46.8% vs baseline",
+        "order-service p99 latency 4188.0ms",
+        "PIPELINE_ALERT_UNCLASSIFIED on payment-service",
+        "order-service p99 latency 4188.0ms is 2.0x its own baseline avg 2093.8ms",
+        "payment-service error rate 50.0% across 4 traces",
+        "payment-service p99 latency 3891.0ms",
+        "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+        "PIPELINE_ALERT_UNCLASSIFIED on order-service",
+        "CHECKPOINT_STALE on checkout-consumer",
+        "Kafka consumer lag critical for topic ecommerce-events, lag=118000"
       ],
       "evidence_sources": [
+        "anomaly_report.json",
         "apm_report.json",
         "dependency_report.json",
-        "anomaly_report.json"
+        "log_analysis.json",
+        "metrics_report.json"
       ],
       "severity": "CRITICAL",
       "blast_radius": 3
     },
     {
-      "incident_id": "incident_002",
+      "incident_id": "incident_006",
       "root_cause_category": "SECURITY_INCIDENT",
       "confidence": "HIGH",
       "primary_service": "user-service",
@@ -46,25 +69,89 @@
         "user-service"
       ],
       "timeframe": {
-        "from": "2026-07-02T09:50:00Z",
-        "to": "2026-07-02T09:53:30Z"
+        "from": "2026-07-02T09:50:00.000Z",
+        "to": "2026-07-02T09:55:00.000Z"
       },
-      "root_cause_finding": "PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service",
+      "root_cause_finding": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
       "dependency_breakpoint": null,
       "downstream_symptoms": [
-        "Authentication and authorization failures were exposed in service logs"
+        "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+        "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "user-service error rate 50.0% across 2 traces",
+        "PIPELINE_ALERT_UNCLASSIFIED on user-service",
+        "External monitor 'user-service-auth-failures' reported possible brute force -- not independently confirmed",
+        "PII field 'email' detected in log message: user record email=[REDACTED]",
+        "Credential leak detected: Authorization:[REDACTED]"
       ],
       "evidence_sources": [
+        "apm_report.json",
+        "log_analysis.json",
+        "metrics_report.json",
         "security_report.json"
       ],
       "severity": "CRITICAL",
       "blast_radius": 1
     }
   ],
-  "unresolved_findings": [],
+  "unresolved_findings": [
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HOST_DOWN",
+      "service": "host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HIGH_CPU",
+      "service": "host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HIGH_MEMORY",
+      "service": "host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "NETWORK_SATURATION",
+      "service": "host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "RESOURCE_EXHAUSTION",
+      "service": "host-01",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HOST_DOWN",
+      "service": "host-03",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HIGH_CPU",
+      "service": "host-03",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "HIGH_MEMORY",
+      "service": "host-03",
+      "reason": "fewer than 2 corroborating sources"
+    },
+    {
+      "source": "metrics_report.json",
+      "issue_type": "NETWORK_SATURATION",
+      "service": "host-03",
+      "reason": "fewer than 2 corroborating sources"
+    }
+  ],
   "all_incidents": [
     {
-      "incident_id": "incident_001",
+      "incident_id": "incident_005",
       "root_cause_category": "PIPELINE_BACKPRESSURE",
       "confidence": "HIGH",
       "primary_service": "checkout-consumer",
@@ -74,24 +161,47 @@
         "payment-service"
       ],
       "timeframe": {
-        "from": "2026-07-02T09:28:00Z",
-        "to": "2026-07-02T09:28:00Z"
+        "from": "2026-07-02T09:10:00.000Z",
+        "to": "2026-07-02T10:00:00.000Z"
       },
-      "root_cause_finding": "KAFKA_LAG_CRITICAL on topic ecommerce-events (lag 125000)",
+      "root_cause_finding": "checkout-consumer identified as origin; failure propagated to order-service, payment-service within 5 minutes",
       "dependency_breakpoint": "checkout-consumer",
       "downstream_symptoms": [
-        "Latency and errors propagated to payment-service and order-service"
+        "KAFKA_LAG_HIGH on checkout-consumer",
+        "PIPELINE_ALERT_UNCLASSIFIED on checkout-consumer",
+        "DQ_ALERT rejection_reason=FORMAT_MISMATCH:email count=45",
+        "DQ_ALERT rejection_reason=NULL_VALUE:phone count=30",
+        "Kafka consumer lag critical for topic ecommerce-events, lag=125000",
+        "KAFKA_LAG_CRITICAL on checkout-consumer",
+        "order-service and checkout-consumer showed correlated KAFKA_LAG_SPIKE and LATENCY_SPIKE within the same window",
+        "checkout-consumer kafka_consumer_lag reading 125000.0 exceeded 2.0x its own prior baseline 33666.67",
+        "checkout-consumer error rate 100.0% across 2 traces",
+        "checkout-consumer p99 latency 3498.0ms",
+        "Request timeout: upstream checkout-consumer not responding",
+        "order-service error rate 50.0% across 4 traces",
+        "payment-service throughput dropped 46.8% vs baseline",
+        "order-service p99 latency 4188.0ms",
+        "PIPELINE_ALERT_UNCLASSIFIED on payment-service",
+        "order-service p99 latency 4188.0ms is 2.0x its own baseline avg 2093.8ms",
+        "payment-service error rate 50.0% across 4 traces",
+        "payment-service p99 latency 3891.0ms",
+        "Unhandled exception: NullPointerException at OrderProcessor.finalize",
+        "PIPELINE_ALERT_UNCLASSIFIED on order-service",
+        "CHECKPOINT_STALE on checkout-consumer",
+        "Kafka consumer lag critical for topic ecommerce-events, lag=118000"
       ],
       "evidence_sources": [
+        "anomaly_report.json",
         "apm_report.json",
         "dependency_report.json",
-        "anomaly_report.json"
+        "log_analysis.json",
+        "metrics_report.json"
       ],
       "severity": "CRITICAL",
       "blast_radius": 3
     },
     {
-      "incident_id": "incident_002",
+      "incident_id": "incident_006",
       "root_cause_category": "SECURITY_INCIDENT",
       "confidence": "HIGH",
       "primary_service": "user-service",
@@ -99,15 +209,24 @@
         "user-service"
       ],
       "timeframe": {
-        "from": "2026-07-02T09:50:00Z",
-        "to": "2026-07-02T09:53:30Z"
+        "from": "2026-07-02T09:50:00.000Z",
+        "to": "2026-07-02T09:55:00.000Z"
       },
-      "root_cause_finding": "PII_IN_LOGS and CREDENTIAL_LEAK observed on user-service",
+      "root_cause_finding": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
       "dependency_breakpoint": null,
       "downstream_symptoms": [
-        "Authentication and authorization failures were exposed in service logs"
+        "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
+        "Unauthorised access attempt: 401 Unauthorized invalid token",
+        "user-service error rate 50.0% across 2 traces",
+        "PIPELINE_ALERT_UNCLASSIFIED on user-service",
+        "External monitor 'user-service-auth-failures' reported possible brute force -- not independently confirmed",
+        "PII field 'email' detected in log message: user record email=[REDACTED]",
+        "Credential leak detected: Authorization:[REDACTED]"
       ],
       "evidence_sources": [
+        "apm_report.json",
+        "log_analysis.json",
+        "metrics_report.json",
         "security_report.json"
       ],
       "severity": "CRITICAL",

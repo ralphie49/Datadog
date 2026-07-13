@@ -1,29 +1,57 @@
 {
   "summary": {
     "total_patches_generated": 2,
-    "manual_review_required": 2
+    "low_risk": 0,
+    "medium_risk": 2,
+    "high_risk": 0,
+    "manual_review_required": 0
   },
   "patches": [
     {
       "patch_id": "patch_001",
-      "incident_id": "incident_001",
+      "incident_id": "incident_005",
       "recommendation_ref": "rank_1",
-      "patch_type": "KAFKA_CONSUMER_SCALING",
+      "patch_type": "SCALING_CONFIG_CHANGE",
       "risk_level": "MEDIUM",
-      "target_file": "deploy/consumer.yaml",
-      "explanation": "Scale the consumer group and verify partitioning for the lagging topic.",
-      "diff": "+++ deploy/consumer.yaml\n+replicas: 4\n+partitionCount: 8\n",
+      "target_file": "config/kafka-consumer.yaml",
+      "explanation": "Observed consumer lag peaked at 125000; scale consumer instances to 4 to relieve backpressure (assumes a starting scale of 2 -- confirm actual current value before applying).",
+      "diff": "- consumer_instances: 2\n+ consumer_instances: 4",
       "requires_human_review": true
     },
     {
       "patch_id": "patch_002",
-      "incident_id": "incident_002",
+      "incident_id": "incident_006",
       "recommendation_ref": "rank_2",
-      "patch_type": "REDACTION_POLICY_CHANGE",
-      "risk_level": "LOW",
-      "target_file": "logging/redaction_policy.yaml",
-      "explanation": "Enforce structured redaction for PII and credentials before logs are emitted.",
-      "diff": "+++ logging/redaction_policy.yaml\n+redact: [email, token, password, secret]\n",
+      "patch_type": "LOGGING_REDACTION_ADD",
+      "risk_level": "MEDIUM",
+      "target_file": "src/logging/redaction.py",
+      "explanation": "Log line(s) exposed unredacted Authorization, email; add Authorization, email to the redaction field list before logging.",
+      "diff": "- redact_fields = [\"password\", \"token\"]\n+ redact_fields = [\"password\", \"token\", \"Authorization\", \"email\"]",
+      "requires_human_review": true
+    }
+  ],
+  "skipped_recommendations": [],
+  "all_patches": [
+    {
+      "patch_id": "patch_001",
+      "incident_id": "incident_005",
+      "recommendation_ref": "rank_1",
+      "patch_type": "SCALING_CONFIG_CHANGE",
+      "risk_level": "MEDIUM",
+      "target_file": "config/kafka-consumer.yaml",
+      "explanation": "Observed consumer lag peaked at 125000; scale consumer instances to 4 to relieve backpressure (assumes a starting scale of 2 -- confirm actual current value before applying).",
+      "diff": "- consumer_instances: 2\n+ consumer_instances: 4",
+      "requires_human_review": true
+    },
+    {
+      "patch_id": "patch_002",
+      "incident_id": "incident_006",
+      "recommendation_ref": "rank_2",
+      "patch_type": "LOGGING_REDACTION_ADD",
+      "risk_level": "MEDIUM",
+      "target_file": "src/logging/redaction.py",
+      "explanation": "Log line(s) exposed unredacted Authorization, email; add Authorization, email to the redaction field list before logging.",
+      "diff": "- redact_fields = [\"password\", \"token\"]\n+ redact_fields = [\"password\", \"token\", \"Authorization\", \"email\"]",
       "requires_human_review": true
     }
   ]

@@ -123,11 +123,19 @@ error_dq_config:
 | `AUTHENTICATION_FAILURE` | Invalid credentials, token expired, unauthorised |
 | `PERMISSION_DENIED` | Access denied, forbidden, insufficient privileges |
 | `SCHEMA_MISMATCH` | Column not found, type mismatch, schema evolution error |
-| `RESOURCE_EXHAUSTION` | CPU throttled, disk full, thread pool exhausted |
+| `RESOURCE_EXHAUSTION` | CPU throttled, disk full, thread pool exhausted, no space left on device, disk usage reached N%, worker/encoder pool degraded or offline, queue depth exceeded |
 | `CHECKPOINT_FAILURE` | Checkpoint corrupted, offset missing, recovery failed |
 | `DELTA_CONFLICT` | Concurrent write conflict, transaction failed |
 | `APPLICATION_ERROR` | Unhandled exception, stack overflow, assertion failed |
 | `UNKNOWN` | Cannot be classified into above types |
+
+Pattern matching for each error type MUST cover the realistic range of phrasing a service would actually log for
+that condition, not just the single literal example string in the table above. For example, `RESOURCE_EXHAUSTION`
+must match disk-exhaustion messages phrased as "no space left on device", "disk usage reached N%", "insufficient
+disk", or "pool degraded/offline" — not only the literal phrase "disk full". Before accepting an implementation,
+verify each error type's pattern set against several plausible real-world log phrasings for that condition, not
+just the table's example wording. An implementation where any error record with a clearly-classifiable message
+falls through to `UNKNOWN` is non-compliant with the Application Error Types classification requirement.
 
 Several patterns can match the same message (e.g. a connection message containing the word "timed out" matches
 both `CONNECTION_FAILURE` and `TIMEOUT`). When more than one pattern matches, resolve using this fixed priority

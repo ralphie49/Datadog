@@ -1,0 +1,26 @@
+{
+  "summary": {
+    "total_errors": 0,
+    "total_warnings": 0,
+    "total_critical": 0,
+    "recurring_errors": 0,
+    "affected_services": [],
+    "total_batches_analysed": 0,
+    "batches_with_dq_issues": 0,
+    "avg_rejection_rate_pct": 0.0,
+    "max_rejection_rate_pct": 0.0,
+    "total_quarantine_records": 0,
+    "total_dead_letter_records": 0,
+    "analysis_period": {
+      "from": "2026-07-07T11:13:30.072Z",
+      "to": "2026-07-07T11:13:30.072Z"
+    }
+  },
+  "top_errors": [],
+  "rejection_rates": [],
+  "worst_columns": [],
+  "dq_alerts": [],
+  "dq_trends": [],
+  "all_errors": [],
+  "all_dq_issues": []
+}

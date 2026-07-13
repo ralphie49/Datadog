@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "total_services_mapped": 0,
+    "total_edges": 0,
+    "breakpoints_identified": 0,
+    "cascading_failures": 0,
+    "effective_min_call_count_for_edge": 5,
+    "parent_span_id_available": false,
+    "analysis_period": {
+      "from": "2026-07-07T10:49:00.000Z",
+      "to": "2026-07-07T11:13:30.072Z"
+    }
+  },
+  "dependency_graph": {
+    "nodes": [],
+    "edges": []
+  },
+  "breakpoints": [],
+  "cascading_failures": [],
+  "all_findings": []
+}

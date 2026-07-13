@@ -1,0 +1,306 @@
+{
+  "summary": {
+    "total_services_analysed": 4,
+    "total_hosts_analysed": 4,
+    "services_with_issues": 3,
+    "hosts_with_issues": 4,
+    "critical_issues": 11,
+    "warn_issues": 2,
+    "hosts_down": 4,
+    "analysis_period": {
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T15:02:01.000Z"
+    }
+  },
+  "latency": {
+    "slowest_traces": [
+      {
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 5300,
+        "timestamp": "2026-07-15T14:27:00.000Z",
+        "trace_id": "tr003"
+      },
+      {
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 5210,
+        "timestamp": "2026-07-15T14:27:01.000Z",
+        "trace_id": "tr003"
+      },
+      {
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 5200,
+        "timestamp": "2026-07-15T14:26:00.000Z",
+        "trace_id": "tr002"
+      },
+      {
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 5100,
+        "timestamp": "2026-07-15T14:26:01.000Z",
+        "trace_id": "tr002"
+      },
+      {
+        "service": "recommendation-engine",
+        "operation": "get_recommendations",
+        "duration_ms": 4800,
+        "timestamp": "2026-07-15T14:27:02.000Z",
+        "trace_id": "tr003"
+      }
+    ],
+    "by_service": [
+      {
+        "service": "cdn-gateway",
+        "avg_ms": 2683.8,
+        "p95_ms": 5285.0,
+        "p99_ms": 5297.0,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "video-encoder",
+        "avg_ms": 2623.8,
+        "p95_ms": 5193.5,
+        "p99_ms": 5206.7,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "recommendation-engine",
+        "avg_ms": 4800.0,
+        "p95_ms": 4800,
+        "p99_ms": 4800,
+        "verdict": "CRITICAL"
+      },
+      {
+        "service": "billing-service",
+        "avg_ms": 200.0,
+        "p95_ms": 200,
+        "p99_ms": 200,
+        "verdict": "OK"
+      }
+    ]
+  },
+  "throughput": [],
+  "hosts": [
+    {
+      "host": "enc-host-01",
+      "cpu_pct": 91.0,
+      "memory_pct": 74.0,
+      "disk_pct": 99.0,
+      "network_mbps": 580.0,
+      "health_score": 70,
+      "verdict": "CRITICAL",
+      "issues": [
+        "HIGH_CPU",
+        "HIGH_DISK",
+        "HOST_DOWN"
+      ]
+    },
+    {
+      "host": "cdn-host-01",
+      "cpu_pct": 60.0,
+      "memory_pct": 48.0,
+      "disk_pct": 36.0,
+      "network_mbps": 1250.0,
+      "health_score": 85,
+      "verdict": "CRITICAL",
+      "issues": [
+        "NETWORK_SATURATION",
+        "HOST_DOWN"
+      ]
+    },
+    {
+      "host": "bill-host-01",
+      "cpu_pct": 22.0,
+      "memory_pct": 35.0,
+      "disk_pct": 28.0,
+      "network_mbps": 170.0,
+      "health_score": 100,
+      "verdict": "WARN",
+      "issues": [
+        "HOST_DOWN"
+      ]
+    },
+    {
+      "host": "rec-host-01",
+      "cpu_pct": 28.0,
+      "memory_pct": 38.0,
+      "disk_pct": 30.0,
+      "network_mbps": 290.0,
+      "health_score": 100,
+      "verdict": "WARN",
+      "issues": [
+        "HOST_DOWN"
+      ]
+    }
+  ],
+  "storage_issues": [],
+  "network": [
+    {
+      "host": "cdn-host-01",
+      "network_mbps": 1250.0
+    }
+  ],
+  "downtime_issues": [
+    {
+      "host": "enc-host-01",
+      "from": "2026-07-15T14:24:00.000Z",
+      "to": "2026-07-15T14:30:00.000Z",
+      "gap_minutes": 6.0
+    },
+    {
+      "host": "enc-host-01",
+      "from": "2026-07-15T14:35:00.000Z",
+      "to": "2026-07-15T14:45:00.000Z",
+      "gap_minutes": 10.0
+    },
+    {
+      "host": "enc-host-01",
+      "from": "2026-07-15T14:45:00.000Z",
+      "to": "2026-07-15T15:00:00.000Z",
+      "gap_minutes": 15.0
+    },
+    {
+      "host": "cdn-host-01",
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T14:15:00.000Z",
+      "gap_minutes": 15.0
+    },
+    {
+      "host": "cdn-host-01",
+      "from": "2026-07-15T14:15:00.000Z",
+      "to": "2026-07-15T14:26:00.000Z",
+      "gap_minutes": 11.0
+    },
+    {
+      "host": "cdn-host-01",
+      "from": "2026-07-15T14:27:00.000Z",
+      "to": "2026-07-15T14:35:00.000Z",
+      "gap_minutes": 8.0
+    },
+    {
+      "host": "cdn-host-01",
+      "from": "2026-07-15T14:35:00.000Z",
+      "to": "2026-07-15T15:00:00.000Z",
+      "gap_minutes": 25.0
+    },
+    {
+      "host": "rec-host-01",
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T14:28:00.000Z",
+      "gap_minutes": 28.0
+    },
+    {
+      "host": "rec-host-01",
+      "from": "2026-07-15T14:28:00.000Z",
+      "to": "2026-07-15T15:00:00.000Z",
+      "gap_minutes": 32.0
+    },
+    {
+      "host": "bill-host-01",
+      "from": "2026-07-15T14:00:00.000Z",
+      "to": "2026-07-15T14:40:00.000Z",
+      "gap_minutes": 40.0
+    },
+    {
+      "host": "bill-host-01",
+      "from": "2026-07-15T14:40:00.000Z",
+      "to": "2026-07-15T15:00:00.000Z",
+      "gap_minutes": 20.0
+    }
+  ],
+  "all_issues": [
+    {
+      "service": "cdn-gateway",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "description": "cdn-gateway error rate 50.0% across 4 traces"
+    },
+    {
+      "service": "video-encoder",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:26:01.000Z",
+      "description": "video-encoder error rate 50.0% across 4 traces"
+    },
+    {
+      "service": "recommendation-engine",
+      "issue_type": "HIGH_ERROR_RATE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:27:02.000Z",
+      "description": "recommendation-engine error rate 100.0% across 1 traces"
+    },
+    {
+      "service": "enc-host-01",
+      "issue_type": "HIGH_CPU",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "description": "host enc-host-01 flagged HIGH_CPU (verdict CRITICAL)"
+    },
+    {
+      "service": "enc-host-01",
+      "issue_type": "HIGH_DISK",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:05:00.000Z",
+      "description": "host enc-host-01 flagged HIGH_DISK (verdict CRITICAL)"
+    },
+    {
+      "service": "enc-host-01",
+      "issue_type": "HOST_DOWN",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "description": "host enc-host-01 flagged HOST_DOWN (verdict CRITICAL)"
+    },
+    {
+      "service": "cdn-host-01",
+      "issue_type": "NETWORK_SATURATION",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "description": "host cdn-host-01 flagged NETWORK_SATURATION (verdict CRITICAL)"
+    },
+    {
+      "service": "cdn-host-01",
+      "issue_type": "HOST_DOWN",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "description": "host cdn-host-01 flagged HOST_DOWN (verdict CRITICAL)"
+    },
+    {
+      "service": "bill-host-01",
+      "issue_type": "HOST_DOWN",
+      "verdict": "WARN",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "description": "host bill-host-01 flagged HOST_DOWN (verdict WARN)"
+    },
+    {
+      "service": "rec-host-01",
+      "issue_type": "HOST_DOWN",
+      "verdict": "WARN",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "description": "host rec-host-01 flagged HOST_DOWN (verdict WARN)"
+    },
+    {
+      "service": "cdn-gateway",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "description": "cdn-gateway p99 latency 5297.0ms"
+    },
+    {
+      "service": "video-encoder",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:26:01.000Z",
+      "description": "video-encoder p99 latency 5206.7ms"
+    },
+    {
+      "service": "recommendation-engine",
+      "issue_type": "HIGH_LATENCY",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-15T14:27:02.000Z",
+      "description": "recommendation-engine p99 latency 4800ms"
+    }
+  ]
+}

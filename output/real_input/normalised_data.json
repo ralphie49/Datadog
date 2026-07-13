@@ -1,0 +1,1159 @@
+{
+  "dataset_name": "real_input",
+  "input_root": "real_input",
+  "analysis_period": {
+    "from": "2026-07-07T10:49:00.000Z",
+    "to": "2026-07-07T11:13:30.072Z"
+  },
+  "record_counts": {
+    "log": 1,
+    "metric": 50,
+    "trace": 0,
+    "alert": 0,
+    "infrastructure": 0,
+    "total": 51
+  },
+  "classified_files": [
+    {
+      "path": "datadog_logs_export_real.json",
+      "source_type": "log",
+      "record_count": 1
+    },
+    {
+      "path": "datadog_metrics_export_real.json",
+      "source_type": "metric",
+      "record_count": 50
+    }
+  ],
+  "skipped_files": [
+    {
+      "path": "datadog_traces_export_real.json",
+      "reason": "file is empty (0 bytes) -- not parseable JSON/CSV",
+      "status": "skipped_unreadable"
+    }
+  ],
+  "records": [
+    {
+      "record_id": "metric_000001",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:49:00.000Z",
+      "message": "system.cpu.user=0.0",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 0.0,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000002",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:49:20.000Z",
+      "message": "system.cpu.user=4.271137642845462",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.271137642845462,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000003",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:49:40.000Z",
+      "message": "system.cpu.user=3.229170649310467",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.229170649310467,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000004",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:50:00.000Z",
+      "message": "system.cpu.user=1.614566552604963",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.614566552604963,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000005",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:50:20.000Z",
+      "message": "system.cpu.user=7.226663745253028",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 7.226663745253028,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000006",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:50:40.000Z",
+      "message": "system.cpu.user=7.434790178153131",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 7.434790178153131,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000007",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:51:00.000Z",
+      "message": "system.cpu.user=4.427051871751365",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.427051871751365,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000008",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:51:20.000Z",
+      "message": "system.cpu.user=5.058595328224687",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 5.058595328224687,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000009",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:51:40.000Z",
+      "message": "system.cpu.user=7.317529159587339",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 7.317529159587339,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000010",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:52:00.000Z",
+      "message": "system.cpu.user=3.7890680218828043",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.7890680218828043,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000011",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:52:20.000Z",
+      "message": "system.cpu.user=3.222642653107978",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.222642653107978,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000012",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:52:40.000Z",
+      "message": "system.cpu.user=2.5781056402470415",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.5781056402470415,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000013",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:53:00.000Z",
+      "message": "system.cpu.user=1.3671851106821329",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.3671851106821329,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000014",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:53:20.000Z",
+      "message": "system.cpu.user=4.140572965227002",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.140572965227002,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000015",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:53:40.000Z",
+      "message": "system.cpu.user=3.2942584998719404",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.2942584998719404,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000016",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:54:00.000Z",
+      "message": "system.cpu.user=3.6328552921687614",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.6328552921687614,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000017",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:54:20.000Z",
+      "message": "system.cpu.user=6.035090117247496",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 6.035090117247496,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000018",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:54:40.000Z",
+      "message": "system.cpu.user=5.468696260944742",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 5.468696260944742,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000019",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:55:00.000Z",
+      "message": "system.cpu.user=2.513027063035037",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.513027063035037,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000020",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:55:20.000Z",
+      "message": "system.cpu.user=2.4088640415694202",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.4088640415694202,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000021",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:55:40.000Z",
+      "message": "system.cpu.user=4.426993288289849",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.426993288289849,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000022",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:56:00.000Z",
+      "message": "system.cpu.user=5.1953120432292215",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 5.1953120432292215,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000023",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:56:20.000Z",
+      "message": "system.cpu.user=4.824188992916649",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.824188992916649,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000024",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:56:40.000Z",
+      "message": "system.cpu.user=2.9296877434896174",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.9296877434896174,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000025",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:57:00.000Z",
+      "message": "system.cpu.user=3.3463833786360553",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.3463833786360553,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000026",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:57:20.000Z",
+      "message": "system.cpu.user=3.88671699832686",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.88671699832686,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000027",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:57:40.000Z",
+      "message": "system.cpu.user=4.179640744271171",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.179640744271171,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000028",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:58:00.000Z",
+      "message": "system.cpu.user=3.164032249769972",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.164032249769972,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000029",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:58:20.000Z",
+      "message": "system.cpu.user=2.402332593278134",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.402332593278134,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000030",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:58:40.000Z",
+      "message": "system.cpu.user=5.07800985938913",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 5.07800985938913,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000031",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:59:00.000Z",
+      "message": "system.cpu.user=2.9166526667338664",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.9166526667338664,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000032",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:59:20.000Z",
+      "message": "system.cpu.user=3.6523346289327554",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.6523346289327554,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000033",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T10:59:40.000Z",
+      "message": "system.cpu.user=4.843819040567392",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.843819040567392,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000034",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:00:00.000Z",
+      "message": "system.cpu.user=1.7447666507011148",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.7447666507011148,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000035",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:00:20.000Z",
+      "message": "system.cpu.user=0.6575520608972434",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 0.6575520608972434,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000036",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:00:40.000Z",
+      "message": "system.cpu.user=1.0286334697606487",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.0286334697606487,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000037",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:01:00.000Z",
+      "message": "system.cpu.user=1.1197995847758542",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.1197995847758542,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000038",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:01:20.000Z",
+      "message": "system.cpu.user=1.764308635420972",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 1.764308635420972,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000039",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:01:40.000Z",
+      "message": "system.cpu.user=3.4244247890499855",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.4244247890499855,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000040",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:02:00.000Z",
+      "message": "system.cpu.user=5.898491872892439",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 5.898491872892439,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000041",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:02:20.000Z",
+      "message": "system.cpu.user=4.446646591059479",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.446646591059479,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000042",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:02:40.000Z",
+      "message": "system.cpu.user=2.5781115834048887",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.5781115834048887,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000043",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:03:00.000Z",
+      "message": "system.cpu.user=3.828037183256906",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.828037183256906,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000044",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:03:20.000Z",
+      "message": "system.cpu.user=3.072893188528263",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.072893188528263,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000045",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:03:40.000Z",
+      "message": "system.cpu.user=3.6979907744017853",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.6979907744017853,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000046",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:04:00.000Z",
+      "message": "system.cpu.user=2.148391064816537",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 2.148391064816537,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000047",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:04:20.000Z",
+      "message": "system.cpu.user=6.2435005168849855",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 6.2435005168849855,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000048",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:04:40.000Z",
+      "message": "system.cpu.user=3.5156430990497936",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.5156430990497936,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000049",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:05:00.000Z",
+      "message": "system.cpu.user=4.257797963071034",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 4.257797963071034,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000050",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "AVDAILAB102-119",
+      "environment": "unknown",
+      "timestamp": "2026-07-07T11:05:20.000Z",
+      "message": "system.cpu.user=3.5155324894047943",
+      "tags": [
+        "host:AVDAILAB102-119"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "scope": "host:AVDAILAB102-119",
+        "metric": "system.cpu.user",
+        "metric_name": "system.cpu.user",
+        "value": 3.5155324894047943,
+        "host": "AVDAILAB102-119",
+        "service": null
+      }
+    },
+    {
+      "record_id": "log_000001",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "test-service",
+      "environment": "test",
+      "timestamp": "2026-07-07T11:13:30.072Z",
+      "message": "Manual test log entry for pipeline testing",
+      "tags": [
+        "datadog.submission_auth:api_key",
+        "env:test",
+        "source:test"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "id": "AwAAAZ88SHfYqFQkGQAAABhBWjg4U0hmWUFBRDRQYU5Nd3lUQnJRQUEAAAAkZjE5ZjNjNDgtNzdkOC00MzRiLTg5OGItYTUxYjkyMTBkYjZkAAAAAA",
+        "type": "log",
+        "service": "test-service"
+      }
+    }
+  ],
+  "_generated_at": "2026-07-10T11:22:13Z"
+}

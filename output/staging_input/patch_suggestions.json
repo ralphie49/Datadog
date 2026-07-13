@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "total_patches_generated": 1,
+    "low_risk": 1,
+    "medium_risk": 0,
+    "high_risk": 0,
+    "manual_review_required": 1
+  },
+  "patches": [
+    {
+      "patch_id": "patch_001",
+      "incident_id": "incident_005",
+      "recommendation_ref": "rank_2",
+      "patch_type": "CONNECTION_POOL_RESIZE",
+      "risk_level": "LOW",
+      "target_file": "config/connection-pool.yaml",
+      "explanation": "enc-host-01 showed sustained resource exhaustion; double the connection/thread pool size to relieve pressure (confirm current pool_size before applying).",
+      "diff": "- pool_size: 20  # enc-host-01\n+ pool_size: 40  # enc-host-01",
+      "requires_human_review": true
+    }
+  ],
+  "skipped_recommendations": [
+    {
+      "recommendation_rank": 1,
+      "reason": "no concrete field/value could be extracted from incident evidence for a CONNECTION_POOL_RESIZE diff -- flagged MANUAL_REVIEW_REQUIRED"
+    }
+  ],
+  "all_patches": [
+    {
+      "patch_id": "patch_001",
+      "incident_id": "incident_005",
+      "recommendation_ref": "rank_2",
+      "patch_type": "CONNECTION_POOL_RESIZE",
+      "risk_level": "LOW",
+      "target_file": "config/connection-pool.yaml",
+      "explanation": "enc-host-01 showed sustained resource exhaustion; double the connection/thread pool size to relieve pressure (confirm current pool_size before applying).",
+      "diff": "- pool_size: 20  # enc-host-01\n+ pool_size: 40  # enc-host-01",
+      "requires_human_review": true
+    }
+  ]
+}

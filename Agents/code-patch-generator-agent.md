@@ -245,6 +245,18 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
 - `summary.manual_review_required` MUST equal `len(skipped_recommendations)`. It MUST NOT count generated patches merely because `requires_human_review == true`; every generated patch requires human review by design.
 - `summary.low_risk`, `summary.medium_risk`, and `summary.high_risk` MUST count patches by `risk_level`.
 - The diff MUST be syntactically recognizable as a unified or minimal before/after diff. Do not output vague prose as `diff`.
+- **A diff consisting only of comment lines is not a valid diff.** A diff whose every `-`/`+` line is a
+  `#`-prefixed (or language-equivalent) comment — e.g. `- # (see explanation)` / `+ # adjust per
+  recommendation` — contains no actual code or config change and MUST be rejected. This has been observed
+  in a real run: `patch_001` for a `LOGGING_REDACTION_ADD` had a diff of two placeholder comment lines with
+  no concrete redaction logic (no regex, no field name, no function call) despite `security_report.json`
+  identifying the specific PII field (`email`) that triggered the finding. The diff for a
+  `LOGGING_REDACTION_ADD` patch MUST reference the specific field/pattern from the finding (e.g. show a
+  before/after around a `redact_fields = [...]` list or equivalent), not a comment describing that a change
+  should happen elsewhere. If the repo scan genuinely cannot locate a concrete line to anchor the diff to,
+  set `requires_human_review: true` (already default) AND move the recommendation to
+  `skipped_recommendations` instead of emitting a comment-only placeholder patch — a patch with no
+  substantive diff should not count toward `summary.total_patches_generated`.
 - If no patch can be safely generated, write zero patches and explain all skipped recommendations. Do not fabricate a config change.
 
 Reject the generated output if `manual_review_required` is anything other than the count of skipped recommendations requiring manual investigation.

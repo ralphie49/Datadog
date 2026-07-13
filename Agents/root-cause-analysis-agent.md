@@ -95,6 +95,20 @@ root_cause_config:
 - MUST load all upstream report JSON files, including the dependency graph and breakpoint findings
 - MUST group findings that occur within `correlation_window_minutes` of each other into a single incident
 - MUST prefer a breakpoint identified in `dependency_report.json` as the root cause candidate when one exists for the incident window, over pure time-correlation guessing
+- **When no `dependency_report.json` breakpoint exists for an incident's services** (including the case
+  where the Dependency/Flow Agent's breakpoint search legitimately found nothing), `primary_service` MUST
+  be selected by **earliest first-evidenced CRITICAL/ERROR timestamp** among the incident's corroborating
+  findings — never by highest error-rate percentage, highest deviation, or list order. **Concrete regression
+  case:** an incident had `video-encoder` CRITICAL findings first-seen at `14:24:00` (disk exhaustion) and
+  `cdn-gateway` ERROR findings first-seen at `14:26:00` (timeout calling `video-encoder`) — two minutes
+  later. The correct `primary_service` is `video-encoder`, because it is causally and temporally upstream:
+  a service cannot be the origin of a failure that started after the service it was calling already failed.
+  An implementation that sorted candidate services by error-rate percentage (both showed 50%) and picked
+  whichever appeared first in that ranking picked `cdn-gateway` instead — this is the defect this rule
+  exists to prevent. Before assigning `primary_service`, sort the incident's distinct services by their own
+  earliest CRITICAL-or-ERROR `timestamp` in the source findings, and pick the earliest, unless a
+  `dependency_report.json` breakpoint says otherwise (breakpoint evidence always outranks temporal
+  ordering, per the rule above — this fallback only applies when no breakpoint is available).
 - MUST require at least `min_evidence_sources` corroborating findings before naming a root cause
 - MUST assign a confidence level to each root cause: LOW | MEDIUM | HIGH
 - MUST distinguish between root cause (originating issue) and symptom (downstream effect)
@@ -120,6 +134,41 @@ root_cause_config:
   all four source files listed above and confirm each one maps to an incident or an `unresolved_findings`
   entry; do not stop after finding the first/highest-severity incident.
 - MUST NOT modify any upstream input files
+
+### Mandatory Pre-Write Gate (hard assertion, not prose to remember)
+
+This rule exists because a prior run satisfied every other MUST rule in this file yet still shipped
+`root_cause_category: "UPSTREAM_DEPENDENCY_FAILURE"` instead of `PIPELINE_BACKPRESSURE` for a Kafka-lag/
+checkpoint-stale/DQ-rejection incident — the general clustering logic worked, but the *category label*
+picked was wrong, and nothing forced a check of that specific field before the file was written. English
+prose describing the correct behavior earlier in this document was not sufficient to prevent the
+regression from recurring. The implementation MUST therefore run this exact assertion — not an
+equivalent-in-spirit check, this literal one — immediately before writing `root_cause.json`, and MUST
+refuse to write the file (raise/exit non-zero) if it fails:
+
+```
+def assert_pipeline_backpressure_category(apm_report, root_cause_output):
+    critical_kafka_or_checkpoint = [
+        t for t in apm_report.get("kafka", {}).get("topics", [])
+        if t.get("verdict") == "CRITICAL"
+    ] + [
+        c for c in apm_report.get("checkpoints", [])
+        if c.get("severity") == "CRITICAL"
+    ]
+    if not critical_kafka_or_checkpoint:
+        return  # rule does not apply this run
+    categories_present = {i["root_cause_category"] for i in root_cause_output["incidents"]}
+    if "PIPELINE_BACKPRESSURE" not in categories_present:
+        raise AssertionError(
+            "apm_report.json has CRITICAL kafka/checkpoint findings but no incident in "
+            "root_cause.json is categorized PIPELINE_BACKPRESSURE. Do not write root_cause.json "
+            "until this is fixed — see 'Concrete regression case' above."
+        )
+```
+
+This assertion MUST run as actual code in the implementation, not merely be read as guidance. If it
+fires, fix the clustering/category logic and re-run — do not relabel the incident after the fact or
+add the category to satisfy the check without genuine matching evidence.
 
 ---
 
@@ -265,7 +314,14 @@ but then not translating that evidence into the matching category.
    that finding's own `description` field, falling back to `message` or a synthesized "`issue_type` on `service`"
    string if `description` is blank or absent. An entry in `downstream_symptoms` MUST NEVER be an empty string
    (`""`) or whitespace-only; if no readable text can be resolved for a finding, omit that finding from the list
-   entirely rather than inserting a blank placeholder
+   entirely rather than inserting a blank placeholder.
+   **Concrete regression case:** an implementation was observed building the `apm_report.json` findings by
+   *unconditionally* writing `description: f"{issue_type} on {service}"`, discarding that finding's real
+   `description` field (e.g. "Disk usage exceeded 95% on enc-host-01") even though it was present and populated
+   upstream. This produced uninformative `downstream_symptoms` entries like "PIPELINE_ALERT_UNCLASSIFIED on
+   video-encoder" in the final report when the real alert text was sitting right there in the input. The
+   fallback template is a last resort for when `description` is genuinely absent — never an unconditional
+   default applied ahead of checking for real text that already exists.
 6. **Timestamp-robustness safeguard.** Upstream reports occasionally carry corrupted or missing per-finding
    timestamps (e.g. a finding defaulted to the analysis-period start instead of its real occurrence time), which
    can cause step 2's time-window clustering to fail even though strong, clearly-related evidence exists across

@@ -1,0 +1,6 @@
+[
+  {"monitor_name": "video-encoder-disk-usage", "status": "TRIGGERED", "triggered_at": "2026-07-15T14:24:00Z", "service": "video-encoder", "message": "Disk usage exceeded 95% on enc-host-01", "priority": "P1"},
+  {"monitor_name": "cdn-gateway-upstream-timeout", "status": "TRIGGERED", "triggered_at": "2026-07-15T14:26:00Z", "service": "cdn-gateway", "message": "Upstream timeout rate exceeded threshold", "priority": "P2"},
+  {"monitor_name": "video-encoder-queue-depth", "status": "TRIGGERED", "triggered_at": "2026-07-15T14:25:00Z", "service": "video-encoder", "message": "encode queue depth exceeded 500 on video-encode-queue", "priority": "P2"},
+  {"monitor_name": "video-encoder-disk-recovery", "status": "RESOLVED", "triggered_at": "2026-07-15T15:00:00Z", "service": "video-encoder", "message": "Disk usage returned to normal", "priority": "P4"}
+]

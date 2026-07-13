@@ -1,78 +1,78 @@
 {
-  "dataset_name": "input",
+  "dataset_name": "staging_input",
   "status": "valid",
   "checks": [
     {
       "check_id": "path_normalised_data.json",
       "artifact": "normalised_data.json",
       "status": "passed",
-      "detail": "output\\input\\normalised_data.json is inside output\\input"
+      "detail": "output\\staging_input\\normalised_data.json is inside output\\staging_input"
     },
     {
       "check_id": "path_log_analysis.json",
       "artifact": "log_analysis.json",
       "status": "passed",
-      "detail": "output\\input\\log_analysis.json is inside output\\input"
+      "detail": "output\\staging_input\\log_analysis.json is inside output\\staging_input"
     },
     {
       "check_id": "path_metrics_report.json",
       "artifact": "metrics_report.json",
       "status": "passed",
-      "detail": "output\\input\\metrics_report.json is inside output\\input"
+      "detail": "output\\staging_input\\metrics_report.json is inside output\\staging_input"
     },
     {
       "check_id": "path_apm_report.json",
       "artifact": "apm_report.json",
       "status": "passed",
-      "detail": "output\\input\\apm_report.json is inside output\\input"
+      "detail": "output\\staging_input\\apm_report.json is inside output\\staging_input"
     },
     {
       "check_id": "path_security_report.json",
       "artifact": "security_report.json",
       "status": "passed",
-      "detail": "output\\input\\security_report.json is inside output\\input"
+      "detail": "output\\staging_input\\security_report.json is inside output\\staging_input"
     },
     {
       "check_id": "path_anomaly_report.json",
       "artifact": "anomaly_report.json",
       "status": "passed",
-      "detail": "output\\input\\anomaly_report.json is inside output\\input"
+      "detail": "output\\staging_input\\anomaly_report.json is inside output\\staging_input"
     },
     {
       "check_id": "path_dependency_report.json",
       "artifact": "dependency_report.json",
       "status": "passed",
-      "detail": "output\\input\\dependency_report.json is inside output\\input"
+      "detail": "output\\staging_input\\dependency_report.json is inside output\\staging_input"
     },
     {
       "check_id": "path_root_cause.json",
       "artifact": "root_cause.json",
       "status": "passed",
-      "detail": "output\\input\\root_cause.json is inside output\\input"
+      "detail": "output\\staging_input\\root_cause.json is inside output\\staging_input"
     },
     {
       "check_id": "path_recommendations.json",
       "artifact": "recommendations.json",
       "status": "passed",
-      "detail": "output\\input\\recommendations.json is inside output\\input"
+      "detail": "output\\staging_input\\recommendations.json is inside output\\staging_input"
     },
     {
       "check_id": "path_patch_suggestions.json",
       "artifact": "patch_suggestions.json",
       "status": "passed",
-      "detail": "output\\input\\patch_suggestions.json is inside output\\input"
+      "detail": "output\\staging_input\\patch_suggestions.json is inside output\\staging_input"
     },
     {
       "check_id": "path_datadog_analysis_report.md",
       "artifact": "datadog_analysis_report.md",
       "status": "passed",
-      "detail": "output\\input\\datadog_analysis_report.md is inside output\\input"
+      "detail": "output\\staging_input\\datadog_analysis_report.md is inside output\\staging_input"
     },
     {
       "check_id": "record_count_match",
       "artifact": "normalised_data.json",
       "status": "passed",
-      "detail": "record_counts.total=90 vs len(records)=90"
+      "detail": "record_counts.total=62 vs len(records)=62"
     },
     {
       "check_id": "schema_summary",
@@ -96,13 +96,13 @@
       "check_id": "correlation_completeness",
       "artifact": "anomaly_report.json / dependency_report.json",
       "status": "passed",
-      "detail": "connected anomaly pairs found: 1 (checkout-consumer@2026-07-02T09:28:00.000Z <-> order-service@2026-07-02T09:30:00.000Z via edge checkout-consumer<->order-service); correlated_anomalies recorded: 1; dependency breakpoints recorded: 1"
+      "detail": "connected anomaly pairs found: 0"
     },
     {
       "check_id": "pipeline_backpressure_category",
       "artifact": "apm_report.json / root_cause.json",
       "status": "passed",
-      "detail": "3 CRITICAL kafka/checkpoint finding(s) matched by a PIPELINE_BACKPRESSURE incident"
+      "detail": "no CRITICAL kafka/checkpoint findings in apm_report.json"
     },
     {
       "check_id": "breakpoint_edge_consistency",
@@ -151,47 +151,47 @@
   "artifact_paths": [
     {
       "artifact": "normalised_data.json",
-      "path": "output\\input\\normalised_data.json"
+      "path": "output\\staging_input\\normalised_data.json"
     },
     {
       "artifact": "log_analysis.json",
-      "path": "output\\input\\log_analysis.json"
+      "path": "output\\staging_input\\log_analysis.json"
     },
     {
       "artifact": "metrics_report.json",
-      "path": "output\\input\\metrics_report.json"
+      "path": "output\\staging_input\\metrics_report.json"
     },
     {
       "artifact": "apm_report.json",
-      "path": "output\\input\\apm_report.json"
+      "path": "output\\staging_input\\apm_report.json"
     },
     {
       "artifact": "security_report.json",
-      "path": "output\\input\\security_report.json"
+      "path": "output\\staging_input\\security_report.json"
     },
     {
       "artifact": "anomaly_report.json",
-      "path": "output\\input\\anomaly_report.json"
+      "path": "output\\staging_input\\anomaly_report.json"
     },
     {
       "artifact": "dependency_report.json",
-      "path": "output\\input\\dependency_report.json"
+      "path": "output\\staging_input\\dependency_report.json"
     },
     {
       "artifact": "root_cause.json",
-      "path": "output\\input\\root_cause.json"
+      "path": "output\\staging_input\\root_cause.json"
     },
     {
       "artifact": "recommendations.json",
-      "path": "output\\input\\recommendations.json"
+      "path": "output\\staging_input\\recommendations.json"
     },
     {
       "artifact": "patch_suggestions.json",
-      "path": "output\\input\\patch_suggestions.json"
+      "path": "output\\staging_input\\patch_suggestions.json"
     },
     {
       "artifact": "datadog_analysis_report.md",
-      "path": "output\\input\\datadog_analysis_report.md"
+      "path": "output\\staging_input\\datadog_analysis_report.md"
     }
   ]
 }

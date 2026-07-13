@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "total_pipelines_analysed": 0,
+    "pipelines_with_issues": 0,
+    "critical_issues": 0,
+    "warn_issues": 0,
+    "sla_breaches": 0,
+    "analysis_period": {
+      "from": "2026-07-07T10:49:00.000Z",
+      "to": "2026-07-07T11:13:30.072Z"
+    }
+  },
+  "kafka": {
+    "topics": []
+  },
+  "checkpoints": [],
+  "sla_breaches": [],
+  "backlogs": [],
+  "unclassified_alerts": [],
+  "all_issues": []
+}

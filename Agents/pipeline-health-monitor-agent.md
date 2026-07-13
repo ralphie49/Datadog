@@ -113,6 +113,28 @@ pipeline_health_config:
   scanning — recompute it as the count of distinct pipeline/topic/consumer-group names seen across the input,
   never leave the two numbers contradicting each other
 - MUST write all findings to `apm_report.json`
+- MUST give every entry in `all_issues[]` a `description` field carrying that finding's real, human-readable
+  detail (the actual alert message, checkpoint detail, or lag/SLA description) — never just the bare
+  `issue_type`/`service` pair. This applies uniformly to every finding kind written into `all_issues`
+  (Kafka lag, checkpoint, SLA breach, backlog, and `PIPELINE_ALERT_UNCLASSIFIED`), not only the ones that
+  happen to already carry a `description` in their own subsection object. If a finding's subsection entry
+  (e.g. a `kafka.topics[]` row) has no free-text description of its own, synthesize one from that entry's
+  actual fields (e.g. `f"consumer lag {lag} on {consumer_group}"`) — never a fallback that only repeats
+  `issue_type`. Downstream agents (Root Cause Analysis, Report Generation) read `all_issues[].description`
+  as their primary human-readable evidence text; an entry without it forces those agents to fall back to a
+  generic `"{issue_type} on {service}"` template, which silently discards real diagnostic detail this agent
+  already had in hand.
+
+`all_issues[]` entry schema (every entry, regardless of finding kind, MUST include all of these keys):
+```json
+{
+  "service":      "<the affected service/consumer-group>",
+  "issue_type":   "<one of the seven named types, or PIPELINE_ALERT_UNCLASSIFIED>",
+  "verdict":      "<CRITICAL | ERROR | WARN | INFO>",
+  "timestamp":    "<ISO-8601 timestamp this finding was evidenced at>",
+  "description":  "<real, human-readable detail — see MUST rule above; never omitted, never a bare label>"
+}
+```
 
 ### MUST NOT
 - MUST NOT accept a summary-only `normalised_data.json` that has no `records[]` array
@@ -133,6 +155,7 @@ pipeline_health_config:
 | `MISSED_TRIGGER` | Streaming trigger interval was missed |
 | `PROCESSING_BACKLOG` | Records accumulating faster than being processed |
 | `PIPELINE_STOPPED` | Pipeline stopped unexpectedly |
+| `PIPELINE_ALERT_UNCLASSIFIED` | Generic fallback for a triggered `alert`-type record (monitor_name/message) whose subject matter does not match any named type above — e.g. queue depth, GC pause time, worker pool saturation, or any other streaming/pipeline-adjacent domain this table doesn't yet enumerate. See Closed-Set Fallback Contract below. |
 
 ---
 
@@ -166,7 +189,15 @@ pipeline_health_config:
   "checkpoints": [],
   "sla_breaches": [],
   "backlogs": [],
-  "all_issues": []
+  "all_issues": [
+    {
+      "service":     "pyspark-consumer",
+      "issue_type":  "KAFKA_LAG_CRITICAL",
+      "verdict":     "CRITICAL",
+      "timestamp":   "2026-07-15T14:24:00.000Z",
+      "description": "consumer lag 125000 on pyspark-consumer (topic ecommerce-events)"
+    }
+  ]
 }
 ```
 
@@ -202,6 +233,72 @@ pipeline_health_config:
 ### Phase 5 — Write Output
 1. Build summary statistics
 2. Write `apm_report.json`
+
+---
+
+## Closed-Set Fallback Contract (added to prevent an entire class of coverage-gap defects)
+
+A real incident observed in this pipeline: a triggered monitor alert (`monitor_name` containing
+"queue-depth", `message` reading "encode queue depth exceeded 500 on video-encode-queue", `priority: P2`)
+was present in the normalised `alert` records this agent is required to scan, but its subject matter
+(worker/encode queue depth) did not match any of `KAFKA_LAG_HIGH`, `KAFKA_LAG_CRITICAL`,
+`CHECKPOINT_STALE`, `CHECKPOINT_CORRUPT`, `SLA_BREACH`, `MISSED_TRIGGER`, or `PROCESSING_BACKLOG`. Because
+this agent's detection logic only recognizes those seven named categories, the alert was silently
+dropped — it appears in no subsection, `all_issues`, or summary count of `apm_report.json` — and every
+downstream agent (Root Cause, Recommendations, Report Generation) inherited the gap with no way to
+recover it. This is the exact same failure shape the Anomaly Detection Agent's own Closed-Set Fallback
+Contract was written to prevent, but that agent's fallback only covers metric *anomalies* (spikes/drops
+against a baseline) — it has no visibility into a discrete, already-triggered monitor `alert` record like
+this one. The fix belongs here, in the agent that actually owns alert-type records.
+
+**MUST:** for every normalised record with `source_type: "alert"` (i.e. from `datadog_monitor_alerts_*.json`
+via the Log Ingestion & Normaliser Agent) whose `monitor_name`/`message` does not match any of the seven
+named issue types above, emit it anyway as a generic `PIPELINE_ALERT_UNCLASSIFIED` finding — populated from
+that record's own actual fields, never fabricated:
+```json
+{
+  "issue_type":  "PIPELINE_ALERT_UNCLASSIFIED",
+  "service":     "<record.service>",
+  "verdict":     "<CRITICAL if priority P1, ERROR if P2, WARN if P3, else INFO — same mapping used at ingestion>",
+  "timestamp":   "<record.triggered_at>",
+  "monitor_name":"<record.monitor_name>",
+  "description": "<record.message, redacted per the same PII/credential rules every other agent follows>"
+}
+```
+This entry MUST appear in `all_issues` and MUST count toward `summary.critical_issues` /
+`summary.warn_issues` using the same severity mapping as every other finding in this file.
+
+**MUST NOT** silently omit a triggered `alert` record from `apm_report.json` merely because its
+`monitor_name`/`message` doesn't match one of the seven named categories this file happens to enumerate
+today — the same principle the Anomaly Detection Agent applies to unrecognized metric domains. Omission
+is only acceptable when the alert record's `status` is not `TRIGGERED` (e.g. it is `RESOLVED` and has no
+open finding to report), never because the subject matter is unfamiliar.
+
+### Mandatory Pre-Write Gate (hard assertion)
+
+The implementation MUST run this literal assertion immediately before writing `apm_report.json`, and MUST
+refuse to write the file if it fails:
+
+```
+def assert_no_dropped_alert(all_alert_records, all_issues_output):
+    for record in all_alert_records:
+        if record.status != "TRIGGERED":
+            continue  # resolved/non-triggered alerts have no open finding to report
+        matching = [i for i in all_issues_output
+                    if i.get("monitor_name") == record.monitor_name
+                    and i.get("timestamp") == record.triggered_at]
+        if not matching:
+            raise AssertionError(
+                f"Alert '{record.monitor_name}' (priority {record.priority}, triggered "
+                f"{record.triggered_at}) has no corresponding entry in apm_report.json.all_issues — "
+                f"not even a PIPELINE_ALERT_UNCLASSIFIED fallback. Do not write apm_report.json until "
+                f"every TRIGGERED alert record is represented by a named issue type or the fallback."
+            )
+```
+
+This MUST run as actual code, not be read as guidance. If it fires, add the missing finding (named type
+or `PIPELINE_ALERT_UNCLASSIFIED`) and re-run — do not special-case the specific `monitor_name` that failed
+the assertion; the fallback path must catch any future unrecognized alert subject, not just this one.
 
 ---
 
@@ -285,10 +382,20 @@ When this file is used as a prompt for Copilot, Claude, or another code generato
 - `summary.total_pipelines_analysed` MUST be the count of distinct topic/consumer-group/pipeline identifiers observed in relevant input.
 - `summary.pipelines_with_issues` MUST be the count of distinct identifiers with at least one issue and MUST NOT exceed `total_pipelines_analysed`.
 - `summary.critical_issues` and `summary.warn_issues` MUST be counted from `all_issues`.
+- Every entry in `all_issues[]` MUST have a non-empty `description` field carrying real finding detail, not
+  just `issue_type`/`service`. Reject the implementation if any `all_issues[]` entry lacks `description`, or
+  if a downstream consumer of this file would have to fall back to a generic `"{issue_type} on {service}"`
+  template because this file omitted the real text it already had available at generation time.
+- Every normalised `source_type: "alert"` record with `status: "TRIGGERED"` MUST be represented in
+  `all_issues` — either as one of the seven named issue types, or as `PIPELINE_ALERT_UNCLASSIFIED` if its
+  subject matter matches none of them. Do not drop a triggered alert merely because its `monitor_name`
+  or `message` is unfamiliar; see the Closed-Set Fallback Contract above.
 
 Reject the generated output if topic equals `kafka_consumer_lag`, equals the consumer group, or is invented without evidence.
 Also reject it if the `kafka` section is missing while the input contains `kafka_consumer_lag` metrics or
 Kafka lag log/alert messages.
+Also reject it if any `TRIGGERED` alert record from the input has no corresponding entry (named type or
+`PIPELINE_ALERT_UNCLASSIFIED`) anywhere in `all_issues`.
 
 
 ---

@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "total_patches_generated": 0,
+    "low_risk": 0,
+    "medium_risk": 0,
+    "high_risk": 0,
+    "manual_review_required": 0
+  },
+  "patches": [],
+  "skipped_recommendations": [],
+  "all_patches": []
+}

@@ -1,0 +1,37 @@
+{
+  "summary": {
+    "total_recommendations": 2,
+    "p1_immediate": 2,
+    "p2_urgent": 0,
+    "p3_planned": 0,
+    "p4_advisory": 0
+  },
+  "recommendations": [
+    {
+      "rank": 1,
+      "priority": "P1_IMMEDIATE",
+      "incident_id": "incident_004",
+      "title": "Address RESOURCE_SATURATION on video-encoder",
+      "description": "video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes",
+      "action": "Investigate and remediate RESOURCE_SATURATION affecting cdn-gateway, recommendation-engine, video-encoder",
+      "affected_services": [
+        "cdn-gateway",
+        "recommendation-engine",
+        "video-encoder"
+      ],
+      "evidence": "apm_report.json; dependency_report.json; log_analysis.json; metrics_report.json: video-encoder identified as origin; failure propagated to cdn-gateway, recommendation-engine within 5 minutes"
+    },
+    {
+      "rank": 2,
+      "priority": "P1_IMMEDIATE",
+      "incident_id": "incident_005",
+      "title": "Address RESOURCE_SATURATION on enc-host-01",
+      "description": "host enc-host-01 flagged HIGH_DISK (verdict CRITICAL)",
+      "action": "Investigate and remediate RESOURCE_SATURATION affecting enc-host-01",
+      "affected_services": [
+        "enc-host-01"
+      ],
+      "evidence": "anomaly_report.json; metrics_report.json: host enc-host-01 flagged HIGH_DISK (verdict CRITICAL)"
+    }
+  ]
+}

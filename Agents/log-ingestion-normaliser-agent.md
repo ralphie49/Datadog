@@ -137,6 +137,60 @@ implementation MUST NOT classify a JSON file as infrastructure merely because th
 `disk_pct`, `network_in`, `network_out`) with numeric values. If a record has `timestamp`, `message`,
 and `level`/`severity`, classify it as `log` even when it also has `host`, `environment`, and `tags`.
 
+### Real Datadog API / UI export envelope (nested schema)
+
+Files exported directly from the Datadog UI or the Datadog Logs/Spans/Monitors API are shaped
+differently from this project's flat sample files. Instead of a flat JSON array of records, they arrive
+as a wrapping object, e.g.:
+
+```json
+{
+  "data": [
+    {
+      "id": "...",
+      "type": "log",
+      "attributes": {
+        "timestamp": "...", "status": "error", "service": "...", "host": "...",
+        "message": "...", "tags": [...], "attributes": { ... nested custom fields ... }
+      }
+    }
+  ],
+  "meta": { ... }, "links": { ... }
+}
+```
+
+A generated implementation MUST detect and unwrap this shape as a pre-processing step before running the
+Auto-Detection Rules above, using this logic:
+
+- If the top-level parsed JSON is an object (not an array) containing a `data` key whose value is a JSON
+  array, treat each element of `data[]` as one candidate record, and read its actual fields from
+  `element.attributes` (falling back to `element` itself if `attributes` is absent), rather than from
+  the top-level element.
+- Within `attributes`, map `status` → the same role as `level`/`severity` in the flat schema (i.e. a
+  record with `attributes.status` plus `attributes.timestamp` and `attributes.message` MUST classify as
+  `log`, exactly as a flat record with `level`+`timestamp`+`message` would).
+  - For spans/traces:
+  `attributes.trace_id` and `attributes.span_id` (or a `data[].type == "span"` element) MUST classify as
+  `trace`, mapped the same way flat `trace_id`/`span_id` fields would be.
+  - For monitors: an element with `attributes.name` (monitor name) and (`attributes.overall_state` or
+    `attributes.priority`) MUST classify as `alert`, mapping `attributes.name` → `monitor_name`,
+    `attributes.overall_state` → `status`, exactly as the flat `monitor_name`/`status`/`priority` schema
+    would be handled.
+  - Nested `attributes.attributes` (custom fields specific to that record, e.g. `error.kind`, `http.status_code`,
+    `duration`) MUST be preserved under the normalized record's `raw` field, the same way flat-schema
+    custom fields are preserved, so downstream agents (error/DQ, security, APM) can still read them.
+  - `meta` and `links` keys at the top level of the API response are pagination/request metadata, not
+    records — they MUST be ignored for classification and MUST NOT be counted as `unknown` records.
+- After unwrapping, every downstream rule in this spec (severity detection, timestamp normalization,
+  environment derivation, source_ip/user extraction, record_id assignment, record_counts, etc.) applies
+  identically regardless of whether the original file was the flat sample schema or this nested API
+  envelope schema. The two input shapes MUST produce structurally identical `normalised_data.json`
+  records — a downstream agent MUST NOT be able to tell, from the normalized record alone, which input
+  shape a given record originally came from.
+- If a file is an object with a `data` key but elements inside `data[]` don't match any known signature
+  after unwrapping, classify those specific elements as `unknown` (not the whole file) and report them
+  in the ingestion summary the same way malformed flat records would be reported.
+
 ---
 
 ## Output File Schema - `normalised_data.json`

@@ -1,172 +1,153 @@
 {
   "summary": {
     "total_security_issues": 9,
-    "critical_issues": 3,
+    "critical_issues": 2,
     "error_issues": 6,
-    "warn_issues": 0,
+    "warn_issues": 1,
     "pii_exposures": 1,
     "credential_leaks": 1,
-    "auth_failures": 1,
+    "auth_failures": 6,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:01.000Z"
     }
   },
   "findings": [
     {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:50:00Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:51:00Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:52:00Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:52:30Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:53:00Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "severity": "ERROR",
-      "service": "user-service",
-      "timestamp": "2026-07-02T09:53:30Z",
-      "description": "Authentication failure or unauthorized access observed",
-      "redacted": true,
-      "action": "Investigate authentication failures",
-      "evidence": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
       "issue_type": "PII_IN_LOGS",
       "severity": "CRITICAL",
       "service": "user-service",
-      "timestamp": "2026-07-02T09:54:00Z",
-      "description": "PII field detected in log message",
+      "timestamp": "2026-07-02T09:54:00.000Z",
+      "description": "PII field 'email' detected in log message: user record email=[REDACTED]",
       "redacted": true,
-      "action": "Remove PII from logs immediately",
-      "evidence": "PII field 'email' detected in log message: user record email=[REDACTED_EMAIL]"
+      "action": "Remove PII from log statements immediately"
     },
     {
       "issue_type": "CREDENTIAL_LEAK",
       "severity": "CRITICAL",
       "service": "user-service",
-      "timestamp": "2026-07-02T09:55:00Z",
-      "description": "Credential-like data detected in log message",
+      "timestamp": "2026-07-02T09:55:00.000Z",
+      "description": "Credential leak detected: Authorization:[REDACTED]",
       "redacted": true,
-      "action": "Remove credentials from logs and rotate them",
-      "evidence": "Credential leak detected: Authorization: [REDACTED] [REDACTED_TOKEN]"
+      "action": "Rotate leaked credential immediately and scrub log storage"
     },
     {
-      "issue_type": "BRUTE_FORCE_ATTEMPT",
-      "severity": "CRITICAL",
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
       "service": "user-service",
-      "timestamp": "2026-07-02T09:53:30Z",
-      "description": "Repeated authentication failures exceeded threshold",
+      "timestamp": "2026-07-02T09:50:00.000Z",
+      "description": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users",
       "redacted": true,
-      "action": "Investigate and block suspicious access",
-      "evidence": "6 failures grouped by user-service"
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:51:00.000Z",
+      "description": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "redacted": true,
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:00.000Z",
+      "description": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "redacted": true,
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:52:30.000Z",
+      "description": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "redacted": true,
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00.000Z",
+      "description": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "redacted": true,
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:30.000Z",
+      "description": "Unauthorised access attempt: 401 Unauthorized invalid token",
+      "redacted": true,
+      "action": "Investigate unauthorized access attempt and confirm access controls"
+    },
+    {
+      "issue_type": "SUSPICIOUS_ACTIVITY",
+      "severity": "WARN",
+      "service": "user-service",
+      "timestamp": "2026-07-02T09:53:00.000Z",
+      "description": "External monitor 'user-service-auth-failures' reported possible brute force -- not independently confirmed",
+      "redacted": true,
+      "action": "Review monitor and correlate with independent auth-failure grouping"
     }
   ],
   "auth_failures": [
     {
-      "group_key": "user-service",
-      "service": "user-service",
-      "count": 6,
-      "window": "1m"
+      "key_type": "service",
+      "key_value": "user-service",
+      "count": 6
     }
   ],
   "compliance": [],
   "all_issues": [
     {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 403 Forbidden for endpoint /admin/users"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
-      "issue_type": "UNAUTHORISED_ACCESS",
-      "service": "user-service",
-      "severity": "ERROR",
-      "detail": "Unauthorised access attempt: 401 Unauthorized invalid token"
-    },
-    {
       "issue_type": "PII_IN_LOGS",
-      "service": "user-service",
       "severity": "CRITICAL",
-      "detail": "PII field 'email' detected in log message: user record email=[REDACTED_EMAIL]"
+      "service": "user-service"
     },
     {
       "issue_type": "CREDENTIAL_LEAK",
-      "service": "user-service",
       "severity": "CRITICAL",
-      "detail": "Credential leak detected: Authorization: [REDACTED] [REDACTED_TOKEN]"
+      "service": "user-service"
     },
     {
-      "issue_type": "BRUTE_FORCE_ATTEMPT",
-      "service": "user-service",
-      "severity": "CRITICAL",
-      "detail": "6 failures grouped by user-service"
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "UNAUTHORISED_ACCESS",
+      "severity": "ERROR",
+      "service": "user-service"
+    },
+    {
+      "issue_type": "SUSPICIOUS_ACTIVITY",
+      "severity": "WARN",
+      "service": "user-service"
     }
   ]
 }

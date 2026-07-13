@@ -1,0 +1,16 @@
+[
+  {"timestamp": "2026-07-15T14:00:00Z", "level": "INFO", "service": "video-encoder", "message": "Encode job completed successfully for asset_id=9911", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:05:00Z", "level": "WARN", "service": "video-encoder", "message": "Disk usage on /var/encode/tmp reached 82%, cleanup job triggered", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:15:00Z", "level": "WARN", "service": "video-encoder", "message": "Disk usage on /var/encode/tmp reached 90%, cleanup job triggered", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:22:00Z", "level": "ERROR", "service": "video-encoder", "message": "Encode job failed for asset_id=9932: No space left on device", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:23:00Z", "level": "ERROR", "service": "video-encoder", "message": "Encode job failed for asset_id=9933: No space left on device", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:24:00Z", "level": "CRITICAL", "service": "video-encoder", "message": "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:25:00Z", "level": "ERROR", "service": "video-encoder", "message": "Encode job failed for asset_id=9934: No space left on device", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:26:00Z", "level": "ERROR", "service": "cdn-gateway", "message": "Upstream timeout: video-encoder not responding within 5000ms", "host": "cdn-host-01", "environment": "prod", "tags": ["team:cdn"]},
+  {"timestamp": "2026-07-15T14:27:00Z", "level": "ERROR", "service": "cdn-gateway", "message": "Upstream timeout: video-encoder not responding within 5000ms", "host": "cdn-host-01", "environment": "prod", "tags": ["team:cdn"]},
+  {"timestamp": "2026-07-15T14:28:00Z", "level": "WARN", "service": "recommendation-engine", "message": "Fallback to cached recommendations, upstream video-encoder unavailable", "host": "rec-host-01", "environment": "prod", "tags": ["team:personalization"]},
+  {"timestamp": "2026-07-15T14:35:00Z", "level": "CRITICAL", "service": "video-encoder", "message": "Disk usage on /var/encode/tmp reached 99%, encoder pool offline", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T14:40:00Z", "level": "INFO", "service": "billing-service", "message": "Invoice batch processed successfully for cycle=2026-07", "host": "bill-host-01", "environment": "prod", "tags": ["team:billing"]},
+  {"timestamp": "2026-07-15T15:00:00Z", "level": "INFO", "service": "video-encoder", "message": "Disk cleanup completed, usage reduced to 55%", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]},
+  {"timestamp": "2026-07-15T15:02:00Z", "level": "INFO", "service": "video-encoder", "message": "Encode job completed successfully for asset_id=9950", "host": "enc-host-01", "environment": "prod", "tags": ["team:media"]}
+]

@@ -1,65 +1,246 @@
 {
   "summary": {
-    "total_pipelines_analysed": 1,
-    "pipelines_with_issues": 1,
-    "critical_issues": 2,
-    "warn_issues": 1,
+    "total_pipelines_analysed": 8,
+    "pipelines_with_issues": 4,
+    "critical_issues": 5,
+    "warn_issues": 4,
     "sla_breaches": 0,
     "analysis_period": {
-      "from": "2026-07-02T08:00:00Z",
-      "to": "2026-07-02T10:00:02Z"
+      "from": "2026-07-02T08:00:00.000Z",
+      "to": "2026-07-02T10:00:01.000Z"
     }
   },
   "kafka": {
     "topics": [
       {
-        "topic": "ecommerce-events",
+        "topic": null,
         "consumer_group": "checkout-consumer",
-        "lag": 125000,
-        "verdict": "CRITICAL",
-        "issue_type": "KAFKA_LAG_CRITICAL",
-        "timestamp": "2026-07-02T09:28:00Z",
-        "service": "checkout-consumer"
+        "lag": 8000.0,
+        "verdict": "OK",
+        "timestamp": "2026-07-02T09:00:00.000Z"
+      },
+      {
+        "topic": null,
+        "consumer_group": "checkout-consumer",
+        "lag": 25000.0,
+        "verdict": "WARN",
+        "timestamp": "2026-07-02T09:10:00.000Z",
+        "issue_type": "KAFKA_LAG_HIGH"
+      },
+      {
+        "topic": null,
+        "consumer_group": "checkout-consumer",
+        "lag": 68000.0,
+        "verdict": "WARN",
+        "timestamp": "2026-07-02T09:20:00.000Z",
+        "issue_type": "KAFKA_LAG_HIGH"
       },
       {
         "topic": "ecommerce-events",
         "consumer_group": "checkout-consumer",
-        "lag": 118000,
+        "lag": 125000.0,
         "verdict": "CRITICAL",
-        "issue_type": "KAFKA_LAG_CRITICAL",
-        "timestamp": "2026-07-02T09:40:00Z",
-        "service": "checkout-consumer"
+        "timestamp": "2026-07-02T09:28:00.000Z",
+        "issue_type": "KAFKA_LAG_CRITICAL"
+      },
+      {
+        "topic": "ecommerce-events",
+        "consumer_group": "checkout-consumer",
+        "lag": 118000.0,
+        "verdict": "CRITICAL",
+        "timestamp": "2026-07-02T09:40:00.000Z",
+        "issue_type": "KAFKA_LAG_CRITICAL"
+      },
+      {
+        "topic": null,
+        "consumer_group": "checkout-consumer",
+        "lag": 15000.0,
+        "verdict": "WARN",
+        "timestamp": "2026-07-02T10:00:00.000Z",
+        "issue_type": "KAFKA_LAG_HIGH"
       }
     ]
   },
   "checkpoints": [
     {
+      "issue_type": "CHECKPOINT_STALE",
       "service": "checkout-consumer",
-      "timestamp": "2026-07-02T09:35:00Z",
-      "status": "stale",
+      "severity": "CRITICAL",
+      "timestamp": "2026-07-02T09:35:00.000Z",
       "detail": "checkpoint offset missing, last checkpoint 45 minutes old"
     }
   ],
   "sla_breaches": [],
-  "backlogs": [],
+  "backlogs": [
+    {
+      "topic": null,
+      "consumer_group": "checkout-consumer",
+      "lag": 25000.0,
+      "verdict": "WARN",
+      "issue_type": "PROCESSING_BACKLOG",
+      "description": "backlog building on checkout-consumer, lag currently WARN"
+    },
+    {
+      "topic": null,
+      "consumer_group": "checkout-consumer",
+      "lag": 68000.0,
+      "verdict": "WARN",
+      "issue_type": "PROCESSING_BACKLOG",
+      "description": "backlog building on checkout-consumer, lag currently WARN"
+    },
+    {
+      "topic": "ecommerce-events",
+      "consumer_group": "checkout-consumer",
+      "lag": 125000.0,
+      "verdict": "CRITICAL",
+      "issue_type": "PROCESSING_BACKLOG",
+      "description": "backlog building on checkout-consumer, lag currently CRITICAL"
+    },
+    {
+      "topic": "ecommerce-events",
+      "consumer_group": "checkout-consumer",
+      "lag": 118000.0,
+      "verdict": "CRITICAL",
+      "issue_type": "PROCESSING_BACKLOG",
+      "description": "backlog building on checkout-consumer, lag currently CRITICAL"
+    },
+    {
+      "topic": null,
+      "consumer_group": "checkout-consumer",
+      "lag": 15000.0,
+      "verdict": "WARN",
+      "issue_type": "PROCESSING_BACKLOG",
+      "description": "backlog building on checkout-consumer, lag currently WARN"
+    }
+  ],
+  "unclassified_alerts": [
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "checkout-consumer",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:20:00.000Z",
+      "monitor_name": "checkout-consumer-dq-rejection-rate",
+      "description": "DQ rejection rate exceeded 15%"
+    },
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "checkout-consumer",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "monitor_name": "kafka-consumer-lag-ecommerce-events",
+      "description": "Consumer lag exceeded 100000 on topic ecommerce-events"
+    },
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "payment-service",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "monitor_name": "payment-service-error-rate",
+      "description": "Error rate exceeded 15% over 5 minute window"
+    },
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "payment-service",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "monitor_name": "checkout-consumer-cpu",
+      "description": "CPU usage exceeded 90% on host-01"
+    },
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "order-service",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:31:00.000Z",
+      "monitor_name": "order-service-latency",
+      "description": "p99 latency exceeded 1000ms"
+    },
+    {
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "service": "user-service",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:53:00.000Z",
+      "monitor_name": "user-service-auth-failures",
+      "description": "Auth failure rate exceeded threshold, possible brute force"
+    }
+  ],
   "all_issues": [
     {
-      "issue_type": "KAFKA_LAG_CRITICAL",
       "service": "checkout-consumer",
-      "severity": "CRITICAL",
-      "detail": "Kafka lag 125000 for ecommerce-events"
+      "issue_type": "KAFKA_LAG_HIGH",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:10:00.000Z"
     },
     {
-      "issue_type": "KAFKA_LAG_CRITICAL",
       "service": "checkout-consumer",
-      "severity": "CRITICAL",
-      "detail": "Kafka lag 118000 for ecommerce-events"
+      "issue_type": "KAFKA_LAG_HIGH",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:20:00.000Z"
     },
     {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_CRITICAL",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_CRITICAL",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:40:00.000Z"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "KAFKA_LAG_HIGH",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T10:00:00.000Z"
+    },
+    {
+      "service": "checkout-consumer",
       "issue_type": "CHECKPOINT_STALE",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:35:00.000Z"
+    },
+    {
       "service": "checkout-consumer",
-      "severity": "WARN",
-      "detail": "checkpoint offset missing, last checkpoint 45 minutes old"
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "WARN",
+      "timestamp": "2026-07-02T09:20:00.000Z",
+      "monitor_name": "checkout-consumer-dq-rejection-rate"
+    },
+    {
+      "service": "checkout-consumer",
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:28:00.000Z",
+      "monitor_name": "kafka-consumer-lag-ecommerce-events"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "monitor_name": "payment-service-error-rate"
+    },
+    {
+      "service": "payment-service",
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:30:00.000Z",
+      "monitor_name": "checkout-consumer-cpu"
+    },
+    {
+      "service": "order-service",
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "ERROR",
+      "timestamp": "2026-07-02T09:31:00.000Z",
+      "monitor_name": "order-service-latency"
+    },
+    {
+      "service": "user-service",
+      "issue_type": "PIPELINE_ALERT_UNCLASSIFIED",
+      "verdict": "CRITICAL",
+      "timestamp": "2026-07-02T09:53:00.000Z",
+      "monitor_name": "user-service-auth-failures"
     }
   ]
 }

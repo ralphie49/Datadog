@@ -1,0 +1,1388 @@
+{
+  "dataset_name": "staging_input",
+  "input_root": "staging_input",
+  "analysis_period": {
+    "from": "2026-07-15T14:00:00.000Z",
+    "to": "2026-07-15T15:02:01.000Z"
+  },
+  "record_counts": {
+    "log": 14,
+    "metric": 26,
+    "trace": 10,
+    "alert": 4,
+    "infrastructure": 8,
+    "total": 62
+  },
+  "classified_files": [
+    {
+      "path": "datadog_infrastructure_export_20260715.json",
+      "source_type": "infrastructure",
+      "record_count": 8
+    },
+    {
+      "path": "datadog_logs_export_20260715.json",
+      "source_type": "log",
+      "record_count": 14
+    },
+    {
+      "path": "datadog_metrics_export_20260715.csv",
+      "source_type": "metric",
+      "record_count": 26
+    },
+    {
+      "path": "datadog_monitor_alerts_20260715.json",
+      "source_type": "alert",
+      "record_count": 4
+    },
+    {
+      "path": "datadog_traces_export_20260715.json",
+      "source_type": "trace",
+      "record_count": 10,
+      "tags": [
+        "parent_span_id_missing"
+      ]
+    }
+  ],
+  "skipped_files": [],
+  "records": [
+    {
+      "record_id": "infrastructure_000001",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "host=enc-host-01 cpu=40.0 mem=50.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "enc-host-01",
+        "cpu_pct": 40.0,
+        "memory_pct": 50.0,
+        "disk_pct": 60.0,
+        "network_in": 200.0,
+        "network_out": 180.0,
+        "timestamp": "2026-07-15T14:00:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000005",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "host=cdn-host-01 cpu=30.0 mem=40.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "cdn-host-01",
+        "cpu_pct": 30.0,
+        "memory_pct": 40.0,
+        "disk_pct": 35.0,
+        "network_in": 500.0,
+        "network_out": 480.0,
+        "timestamp": "2026-07-15T14:00:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000007",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "rec-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "host=rec-host-01 cpu=25.0 mem=38.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "rec-host-01",
+        "cpu_pct": 25.0,
+        "memory_pct": 38.0,
+        "disk_pct": 30.0,
+        "network_in": 150.0,
+        "network_out": 140.0,
+        "timestamp": "2026-07-15T14:00:00Z"
+      }
+    },
+    {
+      "record_id": "infrastructure_000008",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "bill-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "host=bill-host-01 cpu=20.0 mem=35.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "bill-host-01",
+        "cpu_pct": 20.0,
+        "memory_pct": 35.0,
+        "disk_pct": 28.0,
+        "network_in": 90.0,
+        "network_out": 80.0,
+        "timestamp": "2026-07-15T14:00:00Z"
+      }
+    },
+    {
+      "record_id": "log_000001",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "Encode job completed successfully for asset_id=9911",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "level": "INFO",
+        "service": "video-encoder",
+        "message": "Encode job completed successfully for asset_id=9911",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000001",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "disk_pct=60.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 60.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000011",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "cpu_pct=40.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "host": "enc-host-01",
+        "metric": "cpu_pct",
+        "value": 40.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000016",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "cpu_pct=30.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "host": "cdn-host-01",
+        "metric": "cpu_pct",
+        "value": 30.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000021",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "rec-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "cpu_pct=25.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "host": "rec-host-01",
+        "metric": "cpu_pct",
+        "value": 25.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000024",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "bill-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "cpu_pct=20.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:00:00Z",
+        "host": "bill-host-01",
+        "metric": "cpu_pct",
+        "value": 20.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "trace_000001",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "cdn-gateway",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:00.000Z",
+      "message": "fetch_asset (ok)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr001",
+        "span_id": "sp001",
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 120,
+        "status": "ok",
+        "timestamp": "2026-07-15T14:00:00Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "trace_000002",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:00:01.000Z",
+      "message": "encode_request (ok)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr001",
+        "span_id": "sp002",
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 90,
+        "status": "ok",
+        "timestamp": "2026-07-15T14:00:01Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "log_000002",
+      "source_type": "log",
+      "severity": "WARN",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:05:00.000Z",
+      "message": "Disk usage on /var/encode/tmp reached 82%, cleanup job triggered",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:05:00Z",
+        "level": "WARN",
+        "service": "video-encoder",
+        "message": "Disk usage on /var/encode/tmp reached 82%, cleanup job triggered",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000002",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:05:00.000Z",
+      "message": "disk_pct=82.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:05:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 82.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000003",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:10:00.000Z",
+      "message": "disk_pct=86.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:10:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 86.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "log_000003",
+      "source_type": "log",
+      "severity": "WARN",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:15:00.000Z",
+      "message": "Disk usage on /var/encode/tmp reached 90%, cleanup job triggered",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:15:00Z",
+        "level": "WARN",
+        "service": "video-encoder",
+        "message": "Disk usage on /var/encode/tmp reached 90%, cleanup job triggered",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000004",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:15:00.000Z",
+      "message": "disk_pct=90.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:15:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 90.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000012",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:15:00.000Z",
+      "message": "cpu_pct=45.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:15:00Z",
+        "host": "enc-host-01",
+        "metric": "cpu_pct",
+        "value": 45.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000017",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:15:00.000Z",
+      "message": "cpu_pct=32.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:15:00Z",
+        "host": "cdn-host-01",
+        "metric": "cpu_pct",
+        "value": 32.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000005",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:20:00.000Z",
+      "message": "disk_pct=95.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:20:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 95.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "log_000004",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:22:00.000Z",
+      "message": "Encode job failed for asset_id=9932: No space left on device",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:22:00Z",
+        "level": "ERROR",
+        "service": "video-encoder",
+        "message": "Encode job failed for asset_id=9932: No space left on device",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "log_000005",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:23:00.000Z",
+      "message": "Encode job failed for asset_id=9933: No space left on device",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:23:00Z",
+        "level": "ERROR",
+        "service": "video-encoder",
+        "message": "Encode job failed for asset_id=9933: No space left on device",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_000001",
+      "source_type": "alert",
+      "severity": "CRITICAL",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "message": "Disk usage exceeded 95% on enc-host-01",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "video-encoder-disk-usage",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-15T14:24:00Z",
+        "service": "video-encoder",
+        "message": "Disk usage exceeded 95% on enc-host-01",
+        "priority": "P1"
+      }
+    },
+    {
+      "record_id": "infrastructure_000002",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "message": "host=enc-host-01 cpu=88.0 mem=70.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "enc-host-01",
+        "cpu_pct": 88.0,
+        "memory_pct": 70.0,
+        "disk_pct": 98.0,
+        "network_in": 300.0,
+        "network_out": 260.0,
+        "timestamp": "2026-07-15T14:24:00Z"
+      }
+    },
+    {
+      "record_id": "log_000006",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "message": "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:24:00Z",
+        "level": "CRITICAL",
+        "service": "video-encoder",
+        "message": "Disk usage on /var/encode/tmp reached 98%, encoder pool degraded",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000006",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "message": "disk_pct=98.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:24:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 98.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000013",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:24:00.000Z",
+      "message": "cpu_pct=88.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:24:00Z",
+        "host": "enc-host-01",
+        "metric": "cpu_pct",
+        "value": 88.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "alert_000003",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:25:00.000Z",
+      "message": "encode queue depth exceeded 500 on video-encode-queue",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "video-encoder-queue-depth",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-15T14:25:00Z",
+        "service": "video-encoder",
+        "message": "encode queue depth exceeded 500 on video-encode-queue",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "log_000007",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:25:00.000Z",
+      "message": "Encode job failed for asset_id=9934: No space left on device",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:25:00Z",
+        "level": "ERROR",
+        "service": "video-encoder",
+        "message": "Encode job failed for asset_id=9934: No space left on device",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "alert_000002",
+      "source_type": "alert",
+      "severity": "ERROR",
+      "service": "cdn-gateway",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "message": "Upstream timeout rate exceeded threshold",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "cdn-gateway-upstream-timeout",
+        "status": "TRIGGERED",
+        "triggered_at": "2026-07-15T14:26:00Z",
+        "service": "cdn-gateway",
+        "message": "Upstream timeout rate exceeded threshold",
+        "priority": "P2"
+      }
+    },
+    {
+      "record_id": "log_000008",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "cdn-gateway",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "message": "Upstream timeout: video-encoder not responding within 5000ms",
+      "tags": [
+        "team:cdn"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:26:00Z",
+        "level": "ERROR",
+        "service": "cdn-gateway",
+        "message": "Upstream timeout: video-encoder not responding within 5000ms",
+        "host": "cdn-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:cdn"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000018",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "message": "cpu_pct=58.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:26:00Z",
+        "host": "cdn-host-01",
+        "metric": "cpu_pct",
+        "value": 58.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "trace_000003",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "cdn-gateway",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:26:00.000Z",
+      "message": "fetch_asset (error)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr002",
+        "span_id": "sp003",
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 5200,
+        "status": "error",
+        "timestamp": "2026-07-15T14:26:00Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "trace_000004",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:26:01.000Z",
+      "message": "encode_request (error)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr002",
+        "span_id": "sp004",
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 5100,
+        "status": "error",
+        "timestamp": "2026-07-15T14:26:01Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "infrastructure_000006",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:27:00.000Z",
+      "message": "host=cdn-host-01 cpu=60.0 mem=48.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "cdn-host-01",
+        "cpu_pct": 60.0,
+        "memory_pct": 48.0,
+        "disk_pct": 36.0,
+        "network_in": 650.0,
+        "network_out": 600.0,
+        "timestamp": "2026-07-15T14:27:00Z"
+      }
+    },
+    {
+      "record_id": "log_000009",
+      "source_type": "log",
+      "severity": "ERROR",
+      "service": "cdn-gateway",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:27:00.000Z",
+      "message": "Upstream timeout: video-encoder not responding within 5000ms",
+      "tags": [
+        "team:cdn"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:27:00Z",
+        "level": "ERROR",
+        "service": "cdn-gateway",
+        "message": "Upstream timeout: video-encoder not responding within 5000ms",
+        "host": "cdn-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:cdn"
+        ]
+      }
+    },
+    {
+      "record_id": "trace_000005",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "cdn-gateway",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:27:00.000Z",
+      "message": "fetch_asset (error)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr003",
+        "span_id": "sp005",
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 5300,
+        "status": "error",
+        "timestamp": "2026-07-15T14:27:00Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "trace_000006",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:27:01.000Z",
+      "message": "encode_request (error)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr003",
+        "span_id": "sp006",
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 5210,
+        "status": "error",
+        "timestamp": "2026-07-15T14:27:01Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "trace_000007",
+      "source_type": "trace",
+      "severity": "ERROR",
+      "service": "recommendation-engine",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:27:02.000Z",
+      "message": "get_recommendations (error)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr003",
+        "span_id": "sp007",
+        "service": "recommendation-engine",
+        "operation": "get_recommendations",
+        "duration_ms": 4800,
+        "status": "error",
+        "timestamp": "2026-07-15T14:27:02Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "log_000010",
+      "source_type": "log",
+      "severity": "WARN",
+      "service": "recommendation-engine",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:28:00.000Z",
+      "message": "Fallback to cached recommendations, upstream video-encoder unavailable",
+      "tags": [
+        "team:personalization"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:28:00Z",
+        "level": "WARN",
+        "service": "recommendation-engine",
+        "message": "Fallback to cached recommendations, upstream video-encoder unavailable",
+        "host": "rec-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:personalization"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000022",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "rec-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:28:00.000Z",
+      "message": "cpu_pct=28.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:28:00Z",
+        "host": "rec-host-01",
+        "metric": "cpu_pct",
+        "value": 28.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000007",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:30:00.000Z",
+      "message": "disk_pct=99.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:30:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 99.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "infrastructure_000003",
+      "source_type": "infrastructure",
+      "severity": "WARN",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "message": "host=enc-host-01 cpu=91.0 mem=74.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "enc-host-01",
+        "cpu_pct": 91.0,
+        "memory_pct": 74.0,
+        "disk_pct": 99.0,
+        "network_in": 310.0,
+        "network_out": 270.0,
+        "timestamp": "2026-07-15T14:35:00Z"
+      }
+    },
+    {
+      "record_id": "log_000011",
+      "source_type": "log",
+      "severity": "CRITICAL",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "message": "Disk usage on /var/encode/tmp reached 99%, encoder pool offline",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:35:00Z",
+        "level": "CRITICAL",
+        "service": "video-encoder",
+        "message": "Disk usage on /var/encode/tmp reached 99%, encoder pool offline",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000008",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "message": "disk_pct=99.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:35:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 99.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000014",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "message": "cpu_pct=91.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:35:00Z",
+        "host": "enc-host-01",
+        "metric": "cpu_pct",
+        "value": 91.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000019",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:35:00.000Z",
+      "message": "cpu_pct=60.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:35:00Z",
+        "host": "cdn-host-01",
+        "metric": "cpu_pct",
+        "value": 60.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "log_000012",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "billing-service",
+      "environment": "prod",
+      "timestamp": "2026-07-15T14:40:00.000Z",
+      "message": "Invoice batch processed successfully for cycle=2026-07",
+      "tags": [
+        "team:billing"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:40:00Z",
+        "level": "INFO",
+        "service": "billing-service",
+        "message": "Invoice batch processed successfully for cycle=2026-07",
+        "host": "bill-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:billing"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000025",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "bill-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:40:00.000Z",
+      "message": "cpu_pct=22.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:40:00Z",
+        "host": "bill-host-01",
+        "metric": "cpu_pct",
+        "value": 22.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "trace_000010",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "billing-service",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:40:00.000Z",
+      "message": "process_invoice (ok)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr005",
+        "span_id": "sp010",
+        "service": "billing-service",
+        "operation": "process_invoice",
+        "duration_ms": 200,
+        "status": "ok",
+        "timestamp": "2026-07-15T14:40:00Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "metric_000009",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T14:45:00.000Z",
+      "message": "disk_pct=97.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T14:45:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 97.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "alert_000004",
+      "source_type": "alert",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "Disk usage returned to normal",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "monitor_name": "video-encoder-disk-recovery",
+        "status": "RESOLVED",
+        "triggered_at": "2026-07-15T15:00:00Z",
+        "service": "video-encoder",
+        "message": "Disk usage returned to normal",
+        "priority": "P4"
+      }
+    },
+    {
+      "record_id": "infrastructure_000004",
+      "source_type": "infrastructure",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "host=enc-host-01 cpu=42.0 mem=52.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "host": "enc-host-01",
+        "cpu_pct": 42.0,
+        "memory_pct": 52.0,
+        "disk_pct": 55.0,
+        "network_in": 210.0,
+        "network_out": 190.0,
+        "timestamp": "2026-07-15T15:00:00Z"
+      }
+    },
+    {
+      "record_id": "log_000013",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "Disk cleanup completed, usage reduced to 55%",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "level": "INFO",
+        "service": "video-encoder",
+        "message": "Disk cleanup completed, usage reduced to 55%",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "metric_000010",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "disk_pct=55.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "host": "enc-host-01",
+        "metric": "disk_pct",
+        "value": 55.0,
+        "metric_name": "disk_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000015",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "enc-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "cpu_pct=42.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "host": "enc-host-01",
+        "metric": "cpu_pct",
+        "value": 42.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000020",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "cdn-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "cpu_pct=31.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "host": "cdn-host-01",
+        "metric": "cpu_pct",
+        "value": 31.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000023",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "rec-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "cpu_pct=26.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "host": "rec-host-01",
+        "metric": "cpu_pct",
+        "value": 26.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "metric_000026",
+      "source_type": "metric",
+      "severity": "INFO",
+      "service": "bill-host-01",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:00:00.000Z",
+      "message": "cpu_pct=21.0",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:00:00Z",
+        "host": "bill-host-01",
+        "metric": "cpu_pct",
+        "value": 21.0,
+        "metric_name": "cpu_pct",
+        "service": null
+      }
+    },
+    {
+      "record_id": "log_000014",
+      "source_type": "log",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "prod",
+      "timestamp": "2026-07-15T15:02:00.000Z",
+      "message": "Encode job completed successfully for asset_id=9950",
+      "tags": [
+        "team:media"
+      ],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "timestamp": "2026-07-15T15:02:00Z",
+        "level": "INFO",
+        "service": "video-encoder",
+        "message": "Encode job completed successfully for asset_id=9950",
+        "host": "enc-host-01",
+        "environment": "prod",
+        "tags": [
+          "team:media"
+        ]
+      }
+    },
+    {
+      "record_id": "trace_000008",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "cdn-gateway",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:02:00.000Z",
+      "message": "fetch_asset (ok)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr004",
+        "span_id": "sp008",
+        "service": "cdn-gateway",
+        "operation": "fetch_asset",
+        "duration_ms": 115,
+        "status": "ok",
+        "timestamp": "2026-07-15T15:02:00Z",
+        "parent_span_id": null
+      }
+    },
+    {
+      "record_id": "trace_000009",
+      "source_type": "trace",
+      "severity": "INFO",
+      "service": "video-encoder",
+      "environment": "unknown",
+      "timestamp": "2026-07-15T15:02:01.000Z",
+      "message": "encode_request (ok)",
+      "tags": [],
+      "source_ip": null,
+      "user": null,
+      "raw": {
+        "trace_id": "tr004",
+        "span_id": "sp009",
+        "service": "video-encoder",
+        "operation": "encode_request",
+        "duration_ms": 95,
+        "status": "ok",
+        "timestamp": "2026-07-15T15:02:01Z",
+        "parent_span_id": null
+      }
+    }
+  ],
+  "_generated_at": "2026-07-10T11:22:13Z"
+}

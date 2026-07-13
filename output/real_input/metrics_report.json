@@ -1,0 +1,36 @@
+{
+  "summary": {
+    "total_services_analysed": 0,
+    "total_hosts_analysed": 1,
+    "services_with_issues": 0,
+    "hosts_with_issues": 0,
+    "critical_issues": 0,
+    "warn_issues": 0,
+    "hosts_down": 0,
+    "analysis_period": {
+      "from": "2026-07-07T10:49:00.000Z",
+      "to": "2026-07-07T11:13:30.072Z"
+    }
+  },
+  "latency": {
+    "slowest_traces": [],
+    "by_service": []
+  },
+  "throughput": [],
+  "hosts": [
+    {
+      "host": "AVDAILAB102-119",
+      "cpu_pct": 7.43,
+      "memory_pct": null,
+      "disk_pct": null,
+      "network_mbps": null,
+      "health_score": 100,
+      "verdict": "OK",
+      "issues": []
+    }
+  ],
+  "storage_issues": [],
+  "network": [],
+  "downtime_issues": [],
+  "all_issues": []
+}
